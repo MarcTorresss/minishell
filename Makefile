@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
+#    Updated: 2024/02/01 15:08:19 by martorre         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
 INCLUDE	=	-I./inc -I./readline
@@ -6,24 +18,36 @@ RM		=	rm -fr
 NAME		=	minishell
 COMP		=	./libft/libft.a
 
-SRC			=	read.c enviroment.c
 DIR_OBJ		=	obj/
 DIR_SRC		=	src/
-OBJ			=	$(addprefix $(DIR_OBJ),$(SRC:.c=.o))
-RDLINE_ROOT =	readline/
-LIBFT_ROOT	=	libft/
+DIR_RL 		=	readline/
+DIR_LIB		=	libft/
+DIR_LXR		=	lexer/
 
-LIB_A		:=	$(RDLINE_ROOT)libreadline.a $(RDLINE_ROOT)libhistory.a $(LIBFT_ROOT)libft.a
+# *******************************	FILES	******************************* #
 
-LIB_ADD_DIR	:=	-L$(RDLINE_ROOT) -L$(LIBFT_ROOT)
+FILES		=	read.c
+LXR_FILES	=	string_to_list.c
 
+FILES_SRC	=	$(addprefix $(DIR_SRC), $(FILES));
+LXR_SRC		=	$(addprefix $(DIR_SRC), $(addprefix $(DIR_LXR), $(LXR_FILES)));
+
+# *********************************	OBJECTS	****************************** #
+
+OBJ			=	$(addprefix $(DIR_OBJ), $(FILES_SRC:.c=.o))
+LXR_OBJ		=	$(addprefix $(DIR_OBJ), $(LXR_SRC:.c=.o))
+
+LIB_A		:=	$(DIR_RL)libreadline.a $(DIR_RL)libhistory.a $(DIR_LIB)libft.a
+LIB_ADD_DIR	:=	-L$(DIR_RL) -L$(DIR_LIB)
 LIB_SEARCH	:=	-lreadline -lhistory -ltermcap -lft
 
-#=================HEADERS==================#
-HEADERS		:=	$(INC_ROOT)
-HEADERS		+=	$(addsuffix $(INC_ROOT),$(LIBFT_ROOT))
+# *******************************  HEADERS	******************************* #
 
-#=================COLORS===================#
+HEADERS		:=	$(INC_ROOT)
+HEADERS		+=	$(addsuffix $(INC_ROOT),$(DIR_LIB))
+
+# *******************************  COLORS	******************************* #
+
 RED			=	\033[0;31m
 GREEN		=	\033[0;32m
 YELLOW		=	\033[0;33m
@@ -31,16 +55,17 @@ BLUE		=	\033[0;34m
 PURPLE		=	\033[0;35m
 CYAN		=	\033[0;36m
 RESET		=	\033[0m
-#==================RULES===================#
+
+# *******************************  RULES ******************************* #
 
 all : librarys $(DIR_OBJ) $(NAME)
 
 librarys :
 	@$(MAKE) readline --no-print-directory
-	@$(MAKE) -C $(LIBFT_ROOT) --no-print-directory
+	@$(MAKE) -C $(DIR_LIB) --no-print-directory
 
-$(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
+$(NAME) : $(OBJ) $(LXR_OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
 	@echo "Compiled"
 
 rdline :

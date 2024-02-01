@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/18 11:46:31 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/18 18:35:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	int		i;
+	char	*new;
+	int		len;
 
-#endif
+	i = 0;
+	len = ft_strlen((char *)s);
+	new = malloc(sizeof(char) * ft_strlen((char *)s) + 1);
+	if (!new)
+	{
+		free(new);
+		return (0);
+	}
+	while (s[i] != '\0')
+	{
+		new[i] = f(i, s[i]);
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}

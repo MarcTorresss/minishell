@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/13 11:18:19 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/13 12:28:43 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	size_t	i;
+	char	*dstc;
+	char	*srcc;
 
-#endif
+	i = 0;
+	dstc = (char *)dst;
+	srcc = (char *)src;
+	if (!dstc && !srcc)
+		return (0);
+	while (i < n)
+	{
+		dstc[i] = srcc[i];
+		i++;
+	}
+	return (dstc);
+}

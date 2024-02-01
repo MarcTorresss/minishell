@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 10:45:55 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/01 15:18:03 by martorre         ###   ########.fr       */
+/*   Created: 2023/10/23 14:16:28 by martorre          #+#    #+#             */
+/*   Updated: 2023/11/08 17:07:22 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-
-int main(int argc, char **argv)
+long	ft_atol(const char *str)
 {
-	//t_env	*env;
-	char	*prompt;
+	long	i;
+	long	result;
+	long	sig;
 
-	argc++;
-	(*argv)++;
-	//init_envd(envd, &env);
-	while (1)
+	i = 0;
+	result = 0;
+	sig = 1;
+	while (str[i] == ' ' || str[i] == '\r' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\t' || str[i] == '\n')
+		i++;
+	if (str[i] == '-')
+		sig *= -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		prompt = readline("\033[1;32mminishell: \033[0m");
-		printf("%s\n", prompt);
+		result *= 10;
+		result += (str[i] - '0');
+		i++;
 	}
-    return 0;
+	return (result * sig);
 }

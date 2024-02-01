@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/12 15:51:02 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/27 19:54:01 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+void	ft_bzero(void *s, size_t n)
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	size_t	i;
+	char	*str;
 
-#endif
+	i = 0;
+	str = (char *)s;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
+}
+// int	main(void)
+// {
+// 	void *s;
+
+// 	s = malloc(15);
+// 	ft_bzero(s, 15);
+// 	printf("%s",s);
+// }

@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/13 13:42:39 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/14 11:16:08 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	size_t		i;
+	char		*sc;
 
-#endif
+	sc = (char *)s;
+	i = 0;
+	while (i < n)
+	{
+		if (sc[i] == (char)c)
+			return ((void *)&s[i]);
+		i++;
+	}
+	return (0);
+}

@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/13 18:45:04 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/13 20:03:17 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
+#include <fcntl.h>
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+void	ft_putchar_fd(char c, int fd)
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	write(fd, &c, 1);
+}
 
-#endif
+/*int main()
+{
+	int fd;
+	size_t i = 0;
+	char str[10] = "TORRES..";
+	
+	fd = open("TEST", O_CREAT | O_TRUNC | O_WRONLY, 777);
+	while (str[i])
+		ft_putchar_fd(str[i++], 2);
+	close(fd);
+	return (0);
+}*/

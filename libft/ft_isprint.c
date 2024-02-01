@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 12:54:33 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:43 by martorre         ###   ########.fr       */
+/*   Created: 2023/09/12 17:04:16 by martorre          #+#    #+#             */
+/*   Updated: 2023/09/12 19:01:47 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <errno.h>
-# include "libft/libft.h"
-
-#define PIPE 124
-#define DOLLAR 36
-#define LESS 60
-#define GREAT 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
-
-typedef struct  s_lexer
+int	ft_isprint(int c)
 {
-    char            *word;
-    struct t_lxr   *next;
-}   t_lxr;
+	if (c >= 32 && c < 127)
+		return (1);
+	else
+		return (0);
+	return (0);
+}
+/*
+#include <stdio.h>
 
-#endif
+int	main(void)
+{
+	char	c[] = "holAA1AA";
+	int	i;
+	i = ft_isprint(c);
+	printf("Nos ha devuelto: %d",i);
+}*/
