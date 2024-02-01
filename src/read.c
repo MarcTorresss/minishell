@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:45:55 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/01 15:18:03 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:18:47 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **envd)
 {
-	//t_env	*env;
+	t_env	*env;
 	char	*prompt;
 
 	argc++;
 	(*argv)++;
-	//init_envd(envd, &env);
+	init_envd(envd, &env);
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		printf("%s\n", prompt);
+		ft_isbuiltin(prompt, &env);
+		//printf("%s\n", prompt);
 	}
     return 0;
 }

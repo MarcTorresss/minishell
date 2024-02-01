@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/01/31 12:25:34 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:12:31 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ typedef struct s_env
 
 void	init_envd(char **envd, t_env **env_var);
 char	*find_env_var(char *name, t_env **env_var);
+int		ft_isbuiltin(char *input, t_env **env);
 
 #endif

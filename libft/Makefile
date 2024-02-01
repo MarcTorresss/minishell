@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/27 18:13:35 by pfontenl          #+#    #+#              #
-#    Updated: 2024/02/01 13:48:30 by martorre         ###   ########.fr        #
+#    Updated: 2024/02/01 20:16:00 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,25 +49,23 @@ OBJ_GETNL = $(addprefix $(DIR_OBJ), $(SRC_GETNL:.c=.o))
 
 all: temp $(NAME)
 
-temp: 
-	mkdir -p $(DIR_OBJ)
+temp:
+	@mkdir -p $(DIR_OBJ)
 	
 $(NAME): $(OBJ_LIBFT) $(OBJ_PRINTF) $(OBJ_GETNL)
 	@$(LIB) $(NAME) $(OBJ_LIBFT) $(OBJ_PRINTF) $(OBJ_GETNL)
-	@echo Libft Printf GetNL compiled
+	@echo "\033[1;34mLibft Printf GetNL \033[0;32mcompiled\033[0m ✅\n"
 
 $(DIR_OBJ)%.o: %.c Makefile $(INCLUDE)
 	@mkdir -p $(dir $@)
 	@$(CC) $(FLAGS) -c $< -o $@
-	@echo Compiling $< ...
+	@echo "\033[0;33mCompiling\033[0m $< ..."
 
 clean:
 	@rm -rf $(DIR_OBJ)
-	@echo Deleting all objs
 
 fclean: clean
 	@rm -rf $(NAME)
-	@echo Deleting all libft
 
 re : fclean all
 

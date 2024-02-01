@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/01 15:08:19 by martorre         ###   ########.fr        #
+#    Updated: 2024/02/01 20:15:53 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,19 +23,23 @@ DIR_SRC		=	src/
 DIR_RL 		=	readline/
 DIR_LIB		=	libft/
 DIR_LXR		=	lexer/
+DIR_BLT		=	builtins/
 
 # *******************************	FILES	******************************* #
 
-FILES		=	read.c
-LXR_FILES	=	string_to_list.c
+FILES		=	read.c enviroment.c
+#LXR_FILES	=	string_to_list.c
+BLT_FILES	=	builtins.c 
 
-FILES_SRC	=	$(addprefix $(DIR_SRC), $(FILES));
-LXR_SRC		=	$(addprefix $(DIR_SRC), $(addprefix $(DIR_LXR), $(LXR_FILES)));
+FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
+LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
+BLT_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_BLT),$(BLT_FILES)))
 
 # *********************************	OBJECTS	****************************** #
 
-OBJ			=	$(addprefix $(DIR_OBJ), $(FILES_SRC:.c=.o))
-LXR_OBJ		=	$(addprefix $(DIR_OBJ), $(LXR_SRC:.c=.o))
+OBJ			=	$(addprefix $(DIR_OBJ),$(FILES_SRC:.c=.o))
+LXR_OBJ		=	$(addprefix $(DIR_OBJ),$(LXR_SRC:.c=.o))
+BLT_OBJ		=	$(addprefix $(DIR_OBJ),$(BLT_SRC:.c=.o))
 
 LIB_A		:=	$(DIR_RL)libreadline.a $(DIR_RL)libhistory.a $(DIR_LIB)libft.a
 LIB_ADD_DIR	:=	-L$(DIR_RL) -L$(DIR_LIB)
@@ -55,40 +59,46 @@ BLUE		=	\033[0;34m
 PURPLE		=	\033[0;35m
 CYAN		=	\033[0;36m
 RESET		=	\033[0m
+GREEN_BOLD	=	\033[1;32m
+BLUE_BOLD	=	\033[1;34m
+CYAN_BOLD	=	\033[1;36m
 
 # *******************************  RULES ******************************* #
 
-all : librarys $(DIR_OBJ) $(NAME)
+all : rdline library $(DIR_OBJ) $(NAME)
 
-librarys :
-	@$(MAKE) readline --no-print-directory
+library :
 	@$(MAKE) -C $(DIR_LIB) --no-print-directory
 
-$(NAME) : $(OBJ) $(LXR_OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
-	@echo "Compiled"
+$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
+	@echo "${BLUE_BOLD}minishell ${GREEN}compiled ✅\n${RESET}"
 
-rdline :
+rdline:
+ifeq ($(shell test -e $(DIR_RL)libreadline.a && echo exists),)
+	@echo "${YELLOW}Configuring${RESET} and ${YELLOW}compiling ${RESET}readline..."
 	@cd ./readline/ &> /dev/null && ./configure &> /dev/null
 	@make -C ./readline/ &> /dev/null
+	@echo "${BLUE_BOLD}readline ${GREEN}compiled ✅\n${RESET}"
+endif
 
-$(DIR_OBJ)%.o: $(DIR_SRC)%.c Makefile $(LIB_A)
-	@mkdir -p $(dir $@)
+$(DIR_OBJ)%.o: %.c Makefile $(LIB_A)
+	@mkdir -p $(dir $@) --no-print-directory
 	@$(CC) $(CFLAGS) -DREADLINE_LIBRARY=1 $(INCLUDE) -c $< -o $@
-	@echo "${YELLOW}Compiling obj $@...${RESET}"
+	@echo "${YELLOW}Compiling ${RESET}$@...${RESET}"
 
 $(DIR_OBJ):
 	@mkdir -p $(DIR_OBJ)
 
 clean	:
-#	@$(MAKE) -C libft clean --no-print-directory
+	@$(MAKE) -C libft clean --no-print-directory
 	@$(RM) $(DIR_OBJ)
-	@printf "${RED}Objs deleted\n${RESET}"
+	@echo "${RED}Deleting${RESET} all objects 🗑"
 
 fclean	: clean
-#	@$(MAKE) -C libft cleaname --no-print-directory
-	@$(RM) $(NAME)
-	@printf "${RED}Minishell deleted\n${RESET}"
+	@$(MAKE) -C libft fclean --no-print-directory
+	@$(RM) $(NAME) 
+	@echo "${BLUE_BOLD}minishell ${RED}deleted${RESET}"
 	@$(MAKE) -C readline clean --no-print-directory
 
 norm	:
