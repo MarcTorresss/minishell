@@ -6,12 +6,12 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/01 20:15:53 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/04 18:18:17 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror -g
 INCLUDE	=	-I./inc -I./readline
 RM		=	rm -fr
 
@@ -29,7 +29,7 @@ DIR_BLT		=	builtins/
 
 FILES		=	read.c enviroment.c
 #LXR_FILES	=	string_to_list.c
-BLT_FILES	=	builtins.c 
+BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
@@ -83,7 +83,7 @@ ifeq ($(shell test -e $(DIR_RL)libreadline.a && echo exists),)
 endif
 
 $(DIR_OBJ)%.o: %.c Makefile $(LIB_A)
-	@mkdir -p $(dir $@) --no-print-directory
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -DREADLINE_LIBRARY=1 $(INCLUDE) -c $< -o $@
 	@echo "${YELLOW}Compiling ${RESET}$@...${RESET}"
 
@@ -110,6 +110,7 @@ norm	:
 	@printf "${RESET}"
 	@rm test
 
-re		: fclean all
+re		: fclean
+	@$(MAKE) all
 
 .PHONY : all clean fclean re librarys rdline
