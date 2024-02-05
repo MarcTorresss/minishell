@@ -12,13 +12,6 @@
 
 #include "../../minishell.h"
 
-int ft_isspace(char c)
-{
-    if (c == ' ' || c == '\t')
-        return (1);
-    return (0);
-}
-
 void    ascii_chars(char *str, t_lxr *lxr)
 {
     int i;
@@ -54,7 +47,10 @@ int ft_convert(char *str, t_lxr *lxr)
     int i;
 
     i = 0;
-    if (str[i] != '\0' && ft_isspace(str[i]) == 0)
+    while (str[i] != '\0' && ft_isspace(str[i]) == 0)
+    {
+        //controlar caso de comillas
+    }
         i++;
     if (i == 1)
         ascii_char(str[i], lxr);
@@ -65,7 +61,7 @@ int ft_convert(char *str, t_lxr *lxr)
     return (i);
 }
 
-t_lxr   *lxr_new(void)
+t_lxr   *init_lxr(void)
 {
     t_lxr   *new;
 
@@ -89,23 +85,24 @@ int str_to_list(char *str, t_lxr *lxr)
             i++;
         else
         {
-            new = lxr_new();
+            new = init_lxr();
             if (!new)
                 return (1);
+            ft_lxr_addback(lxr, new);
             i = ft_convert(ft_substr(str, i, ft_strlen(str)), lxr);
         }
     }
     return (0);
 }
 
-int main()
+/*int main()
 {
     t_lxr   *new;
     str_to_list("ls >> aaaa < cat", new);
 	ft_printf("\nStack Lxr\n");
 	while (new != NULL)
 	{
-		ft_printf("%d\n", new->word);
+		ft_printf("%s\n", new->word);
 		new = new->next;
 	}
-}
+}*/
