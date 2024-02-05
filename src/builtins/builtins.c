@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:02:53 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/04 19:26:49 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:27:38 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ void	ft_env(t_env **env)
 
 void	ft_pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	char	*tmp;
+
+	tmp = getcwd(NULL, 0);
+	printf("%s\n", tmp);
+	free(tmp);
 }
 
 int	ft_isbuiltin(char *input, t_env **env, t_env **exp)
@@ -37,12 +41,12 @@ int	ft_isbuiltin(char *input, t_env **env, t_env **exp)
 		ft_pwd();
 	//else if (!ft_strncmp(input, "echo", 4))
 	//	ft_echo();
-	// else if (!ft_strncmp(input, "cd", 2))
-	// 	ft_cd();
+	else if (!ft_strncmp(input, "cd", 2))
+		ft_cd(env, exp, input + 3);
 	else if (!ft_strncmp(input, "env", 3))
 		ft_env(env);
-	// else if (!ft_strncmp(input, "exit", 4))
-	// 	ft_exit();
+	else if (!ft_strncmp(input, "exit", 4))
+		exit(0);
 	else if (!ft_strncmp(input, "unset", 5))
 		ft_unset(env, exp, input);
 	else if (!ft_strncmp(input, "export", 6))

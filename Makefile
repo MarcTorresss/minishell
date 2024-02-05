@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/04 18:18:17 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/05 16:23:48 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ DIR_BLT		=	builtins/
 
 FILES		=	read.c enviroment.c
 #LXR_FILES	=	string_to_list.c
-BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c
+BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
