@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/05 19:45:29 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:39:03 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,55 +35,52 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 	free(str);
 }
 
-void	try_path(t_env **env, t_env **exp, char *path)
-{
-	char	*old_pwd;
-	char	*msg;
-
-	old_pwd = getcwd(NULL, 0);
-	msg = ft_strjoin("minishell: cd: ", path);
-	if (chdir(path))
-	{
-		perror(msg);
-		//g_exit = 1;
-		free(old_pwd);
-	}
-	else
-	{
-		set_oldpwd(env, exp, old_pwd);
-		ft_pwd();
-	}
-	free(msg);
-}
-
 void	cd_prev_dir(t_env **env, t_env **exp)
 {
 	t_env	*tmp;
+	char	*old_pwd;
 
+	old_pwd = getcwd(NULL, 0);
 	tmp = find_env(exp, "OLDPWD");
-	if (tmp)
+	if (tmp && tmp->value)
 	{
-		if (tmp->value)
+		g_exit = 0;
+		if (!tmp->value[0])
+			set_oldpwd(env, exp, 0);
+		else
 		{
-			if (!tmp->value[0])
-				set_oldpwd(env, exp, 0);
-			else
-				try_path(env, exp, tmp->value);
-			return ;
+			if (try_path(tmp->value))
+			{
+				set_oldpwd(env, exp, old_pwd);
+				ft_pwd();
+			}
 		}
+		return ;
 	}
 	ft_printf("minishell: cd: OLDPWD not set\n");
-	//g_exit = 1;
+	g_exit = 1;
+}
+
+void	cd_home(t_env **exp)
+{
+	t_env	*tmp;
+
+	tmp = find_env(exp, "HOME");
+	if (tmp && tmp->value && tmp->value[0])
+		try_path(tmp->value);
+	else
+	{
+		g_exit = 1;
+		ft_printf("minishell: cd: HOME not set\n");
+	}
 }
 
 void	ft_cd(t_env **env, t_env **exp, char *input)
 {
-	if (input[0] == '/')
-		try_path(env, exp, input);
-	//if ((input[0] == '.' && (input[1] == '/' || input[1] == '.') || input[0] != '/')
-	//	cd_rel_path(env, exp, input);
 	if (input[0] == '-' && (!input[1] || input[1] == ' '))
 		cd_prev_dir(env, exp);
-	// if (input[0] == '~' && (!input[1] || input[1] == ' '))
-	// 	cd_home(env, exp, input);
+	else if (input[0] == '~' && (!input[1] || input[1] == ' '))
+		cd_home(exp);
+	else if (input[0] != ' ')
+		try_path(input);
 }

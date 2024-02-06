@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/05 16:35:55 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:34:45 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,24 @@ t_env	*find_env(t_env **env, char *name)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+int	try_path(char *path)
+{
+	char	*msg;
+
+	msg = ft_strjoin("minishell: cd: ", path);
+	if (chdir(path))
+	{
+		perror(msg);
+		g_exit = 1;
+		free(msg);
+	}
+	else
+	{
+		g_exit = 0;
+		free(msg);
+		return (1);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/05 17:30:30 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:26:03 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 #define QUOTE_ONE 39
 #define QUOTE_TOW 34
 
-//int	g_exit = 0;
+extern int	g_exit;
 
 typedef struct s_lexer
 {
@@ -44,7 +44,6 @@ typedef struct s_env
 }	t_env;
 
 void	init_envd(char **envd, t_env **env, t_env **exp);
-char	*find_env_var(char *name, t_env **env_var);
 int		ft_isbuiltin(char *input, t_env **env, t_env **exp);
 void	ft_env_del(t_env *env);
 void	ft_unset(t_env **env, t_env **exp, char *input);
@@ -57,5 +56,7 @@ int		update_value(char *name, char *value, t_env **exp);
 t_env	*find_env(t_env **env, char *name);
 void	ft_pwd(void);
 void	ft_cd(t_env **env, t_env **exp, char *input);
+int		try_path(char *path);
+void	ft_echo(t_env **exp, char *input);
 
 #endif

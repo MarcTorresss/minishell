@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/05 16:23:48 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/06 16:29:22 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ DIR_BLT		=	builtins/
 
 FILES		=	read.c enviroment.c
 #LXR_FILES	=	string_to_list.c
-BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c
+BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
@@ -82,7 +82,7 @@ ifeq ($(shell test -e $(DIR_RL)libreadline.a && echo exists),)
 	@echo "${BLUE_BOLD}readline ${GREEN}compiled ✅\n${RESET}"
 endif
 
-$(DIR_OBJ)%.o: %.c Makefile $(LIB_A)
+$(DIR_OBJ)%.o: %.c Makefile $(LIB_A) inc/minishell.h
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -DREADLINE_LIBRARY=1 $(INCLUDE) -c $< -o $@
 	@echo "${YELLOW}Compiling ${RESET}$@...${RESET}"

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:02:53 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/05 16:27:38 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:52:00 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ int	ft_isbuiltin(char *input, t_env **env, t_env **exp)
 {
 	if (!ft_strncmp(input, "pwd", 3))
 		ft_pwd();
-	//else if (!ft_strncmp(input, "echo", 4))
-	//	ft_echo();
+	else if (!ft_strncmp(input, "echo", 4))
+		ft_echo(exp, input + 6);
 	else if (!ft_strncmp(input, "cd", 2))
 		ft_cd(env, exp, input + 3);
 	else if (!ft_strncmp(input, "env", 3))
 		ft_env(env);
 	else if (!ft_strncmp(input, "exit", 4))
-		exit(0);
+		exit(g_exit);
 	else if (!ft_strncmp(input, "unset", 5))
 		ft_unset(env, exp, input);
-	else if (!ft_strncmp(input, "export", 6))
+	else if (!ft_strncmp(input, "export", 6)) 
 		ft_export(exp, env, input + 6);
 	else
 		printf("not a built in\n");

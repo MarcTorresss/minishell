@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/04 18:43:58 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:06:34 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ int	new_env_var(char *name, char *value, t_env **env_var)
 	return (1);
 }
 
+void	init_SHLVL(t_env **env, t_env **exp)
+{
+	t_env	*tmp;
+
+	tmp = find_env(exp, "SHLVL");
+	if (tmp && tmp->value && ft_isdigit(tmp->value[0]))
+		(tmp->value)++;
+	ft_export(exp, env, " SHLVL=1");
+}
+
 void	init_envd(char **envd, t_env **env, t_env **exp)
 {
 	char	*name;
@@ -54,18 +64,5 @@ void	init_envd(char **envd, t_env **env, t_env **exp)
 		new_env_var(name, value, exp);
 		i++;
 	}
-}
-
-char	*find_env_var(char *name, t_env **env_var)
-{
-	t_env	*tmp;
-
-	tmp = *env_var;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->name, name, ft_strlen(name)))
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
+	init_SHLVL(env, exp);
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/04 19:27:48 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:48:40 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,5 @@ void	ft_export(t_env **exp, t_env **env, char *input)
 			if (value)
 				new_env_var(name, value, env);
 	}
+	g_exit = 0;
 }
