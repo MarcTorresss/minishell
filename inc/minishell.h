@@ -21,12 +21,17 @@
 # include <readline/history.h>
 # include "../libft/libft.h"
 
-#define PIPE_AC 124
-#define DOLLAR_AC 36
-#define LESS_AC 60
-#define GREAT_AC 62
-#define QUOTE_ONE 39
-#define QUOTE_TOW 34
+//  ASCII
+# define PIPE_AC 124
+# define DOLLAR_AC 36
+# define LESS_AC 60
+# define GREAT_AC 62
+# define QUOTE_ONE 39
+# define QUOTE_TOW 34
+
+// Signals
+# define CTRL_C SIGINT
+# define CTRL_SLASH SIGQUIT
 
 typedef enum s_sign
 {

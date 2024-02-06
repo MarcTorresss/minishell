@@ -12,49 +12,49 @@
 
 #include "../../minishell.h"
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
-    if (c == ' ' || c == '\t' || c == '\r' || c == '\v'
-        || c == '\f' || c == '\n')
-        return (1);
-    return (0);
+	if (c == ' ' || c == '\t' || c == '\r' || c == '\v'
+		|| c == '\f' || c == '\n')
+		return (1);
+	return (0);
 }
 
-int ft_isquote(char c)
+int	ft_isquote(char c)
 {
-    if (c == QUOTE_ONE || c == QUOTE_TOW)
-        return (1);
-    return (0);
+	if (c == QUOTE_ONE || c == QUOTE_TOW)
+		return (1);
+	return (0);
 }
 
-int ft_issign(char c)
+int	ft_issign(char c)
 {
-    if (c == PIPE_AC || c == GREAT_AC || c == LESS_AC)
-        retur (1);
-    return (0);
+	if (c == PIPE_AC || c == GREAT_AC || c == LESS_AC)
+		retur (1);
+	return (0);
 }
 
-t_lxr   *ft_last_lxr(t_lxr *lxr)
+t_lxr	*ft_last_lxr(t_lxr *lxr)
 {
-    t_lxr   *last;
+	t_lxr	*last;
 
-    if (!lxr)
-        return (0);
-    last = lxr;
-    while (last->next != NULL)
-        last = last->next;
-    return (last);
+	if (!lxr)
+		return (0);
+	last = lxr;
+	while (last->next != NULL)
+		last = last->next;
+	return (last);
 }
 
-void    ft_lxr_addback(t_lxr *lxr, t_lxr *new)
+void	ft_lxr_addback(t_lxr *lxr, t_lxr *new)
 {
-    t_lxr   *last;
+	t_lxr   *last;
 
-    if (lxr->next != NULL)
-    {
-        last = ft_last_lxr(lxr);
-        last->next = new;
-    }
-    else
-        lxr = new;
+	if (lxr->next != NULL)
+	{
+		last = ft_last_lxr(lxr);
+		last->next = new;
+	}
+	else
+		lxr = new;
 }
