@@ -12,52 +12,63 @@
 
 #include "../../minishell.h"
 
-void    ascii_chars(char *str, t_lxr *lxr)
+int init_word(char *str)
 {
     int i;
+    int isquote;
 
     i = 0;
-    if (str[i] == GREAT && str[i + 1] == GREAT)
-        lxr->word = ">>";
-    else if (str[i] == LESS && str[i + 1] == LESS)
-        lxr->word = "<<";
-}
-
-void    ascii_char(char c, t_lxr *lxr)
-{
-    int i;
-
-    i = 0;
-    if (c == GREAT)
-        lxr->word = ">";
-    else if (c == LESS)
-        lxr->word = "<";
-    else if (c == PIPE)
-        lxr->word = "|";
-    else if (c == DOLLAR)
-        lxr->word = "$";
-    else if (c == QUOTE_ONE)
-        lxr->word = QUOTE_ONE;
-    else if (c == QUOTE_TOW)
-        lxr->word = QUOTE_TOW;
-}
-
-int ft_convert(char *str, t_lxr *lxr)
-{
-    int i;
-
-    i = 0;
-    while (str[i] != '\0' && ft_isspace(str[i]) == 0)
+    isquote = 0;
+    while  (str[i] != '\0')
     {
-        //controlar caso de comillas
-    }
+        if (ft_isquote(str[i]) == 1 && isquote == 0)
+        {
+            isquote == 1;
+            i++;
+        }
+        else if (ft_isquote(str[i] == 1) && isquote == 1)
+            break ;
         i++;
-    if (i == 1)
-        ascii_char(str[i], lxr);
-    else if (i == 2)
-        ascii_chars(str, lxr);
+    }
+    return (i);
+}
+
+int init_sign(char *str, t_lxr *new)
+{
+    int i;
+
+    i = 0,
+    if (str[i] == PIPE_AC)
+        new->sign = PIPE;
+    else if (str[i] == GREAT_AC && str[i + 1] == GREAT_AC)
+        new->sign = GREAT_T;
+    else if (str[i] == LESS_AC && str[i + 1] == LESS_AC)
+        new->sign = LESS_T;
+    else if (str[i] == GREAT_AC && str[i + 1] != GREAT_AC)
+        new->sign = GREAT;
+    else if (str[i] == LESS_AC && str[i + 1] != LESS_AC)
+        new->sign = LESS;
+    if (new->sign == LESS_T || new->sign == GREAT_T)
+        i = 2;
     else
+        i = 1;
+    return (i);
+}
+
+int ft_convert(char *str, t_lxr *new)
+{
+    int i;
+
+    i = 0;
+    if (ft_issign(str[i]) == 1)
+        i = init_sign(str, new);
+    else
+    {
+        i = init_word(str);
         lxr->word = ft_substr(str, 0, i);
+        if (!lxr->word)
+            return (-1);
+    }
     return (i);
 }
 
@@ -77,6 +88,7 @@ int str_to_list(char *str, t_lxr *lxr)
 {
     t_lxr   *new;
     int     i;
+    int     check;
 
     i = 0;
     while (str[i] != '\0')
@@ -89,7 +101,11 @@ int str_to_list(char *str, t_lxr *lxr)
             if (!new)
                 return (1);
             ft_lxr_addback(lxr, new);
-            i = ft_convert(ft_substr(str, i, ft_strlen(str)), lxr);
+            check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
+            if (check != -1)  
+                i += check;
+            else
+                return (1);
         }
     }
     return (0);

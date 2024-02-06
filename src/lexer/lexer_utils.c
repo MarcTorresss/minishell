@@ -27,6 +27,13 @@ int ft_isquote(char c)
     return (0);
 }
 
+int ft_issign(char c)
+{
+    if (c == PIPE_AC || c == GREAT_AC || c == LESS_AC)
+        retur (1);
+    return (0);
+}
+
 t_lxr   *ft_last_lxr(t_lxr *lxr)
 {
     t_lxr   *last;
