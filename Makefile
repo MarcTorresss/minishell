@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/06 16:29:22 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/08 15:19:14 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,23 +23,27 @@ DIR_SRC		=	src/
 DIR_RL 		=	readline/
 DIR_LIB		=	libft/
 DIR_LXR		=	lexer/
-DIR_BLT		=	builtins/
+DIR_BLTIN	=	builtins/
+DIR_EXPAN	=	expansor/
 
 # *******************************	FILES	******************************* #
 
 FILES		=	read.c enviroment.c
 #LXR_FILES	=	string_to_list.c
-BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
+BLTIN_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
+#EXPAN_FILES	=	expansor.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
-BLT_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_BLT),$(BLT_FILES)))
+BLTIN_SRC	=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_BLTIN),$(BLTIN_FILES)))
+EXPAN_SRC	=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_EXPAN),$(EXPAN_FILES)))
 
 # *********************************	OBJECTS	****************************** #
 
 OBJ			=	$(addprefix $(DIR_OBJ),$(FILES_SRC:.c=.o))
 LXR_OBJ		=	$(addprefix $(DIR_OBJ),$(LXR_SRC:.c=.o))
-BLT_OBJ		=	$(addprefix $(DIR_OBJ),$(BLT_SRC:.c=.o))
+BLTIN_OBJ	=	$(addprefix $(DIR_OBJ),$(BLTIN_SRC:.c=.o))
+EXPAN_OBJ	=	$(addprefix $(DIR_OBJ),$(EXPAN_SRC:.c=.o))
 
 LIB_A		:=	$(DIR_RL)libreadline.a $(DIR_RL)libhistory.a $(DIR_LIB)libft.a
 LIB_ADD_DIR	:=	-L$(DIR_RL) -L$(DIR_LIB)
@@ -70,8 +74,8 @@ all : rdline library $(DIR_OBJ) $(NAME)
 library :
 	@$(MAKE) -C $(DIR_LIB) --no-print-directory
 
-$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
+$(NAME) : $(OBJ) $(LXR_OBJ) $(BLTIN_OBJ) $(EXPAN_OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLTIN_OBJ) $(EXPAN_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
 	@echo "${BLUE_BOLD}minishell ${GREEN}compiled ✅\n${RESET}"
 
 rdline:

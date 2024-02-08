@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/27 18:13:35 by pfontenl          #+#    #+#              #
-#    Updated: 2024/02/01 20:16:00 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/08 15:00:30 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bon
 ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c
 
 
-FILES_PRINTF = ft_printf.c ft_numutils.c ft_utils.c\
+FILES_PRINTF = ft_fprintf.c ft_numutils.c ft_utils.c\
 
 FILES_GETNL = get_next_line.c get_next_line_utils.c\
 

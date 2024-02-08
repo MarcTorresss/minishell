@@ -3,33 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:46:55 by martorre          #+#    #+#             */
-/*   Updated: 2023/10/11 11:17:20 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:52:51 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_putchar(char c)
+int	ft_putchar(char c, int fd)
 {
-	return (write(1, &c, 1));
+	return (write(fd, &c, 1));
 }
 
-int	ft_putstr(char *s)
+int	ft_putstr(char *s, int fd)
 {
 	int	i;
 
 	i = 0;
 	if (s == NULL)
-		return (write(1, "(null)", 6));
+		return (write(fd, "(null)", 6));
 	else
-		return (write(1, s, ft_strlen(s)));
+		return (write(fd, s, ft_strlen(s)));
 	return (0);
 }
 
-int	ft_free_itoa(int n)
+int	ft_free_itoa(int n, int fd)
 {
 	char	*str;
 	int		out;
@@ -37,12 +37,12 @@ int	ft_free_itoa(int n)
 	str = ft_itoa(n);
 	if (!str)
 		return (-1);
-	out = ft_putstr(str);
+	out = ft_putstr(str, fd);
 	free(str);
 	return (out);
 }
 
-int	ft_free_nosig(int n)
+int	ft_free_nosig(int n, int fd)
 {
 	char	*str;
 	int		out;
@@ -50,15 +50,15 @@ int	ft_free_nosig(int n)
 	str = ft_nosig(n);
 	if (!str)
 		return (-1);
-	out = ft_putstr(str);
+	out = ft_putstr(str, fd);
 	free(str);
 	return (out);
 }
 
-int	testprint(void)
+int	testprint(int fd)
 {
 	int	out;
 
-	out = ft_putstr("0x");
+	out = ft_putstr("0x", fd);
 	return (out);
 }

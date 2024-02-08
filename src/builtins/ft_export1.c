@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:48:40 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:11:23 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,34 @@ void	swap_data(t_env *nod1, t_env *nod2)
     nod2->value = temp_value;
 }
 
+void	export_print(t_env **exp)
+{
+	t_env	*tmp;
+
+	tmp = *exp;
+	while (tmp)
+	{
+		printf("declare -x %s", tmp->name);
+		if (tmp->value)
+			printf("=\"%s\"\n", tmp->value);
+		else
+			printf("\n");
+		tmp = tmp->next;
+	}
+	g_exit = 0;
+}
+
 void	 sort_export(t_env **exp)
 {
 	t_env	*node;
 	t_env	*start;
 	int		sorted_f;
-	
+
 	node = *exp;
 	start = *exp;
 	sorted_f = 1;
+	if (!node)
+		return ;
 	while (sorted_f)
 	{
 		sorted_f = 0;
@@ -48,22 +67,23 @@ void	 sort_export(t_env **exp)
 		}
 		node = start;
 	}
+	export_print(exp);
 }
 
-void	export_print(t_env **exp)
+int forbidden_char(char *input)
 {
-	t_env	*tmp;
-
-	tmp = *exp;
-	while (tmp)
+	int i = 0;
+	if (ft_isdigit(input[i]))
+		return 1;
+	while (input[i])
 	{
-		ft_printf("declare -x %s", tmp->name);
-		if (tmp->value)
-			ft_printf("=\"%s\"\n", tmp->value);
-		else
-			ft_printf("\n");
-		tmp = tmp->next;
+		if (input[i] == '=')
+			return 0;
+		if (!ft_isalnum(input[i]) && input[i] != '_')
+			return 1;
+		i++;
 	}
+	return 0;
 }
 
 void	ft_export(t_env **exp, t_env **env, char *input)
@@ -73,9 +93,11 @@ void	ft_export(t_env **exp, t_env **env, char *input)
 
 	value = NULL;
 	if (!ft_strlen(input))
-	{	
 		sort_export(exp);
-		export_print(exp);
+	else if (forbidden_char(input + 1))
+	{
+		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n", input + 1);
+		g_exit = 1;
 	}
 	else
 	{
@@ -86,6 +108,8 @@ void	ft_export(t_env **exp, t_env **env, char *input)
 		if (!update_value(name, value, env))
 			if (value)
 				new_env_var(name, value, env);
+		free(name);
+		free(value);
+		g_exit = 0;
 	}
-	g_exit = 0;
 }

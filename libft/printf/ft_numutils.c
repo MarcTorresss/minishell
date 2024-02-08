@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_numutils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 11:24:07 by martorre          #+#    #+#             */
-/*   Updated: 2023/10/11 11:17:14 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:53:52 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	cont_digits(unsigned long nb)
 	return (i);
 }
 
-int	ft_putnbr_hex_v(unsigned long nb, char *base, int out)
+int	ft_putnbr_hex_v(unsigned long nb, char *base, int out, int fd)
 {
 	if (out == -1)
 		return (-1);
@@ -35,38 +35,38 @@ int	ft_putnbr_hex_v(unsigned long nb, char *base, int out)
 		return (0);
 	if (nb >= 16)
 	{
-		out = ft_putnbr_hex_v(nb / 16, base, out);
+		out = ft_putnbr_hex_v(nb / 16, base, out, fd);
 		if (out == -1)
 			return (-1);
-		out = ft_putnbr_hex_v(nb % 16, base, out);
+		out = ft_putnbr_hex_v(nb % 16, base, out, fd);
 		if (out == -1)
 			return (-1);
 	}
 	else
 	{
-		out = write(1, &base[nb], 1);
+		out = write(fd, &base[nb], 1);
 		if (out == -1)
 			return (-1);
 	}
 	return (cont_digits(nb) + 2);
 }
 
-int	ft_putnbr_hex(unsigned int nb, char *base, int out)
+int	ft_putnbr_hex(unsigned int nb, char *base, int out, int fd)
 {
 	if (base == NULL)
 		return (0);
 	if (nb >= 16)
 	{
-		out = ft_putnbr_hex(nb / 16, base, out);
+		out = ft_putnbr_hex(nb / 16, base, out, fd);
 		if (out == -1)
 			return (-1);
-		out = ft_putnbr_hex(nb % 16, base, out);
+		out = ft_putnbr_hex(nb % 16, base, out, fd);
 		if (out == -1)
 			return (-1);
 	}
 	else
 	{
-		out = write(1, &base[nb], 1);
+		out = write(fd, &base[nb], 1);
 		if (out == -1)
 			return (-1);
 	}
@@ -108,8 +108,3 @@ char	*ft_nosig(int n)
 	buffer[i] = '\0';
 	return (buffer);
 }
-
-/*int	main(void)
-{
-	ft_putnbr_hex(4, "00");
-}*/

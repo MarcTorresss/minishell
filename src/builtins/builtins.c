@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:02:53 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:52:00 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:56:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_env(t_env **env)
 	tmp = *env;
 	while (tmp)
 	{
-		ft_printf("%s=", tmp->name);
+		printf("%s=", tmp->name);
 		if (tmp->value)
-			ft_printf("%s\n", tmp->value);
+			printf("%s\n", tmp->value);
 		tmp = tmp->next;
 	}
 }

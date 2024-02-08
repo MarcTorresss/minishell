@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:48:57 by martorre          #+#    #+#             */
-/*   Updated: 2023/11/15 19:08:18 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:57:28 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,20 +77,20 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
-// -----------------------  PRINTF  -----------------------//
+// -----------------------  FPRINTF  -----------------------//
 
-int		ft_putchar(char c);
-int		ft_putstr(char *s);
-int		ft_printf(char const *str, ...);
-int		ft_putnbr_hex(unsigned int nb, char *base, int out);
-int		ft_putnbr_hex_v(unsigned long nb, char *base, int out);
+int		ft_putchar(char c, int fd);
+int		ft_putstr(char *s, int fd);
+int		ft_fprintf(int fd, char const *str, ...);
+int		ft_putnbr_hex(unsigned int nb, char *base, int out, int fd);
+int		ft_putnbr_hex_v(unsigned long nb, char *base, int out, int fd);
 int		ft_withoutsig(const char *str);
 char	*ft_nosig(int n);
 void	num_utils(unsigned int *num, unsigned int *col_count,
 			unsigned int *col_val);
-int		testprint(void);
-int		ft_free_itoa(int n);
-int		ft_free_nosig(int n);
+int		testprint(int fd);
+int		ft_free_itoa(int n, int fd);
+int		ft_free_nosig(int n, int fd);
 
 // -----------------------  GET NEXT LINE  -----------------------//
 

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:39:03 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/08 14:58:16 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 
 	if (!value)
 	{
-		ft_printf("\n");
+		printf("\n");
 		pwd = getcwd(NULL, 0);
 	}
 	else
@@ -57,7 +57,7 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 		}
 		return ;
 	}
-	ft_printf("minishell: cd: OLDPWD not set\n");
+	ft_fprintf(2, "minishell: cd: OLDPWD not set\n");
 	g_exit = 1;
 }
 
@@ -71,7 +71,7 @@ void	cd_home(t_env **exp)
 	else
 	{
 		g_exit = 1;
-		ft_printf("minishell: cd: HOME not set\n");
+		ft_fprintf(2, "minishell: cd: HOME not set\n");
 	}
 }
 
