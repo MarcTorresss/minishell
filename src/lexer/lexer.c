@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../inc/minishell.h"
 
 int	init_word(char *str)
 {
@@ -81,6 +81,7 @@ t_lxr	*init_lxr(void)
 		return (NULL);
 	new->word = NULL;
 	new->next = NULL;
+	new->sign = NOTH
 	return (new);
 }
 

@@ -43,12 +43,20 @@ typedef enum s_sign
     NOTH = 0
 }   t_sign;
 
+typedef enum s_token_type
+{
+    REDIRECT,
+    PIPE,
+    INVALID,
+    WORD
+}   t_type;
+
 typedef struct  s_lexer
 {
     char            *word;
     t_sign          sign;
-    struct t_lxr   *next;
-}   t_lxr;
+    struct s_lexer  *next;
+}       t_lxr;
 
 typedef struct s_env
 {
@@ -56,7 +64,15 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 	struct s_env	*prev;
-}	t_env;
+}       t_env;
+
+typedef struct s_parser
+{
+    int             qtt_args;
+    char            **args;
+	t_type			type;
+    struct s_parser *next;
+}       t_prs;
 
 /*******************************	LEXER	*******************************/
 
