@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:38:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:01:43 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,15 @@ int     ft_lexer(char *str, t_lxr *lxr);
 int     ft_isquote(char c);
 int     ft_isspace(char c);
 int     ft_issign(char c);
+void    lexer_clear(t_lxr *lxr);
 t_lxr   *ft_last_lxr(t_lxr *lxr);
 t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
+
+/*******************************  PARSER  *******************************/
+
+int     ft_parser(t_prs *table, t_lxr *lxr);
+int     ft_sizelst(t_lxr *list);
+
 
 /*******************************	****	*******************************/
 

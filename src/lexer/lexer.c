@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/12 15:51:03 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:19:35 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	ft_lexer(char *str, t_lxr *lxr)
 				i += check;
 			else
 				return (1);
-			//printf("\n%zu\n", i);
 			i++;
 		}
 	}
