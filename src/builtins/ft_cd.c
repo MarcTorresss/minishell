@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/08 14:58:16 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 	tmp = find_env(exp, "OLDPWD");
 	if (tmp && tmp->value)
 	{
-		g_exit = 0;
+		//g_exit = 0;
 		if (!tmp->value[0])
 			set_oldpwd(env, exp, 0);
 		else
@@ -58,7 +58,7 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 		return ;
 	}
 	ft_fprintf(2, "minishell: cd: OLDPWD not set\n");
-	g_exit = 1;
+	//g_exit = 1;
 }
 
 void	cd_home(t_env **exp)
@@ -70,7 +70,7 @@ void	cd_home(t_env **exp)
 		try_path(tmp->value);
 	else
 	{
-		g_exit = 1;
+		//g_exit = 1;
 		ft_fprintf(2, "minishell: cd: HOME not set\n");
 	}
 }

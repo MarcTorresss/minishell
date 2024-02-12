@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/08 15:11:23 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	export_print(t_env **exp)
 			printf("\n");
 		tmp = tmp->next;
 	}
-	g_exit = 0;
+	//g_exit = 0;
 }
 
 void	 sort_export(t_env **exp)
@@ -97,7 +97,7 @@ void	ft_export(t_env **exp, t_env **env, char *input)
 	else if (forbidden_char(input + 1))
 	{
 		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n", input + 1);
-		g_exit = 1;
+		//g_exit = 1;
 	}
 	else
 	{
@@ -110,6 +110,6 @@ void	ft_export(t_env **exp, t_env **env, char *input)
 				new_env_var(name, value, env);
 		free(name);
 		free(value);
-		g_exit = 0;
+		//g_exit = 0;
 	}
 }

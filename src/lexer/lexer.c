@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/12 15:25:25 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:51:03 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ t_lxr	*init_lxr(void)
 
 void	print_lex(t_lxr *lxr)
 {
-	ft_printf("\nStack Lxr\n");
+	ft_fprintf(1, "\nStack Lxr\n");
 	while (lxr != NULL)
 	{
-		ft_printf("\nword = %s -> sig = %d\n", lxr->word, lxr->sign);
+		ft_fprintf(1, "\nword = %s -> sig = %d\n", lxr->word, lxr->sign);
 		lxr = lxr->next;
 	}
 
@@ -122,7 +122,7 @@ int	ft_lexer(char *str, t_lxr *lxr)
 				i += check;
 			else
 				return (1);
-			printf("\n%zu\n", i);
+			//printf("\n%zu\n", i);
 			i++;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/06 16:34:45 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	try_path(char *path)
 	if (chdir(path))
 	{
 		perror(msg);
-		g_exit = 1;
+		////g_exit = 1;
 		free(msg);
 	}
 	else
 	{
-		g_exit = 0;
+		////g_exit = 0;
 		free(msg);
 		return (1);
 	}

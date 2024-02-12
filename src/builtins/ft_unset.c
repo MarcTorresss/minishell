@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:36:16 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/08 15:12:56 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ void	ft_unset(t_env **env, t_env **exp, char *input)
 	remove_from_env(env, name);
 	remove_from_env(exp, name);
 	free(name);
-	g_exit = 0;
+	//g_exit = 0;
 }
