@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_to_list.c                                   :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/01 15:18:13 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:25:25 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	init_word(char *str)
 {
@@ -21,12 +21,14 @@ int	init_word(char *str)
 	isquote = 0;
 	while  (str[i] != '\0')
 	{
+		if (ft_isspace(str[i]) == 1 || ft_issign(str[i] == 1))
+			return	(i); 
 		if (ft_isquote(str[i]) == 1 && isquote == 0)
 		{
-			isquote == 1;
+			isquote = 1;
 			i++;
 		}
-		else if (ft_isquote(str[i] == 1) && isquote == 1)
+		else if ((ft_isquote(str[i] == 1) && isquote == 1))
 			break ;
 		i++;
 	}
@@ -37,7 +39,7 @@ int	init_sign(char *str, t_lxr *new)
 {
 	int	i;
 
-	i = 0,
+	i = 0;
 	if (str[i] == PIPE_AC)
 		new->sign = PIPE;
 	else if (str[i] == GREAT_AC && str[i + 1] == GREAT_AC)
@@ -57,16 +59,17 @@ int	init_sign(char *str, t_lxr *new)
 
 int	ft_convert(char *str, t_lxr *new)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (ft_issign(str[i]) == 1)
 		i = init_sign(str, new);
 	else
 	{
+		printf("\n%i\n", i);
 		i = init_word(str);
-		lxr->word = ft_substr(str, 0, i);
-		if (!lxr->word)
+		new->word = ft_substr(str, 0, i);
+		if (!new->word)
 			return (-1);
 	}
 	return (i);
@@ -81,18 +84,30 @@ t_lxr	*init_lxr(void)
 		return (NULL);
 	new->word = NULL;
 	new->next = NULL;
-	new->sign = NOTH
+	new->sign = NOTH;
+	new->prev = NULL;
 	return (new);
 }
 
-int	str_to_list(char *str, t_lxr *lxr)
+void	print_lex(t_lxr *lxr)
+{
+	ft_printf("\nStack Lxr\n");
+	while (lxr != NULL)
+	{
+		ft_printf("\nword = %s -> sig = %d\n", lxr->word, lxr->sign);
+		lxr = lxr->next;
+	}
+
+}
+
+int	ft_lexer(char *str, t_lxr *lxr)
 {
 	t_lxr	*new;
-	int		i;
+	size_t	i;
 	int		check;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (i <= ft_strlen(str))
 	{
 		if (ft_isspace(str[i]) == 1)
 			i++;
@@ -101,25 +116,16 @@ int	str_to_list(char *str, t_lxr *lxr)
 			new = init_lxr();
 			if (!new)
 				return (1);
-			ft_lxr_addback(lxr, new);
+			lxr = ft_lxr_addback(lxr, new);
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
 			if (check != -1)  
 				i += check;
 			else
 				return (1);
+			printf("\n%zu\n", i);
+			i++;
 		}
 	}
+	//print_lex(lxr);
 	return (0);
 }
-
-/*int main()
-{
-	t_lxr   *new;
-    str_to_list("ls >> aaaa < cat", new);
-	ft_printf("\nStack Lxr\n");
-	while (new != NULL)
-	{
-		ft_printf("%s\n", new->word);
-		new = new->next;
-	}
-}*/

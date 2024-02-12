@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:26:42 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/05 11:26:42 by marvin           ###   ########.fr       */
+/*   Updated: 2024/02/12 14:39:15 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int	ft_isspace(char c)
 {
@@ -30,7 +30,7 @@ int	ft_isquote(char c)
 int	ft_issign(char c)
 {
 	if (c == PIPE_AC || c == GREAT_AC || c == LESS_AC)
-		retur (1);
+		return (1);
 	return (0);
 }
 
@@ -46,15 +46,17 @@ t_lxr	*ft_last_lxr(t_lxr *lxr)
 	return (last);
 }
 
-void	ft_lxr_addback(t_lxr *lxr, t_lxr *new)
+t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new)
 {
 	t_lxr   *last;
 
-	if (lxr->next != NULL)
+	if (lxr != NULL)
 	{
 		last = ft_last_lxr(lxr);
 		last->next = new;
+		last->prev = last;
 	}
 	else
 		lxr = new;
+	return (lxr);
 }
