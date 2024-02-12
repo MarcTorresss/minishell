@@ -1,64 +1,96 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-<<<<<<<< HEAD:src/expansor/expansor.c
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/08 13:38:59 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:01:13 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	expand_env(t_cmd *cmd, t_env *env)
+int	single_quote_dealer(char *str, int i, int single_f, int double_f)
+{
+	if (!double_f)
+	{
+		if (str[i] == '\'' && single_f)
+			single_f = 0;
+		else if (str[i] == '\'' && !single_f)
+			single_f = 1;	
+	}
+	return (single_f);
+}
+
+int	double_quote_dealer(char *str, int i, int single_f, int double_f)
+{
+	if (!single_f)
+	{
+		if (str[i] == '\"' && double_f)
+			double_f = 0;
+		else if (str[i] == '\"' && !double_f)
+			double_f = 1;	
+	}
+	return (double_f);
+}
+char	*get_var_name(char *str, int i)
+{
+	int		j;
+	char	*var_name;
+
+	j = 0;
+	while (str[i + j] && (ft_isalnum(str[i + j]) || str[i + j] == '_'))
+		j++;
+	var_name = ft_substr(str, i, j);
+	return (var_name);
+}
+
+char	*expand_var(char *str, int *i, t_env **env)
+{
+	char	*var_name;
+	char	*var_value;
+	char	*tmp;
+	char	*tmp2;
+
+	var_name = get_var_name(str, *i + 1);
+	if (var_name == NULL)
+		return (NULL);
+	var_value = find_env(env, var_name)->value;
+	tmp = ft_strjoin(ft_substr(str, 0, *i), var_value);
+	tmp2 = ft_strjoin(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1, ft_strlen(str) - *i - ft_strlen(var_name) - 1));
+	*i = *i + ft_strlen(var_value);
+	free(str);
+	free(var_name);
+	free(tmp);
+	return (tmp2);
+}
+
+void	expansor(t_prs *cmd, t_env **env)
 {
 	int		i;
+	int		j;
+	int		single_f;
+	int		double_f;
 	char	*tmp;
 	char	*tmp2;
 
 	i = 0;
-	while (cmd->args[i])
+	j = 0;
+	while (cmd->args[j])
 	{
-		tmp = cmd->args[i];
-		if (cmd->args[i][0] == '$')
+		while (cmd->args[j][i])
 		{
-			tmp2 = ft_strdup(cmd->args[i] + 1);
-			free(cmd->args[i]);
-			cmd->args[i] = ft_strdup(find_env(env, tmp2)->value);
-			free(tmp2);
+			tmp = cmd->args[j];
+			single_f = single_quote_dealer(cmd->args[j], i, single_f, double_f);
+			double_f = double_quote_dealer(cmd->args[j], i, single_f, double_f);
+			if (cmd->args[j][i] == '$' && !single_f)
+				tmp2 = expand_var(tmp, &i, env);
+			cmd->args[j] = tmp2;
+			i++;
 		}
-		i++;
+		i = 0;
+		j++;
 	}
 }
-========
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:20:13 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/06 17:20:13 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../inc/minishell.h"
-
-void	signal_hand_default(int signum)
-{
-    if (signum == CTRL_C)
-    {
-        ft_printf("\n");
-        rl_replace_line("", 1);
-		rl_on_new_line(); // cursor nueva linia
-		rl_redisplay(); // redibuja la pantalla de entrada mostrando los cambios echos
-    }
-}
-
-int	init_signals(int status)
-{
-    siganl(CTRL_C, signal_hand_default);
-    return (1);
-}
->>>>>>>> lexer:src/prompt/signals.c

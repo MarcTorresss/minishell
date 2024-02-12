@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:38:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:58:19 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ void    ft_pwd(void);
 void    ft_cd(t_env **env, t_env **exp, char *input);
 int     try_path(char *path);
 void    ft_echo(t_env **exp, char *input);
+int		exit_value(int value);
 
 #endif
