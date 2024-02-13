@@ -58,7 +58,6 @@ typedef struct  s_lexer
     char            *word;
     t_sign          sign;
     struct s_lexer  *next;
-    struct s_lexer  *prev;
 }       t_lxr;
 
 typedef struct s_env
@@ -71,7 +70,6 @@ typedef struct s_env
 
 typedef struct s_parser
 {
-    int             qtt_args;
     char            **args;
 	t_type			type;
     struct s_parser *next;

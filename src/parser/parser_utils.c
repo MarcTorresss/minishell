@@ -36,3 +36,40 @@ int	ft_sizelst(t_lxr *list)
 	}
 	return (i);
 }
+
+t_prs *init_parser(void)
+{
+	t_prs *new;
+
+	new = malloc(sizeof(t_prs));
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	new->args = NULL;
+	new->type = NULL;
+}
+
+t_prs	*ft_last_prs(t_prs *table)
+{
+	t_prs	*last;
+
+	if (!table)
+		return (0);
+	last = table;
+	while (last->next != NULL)
+		last = last->next;
+	return (last);
+}
+
+void	ft_prs_addback(t_prs *table, t_prs *new)
+{
+	t_prs	*last;
+
+	if (table)
+	{
+		last = ft_last_prs(table);
+		last->next = new;
+	}
+	else
+		lst = new;
+}
