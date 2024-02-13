@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:58:19 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:08:05 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
+# include <signal.h>
 
 //  ASCII
 
@@ -85,6 +85,15 @@ int     ft_isspace(char c);
 int     ft_issign(char c);
 t_lxr   *ft_last_lxr(t_lxr *lxr);
 t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
+
+/*******************************  EXPANSOR  *******************************/
+
+void	expansor(t_prs *cmd, t_env **env, int i, int j);
+char	*expand_var(char *str, int *i, t_env **env);
+char	*get_var_name(char *str, int i);
+int		double_quote_dealer(char *str, int i, int single_f, int double_f);
+int		single_quote_dealer(char *str, int i, int single_f, int double_f);
+void	remove_char_at(char *str, int i);
 
 /*******************************	****	*******************************/
 

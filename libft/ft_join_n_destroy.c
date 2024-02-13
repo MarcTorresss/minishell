@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_join_n_destroy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 11:52:55 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/13 17:24:31 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/13 17:08:00 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/13 17:26:04 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_join_n_destroy(char *s1, char *s2, int to_free)
 {
-	int		lens1;
-	int		lens2;
 	char	*new;
-	int		i;
-	int		j;
 
-	lens1 = ft_strlen((char *)s1);
-	lens2 = ft_strlen((char *)s2);
-	new = malloc((lens1 + lens2) + 1);
-	if (!new)
+	new = ft_strjoin(s1, s2);
+	if (to_free == 1)
+		free(s1);
+	else if (to_free == 2)
+		free(s2);
+	else if (to_free == 3)
 	{
-		return (0);
-		free(new);
+		free(s1);
+		free(s2);
 	}
-	i = -1;
-	j = -1;
-	while (s1[++i] != '\0')
-		new[i] = s1[i];
-	while (s2[++j] != '\0')
-	{
-		new[i] = s2[j];
-		i++;
-	}
-	new[i] = '\0';
 	return (new);
 }

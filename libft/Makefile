@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/27 18:13:35 by pfontenl          #+#    #+#              #
-#    Updated: 2024/02/08 15:00:30 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/13 17:09:29 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ft_strrchr.c ft_memchr.c ft_itoa.c ft_substr.c ft_memcmp.c ft_putchar_fd.c ft_st
 ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strnstr.c ft_split.c ft_strjoin.c\
 ft_strtrim.c ft_calloc.c ft_strtrim.c ft_strmapi.c ft_striteri.c ft_lstnew_bonus.c\
 ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c\
-ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c
+ft_lstdelone_bonus.c ft_lstiter_bonus.c ft_lstclear_bonus.c ft_lstmap_bonus.c ft_join_n_destroy.c\
 
 
 FILES_PRINTF = ft_fprintf.c ft_numutils.c ft_utils.c\

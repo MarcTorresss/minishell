@@ -6,12 +6,12 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/12 17:00:29 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/13 18:45:47 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 INCLUDE	=	-I./inc -I./readline
 RM		=	rm -fr
 
@@ -30,10 +30,10 @@ DIR_EXPAN	=	expansor/
 
 # *******************************	FILES	******************************* #
 
-FILES		=	main.c enviroment.c
+FILES		=	main.c enviroment.c exit_value.c
 LXR_FILES	=	lexer_utils.c lexer.c
 BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
-EXPAN_FILES	=	expansor.c
+EXPAN_FILES	=	expansor.c expan_utils.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))

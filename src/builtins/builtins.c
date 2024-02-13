@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:02:53 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:50:20 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:43:25 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_isbuiltin(char *input, t_env **env, t_env **exp)
 	else if (!ft_strncmp(input, "env", 3))
 		ft_env(env);
 	else if (!ft_strncmp(input, "exit", 4))
-		exit(0);//g_exit
+		exit(exit_value(0));
 	else if (!ft_strncmp(input, "unset", 5))
 		ft_unset(env, exp, input);
 	else if (!ft_strncmp(input, "export", 6)) 

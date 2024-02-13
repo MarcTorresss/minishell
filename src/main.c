@@ -14,19 +14,19 @@
 
 int main(int argc, char **argv, char **envd)
 {
-	//t_env	*env;
-	//t_env	*exp;
+	t_env	*env;
+	t_env	*exp;
 	char	*prompt;
-	t_lxr	*lxr = NULL;
+	//t_lxr	*lxr = NULL;
 
-	(void)envd;
+	//(void)envd;
 	argc++;
 	(*argv)++;
-	//init_envd(envd, &env, &exp);
+	init_envd(envd, &env, &exp);
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		ft_lexer(prompt, lxr);
+		//ft_lexer(prompt, lxr);
 		//ft_isbuiltin(prompt, &env, &exp);
 		//printf("%s\n", prompt);
 	}

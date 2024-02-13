@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:50:34 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:44:21 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	ft_echo(t_env **exp, char *input)
 	if (*exp)
 	{
 		if (ft_strcmp(input, "$?"))
-			printf("%d\n", 0);//g_exit);
+			printf("%d\n", exit_value(0));
 		else
 			printf("%s\n", input);
 	}
-	//g_exit = 0;
+	exit_value(0);
 }

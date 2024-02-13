@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:48:57 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/08 14:57:28 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:27:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	**ft_free_mat(char **mat, int i);
-char	**ft_split(char const *s, char c, int *qttwords);
+char	**ft_split(char const *s, char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_join_n_destroy(char *s1, char *s2, int to_free);
 char	*ft_strtrim(char const *s1, char const *set);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strtrim(char const *s1, char const *set);
