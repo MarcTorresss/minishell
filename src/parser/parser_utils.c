@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:26:52 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/12 17:00:12 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:23:51 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,22 @@ int	ft_sizelst(t_lxr *list)
 	return (i);
 }
 
-t_prs *init_parser(void)
+t_cmd	*init_parser(void)
 {
-	t_prs *new;
+	t_cmd *new;
 
-	new = malloc(sizeof(t_prs));
+	new = malloc(sizeof(t_cmd));
 	if (!new)
 		return (NULL);
 	new->next = NULL;
 	new->args = NULL;
-	new->type = NULL;
+	new->type = NOTHING;
+	return (new);
 }
 
-t_prs	*ft_last_prs(t_prs *table)
+t_cmd	*ft_last_cmd(t_cmd *table)
 {
-	t_prs	*last;
+	t_cmd	*last;
 
 	if (!table)
 		return (0);
@@ -61,15 +62,30 @@ t_prs	*ft_last_prs(t_prs *table)
 	return (last);
 }
 
-void	ft_prs_addback(t_prs *table, t_prs *new)
+t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new)
 {
-	t_prs	*last;
+	t_cmd	*last;
 
-	if (table)
+	if (table != NULL)
 	{
-		last = ft_last_prs(table);
+		last = ft_last_cmd(table);
 		last->next = new;
 	}
 	else
-		lst = new;
+		table = new;
+	return (table);
+}
+
+char	**free_all(char **mat, int i)
+{
+	int	j;
+
+	j = 0;
+	while (j < i)
+	{
+		free(mat[j]);
+		j++;
+	}
+	free(mat);
+	return (NULL);
 }

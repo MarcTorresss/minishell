@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/12 16:19:35 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:10:19 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	ft_convert(char *str, t_lxr *new)
 		i = init_sign(str, new);
 	else
 	{
-		printf("\n%i\n", i);
 		i = init_word(str);
 		new->word = ft_substr(str, 0, i);
 		if (!new->word)
@@ -85,7 +84,6 @@ t_lxr	*init_lxr(void)
 	new->word = NULL;
 	new->next = NULL;
 	new->sign = NOTH;
-	new->prev = NULL;
 	return (new);
 }
 
@@ -100,7 +98,7 @@ void	print_lex(t_lxr *lxr)
 
 }
 
-int	ft_lexer(char *str, t_lxr *lxr)
+int	ft_lexer(char *str, t_lxr **lxr)
 {
 	t_lxr	*new;
 	size_t	i;
@@ -116,7 +114,7 @@ int	ft_lexer(char *str, t_lxr *lxr)
 			new = init_lxr();
 			if (!new)
 				return (1);
-			lxr = ft_lxr_addback(lxr, new);
+			*lxr = ft_lxr_addback(*lxr, new);
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
 			if (check != -1)  
 				i += check;

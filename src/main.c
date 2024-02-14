@@ -18,7 +18,7 @@ int main(int argc, char **argv, char **envd)
 	//t_env	*exp;
 	char	*prompt;
 	t_lxr	*lxr = NULL;
-	t_prs	*table = NULL;
+	t_cmd	*table = NULL;
 
 	(void)envd;
 	argc++;
@@ -27,8 +27,8 @@ int main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		ft_lexer(prompt, lxr);
-		ft_parser(table, lxr);
+		ft_lexer(prompt, &lxr);
+		ft_parser(table, &lxr);
 		//ft_isbuiltin(prompt, &env, &exp);
 		//printf("%s\n", prompt);
 	}
