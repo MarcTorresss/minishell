@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/13 18:43:04 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:05:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	ft_env_del(t_env *env)
 {
-	//free(env->name);
+	if (env->name)
+		free(env->name);
+	if (env->value)
+		free(env->value);
 	free(env);
 	env = NULL;
 }

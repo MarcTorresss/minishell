@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/13 18:44:38 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:14:56 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	export_print(t_env **exp)
 	tmp = *exp;
 	while (tmp)
 	{
-		printf("declare -x %s", tmp->name);
+		ft_fprintf(1, "declare -x %s", tmp->name);
 		if (tmp->value)
-			printf("=\"%s\"\n", tmp->value);
+			ft_fprintf(1 ,"=\"%s\"\n", tmp->value);
 		else
-			printf("\n");
+			ft_fprintf(1 ,"\n");
 		tmp = tmp->next;
 	}
 	exit_value(0);
