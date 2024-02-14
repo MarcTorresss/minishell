@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/13 18:43:55 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:59:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 	else
 		pwd = value;
 	str = ft_strjoin(" OLDPWD=", pwd);
-	ft_export(exp, env, str);
+	export_process(exp, env, str);
 	free(pwd);
 	free(str);
 	pwd = getcwd(NULL, 0);
 	str = ft_strjoin(" PWD=", pwd);
-	ft_export(exp, env, str);
+	export_process(exp, env, str);
 	free(pwd);
 	free(str);
 }
@@ -75,12 +75,19 @@ void	cd_home(t_env **exp)
 	}
 }
 
-void	ft_cd(t_env **env, t_env **exp, char *input)
+void	ft_cd(t_env **env, t_env **exp, char *cmd)
 {
-	if (input[0] == '-' && (!input[1] || input[1] == ' '))
-		cd_prev_dir(env, exp);
-	else if (input[0] == '~' && (!input[1] || input[1] == ' '))
+	if (!cmd)
 		cd_home(exp);
-	else if (input[0] != ' ')
-		try_path(input);
+	else
+	{
+		if (try_path(cmd))
+			set_oldpwd(env, exp, 0);
+	}
+	if (cmd[0] == '-' && (!cmd[1] || cmd[1] == ' '))
+		cd_prev_dir(env, exp);
+	else if (cmd[0] == '~' && (!cmd[1] || cmd[1] == ' '))
+		cd_home(exp);
+	else if (cmd[0] != ' ')
+		try_path(cmd);
 }

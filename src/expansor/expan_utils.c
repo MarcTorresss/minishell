@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:55:34 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 10:58:08 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:16:25 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,12 @@ char	*get_var_name(char *str, int i)
 	return (var_name);
 }
 
-void	remove_char_at(char *str, int i)
+char	*remove_char_at(char *str, int i)
 {
 	char	*tmp;
-	char	*tmp2;
 
 	tmp = ft_substr(str, 0, i);
-	tmp2 = ft_join_n_destroy(tmp, ft_substr(str, i + 1, ft_strlen(str) - i - 1), 2);
+	tmp = ft_join_n_destroy(tmp, ft_substr(str, i + 1, ft_strlen(str) - i - 1), 2);
 	free(str);
-	free(tmp);
-	str = tmp2;
+	return (tmp);
 }

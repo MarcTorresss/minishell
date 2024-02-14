@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 15:57:52 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/14 12:28:54 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/14 14:42:54 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_echo(t_env **exp, char *input)
+void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 {
-	if (*exp)
-	{
-		if (ft_strcmp(input, "$?"))
-			printf("%d\n", exit_value(0));
-		else
-			printf("%s\n", input);
-	}
-	exit_value(0);
+	(void)cmd;
+	(void)env;
+	(void)exp;
+	//ft_isbuiltin(cmd->cmd, env, exp);
 }

@@ -6,20 +6,20 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/06 14:06:34 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:33:13 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	new_env_var(char *name, char *value, t_env **env_var)
+void	new_env_var(char *name, char *value, t_env **env_var)
 {
 	t_env	*new;
 	t_env	*tmp;
 
 	new = malloc(sizeof(t_env));
 	if (!new)
-		return (0);
+		exit_msg("Error: malloc failed\n", 2);
 	new->name = ft_strdup(name);
 	new->value = NULL;
 	if (value)
@@ -36,17 +36,22 @@ int	new_env_var(char *name, char *value, t_env **env_var)
 		tmp->next = new;
 		new->prev = tmp;
 	}
-	return (1);
 }
 
 void	init_SHLVL(t_env **env, t_env **exp)
 {
 	t_env	*tmp;
+	int		shlvl;
 
 	tmp = find_env(exp, "SHLVL");
 	if (tmp && tmp->value && ft_isdigit(tmp->value[0]))
-		(tmp->value)++;
-	ft_export(exp, env, " SHLVL=1");
+	{
+		shlvl = ft_atoi(tmp->value);
+		shlvl++;
+		free(tmp->value);
+		tmp->value = ft_itoa(shlvl);
+	}
+	export_process(exp, env, "SHLVL=1");
 }
 
 void	init_envd(char **envd, t_env **env, t_env **exp)

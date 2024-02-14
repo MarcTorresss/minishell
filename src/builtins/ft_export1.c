@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 11:14:56 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:42:46 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	export_print(t_env **exp)
 			ft_fprintf(1 ,"\n");
 		tmp = tmp->next;
 	}
-	exit_value(0);
 }
 
 void	 sort_export(t_env **exp)
@@ -70,46 +69,41 @@ void	 sort_export(t_env **exp)
 	export_print(exp);
 }
 
-int forbidden_char(char *input)
-{
-	int i = 0;
-	if (ft_isdigit(input[i]))
-		return 1;
-	while (input[i])
-	{
-		if (input[i] == '=')
-			return 0;
-		if (!ft_isalnum(input[i]) && input[i] != '_')
-			return 1;
-		i++;
-	}
-	return 0;
-}
-
-void	ft_export(t_env **exp, t_env **env, char *input)
+void	export_process(t_env **exp, t_env **env, char *cmd)
 {
 	char	*name;
 	char	*value;
 
 	value = NULL;
-	if (!ft_strlen(input))
-		sort_export(exp);
-	else if (forbidden_char(input + 1))
+	if (forbidden_char(cmd))
 	{
-		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n", input + 1);
+		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n", cmd);
 		exit_value(1);
 	}
 	else
 	{
-		name = get_name(input);
-		value = get_value(input);
+		name = get_name(cmd);
+		value = get_value(cmd);
 		if (!update_value(name, value, exp))
 			new_env_var(name, value, exp);
-		if (!update_value(name, value, env))
-			if (value)
-				new_env_var(name, value, env);
+		if (!update_value(name, value, env) && value)
+			new_env_var(name, value, env);
 		free(name);
 		free(value);
 		exit_value(0);
 	}
+}
+
+void	ft_export(t_env **exp, t_env **env, char **cmd)
+{
+	int		i;
+
+	i = 0;
+	if (!cmd[1])
+	{
+		sort_export(exp);
+		exit_value(0);
+	}
+	while (cmd[++i])
+		export_process(exp, env, cmd[i]);
 }

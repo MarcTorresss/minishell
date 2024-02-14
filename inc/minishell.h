@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/13 16:08:05 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:32:54 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ typedef enum s_token_type
     WORD
 }   t_type;
 
+typedef struct s_expansion {
+    int i;
+    int j;
+    int single_f;
+    int double_f;
+} t_expansion;
+
 typedef struct  s_lexer
 {
     char            *word;
@@ -75,7 +82,7 @@ typedef struct s_parser
     char            **args;
 	t_type			type;
     struct s_parser *next;
-}       t_prs;
+}       t_cmd;
 
 /*******************************	LEXER	*******************************/
 
@@ -88,22 +95,25 @@ t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
 
 /*******************************  EXPANSOR  *******************************/
 
-void	expansor(t_prs *cmd, t_env **env, int i, int j);
+void	expansor(t_cmd *cmd, t_env **env);
 char	*expand_var(char *str, int *i, t_env **env);
 char	*get_var_name(char *str, int i);
 int		double_quote_dealer(char *str, int i, int single_f, int double_f);
 int		single_quote_dealer(char *str, int i, int single_f, int double_f);
-void	remove_char_at(char *str, int i);
+char	*remove_char_at(char *str, int i);
 
 /*******************************	****	*******************************/
 
+void	export_process(t_env **exp, t_env **env, char *cmd);
+void	exit_msg(char *msg, int status);
+int		forbidden_char(char *input);
 void    init_envd(char **envd, t_env **env, t_env **exp);
-int     ft_isbuiltin(char *input, t_env **env, t_env **exp);
+int     ft_isbuiltin(char **cmd, t_env **env, t_env **exp);
 void    ft_env_del(t_env *env);
-void    ft_unset(t_env **env, t_env **exp, char *input);
+void    ft_unset(t_env **env, t_env **exp, char **cmd);
 void    ft_env(t_env **env);
-void    ft_export(t_env **exp, t_env **env, char *input);
-int     new_env_var(char *name, char *value, t_env **env_var);
+void    ft_export(t_env **exp, t_env **env, char **cmd);
+void	new_env_var(char *name, char *value, t_env **env_var);
 char    *get_name(char *input);
 char    *get_value(char *input);
 int     update_value(char *name, char *value, t_env **exp);

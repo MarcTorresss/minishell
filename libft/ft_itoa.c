@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:09:57 by martorre          #+#    #+#             */
-/*   Updated: 2023/10/02 11:03:02 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:19:46 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_itoa(int n)
 	num_ut(&num, &col_count, &col_val);
 	buffer = malloc(sizeof(char) * (col_count));
 	if (!buffer)
-		return (NULL);
+		exit(1);
 	if (n < 0)
 		buffer[i++] = '-';
 	while (i < col_count - 1)

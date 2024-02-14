@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   exit_msg.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 15:57:52 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/14 17:24:27 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/14 17:24:40 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-void	ft_echo(t_env **exp, char *input)
+void	exit_msg(char *msg, int status)
 {
-	if (*exp)
-	{
-		if (ft_strcmp(input, "$?"))
-			printf("%d\n", exit_value(0));
-		else
-			printf("%s\n", input);
-	}
-	exit_value(0);
+	ft_putstr_fd(msg, 2);
+	exit(status);
 }
