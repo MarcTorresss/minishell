@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:55:50 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 	}
 	else
 		pwd = value;
-	str = ft_strjoin(" OLDPWD=", pwd);
-	ft_export(exp, env, str);
+	str = ft_strjoin("OLDPWD=", pwd);
+	export_process(exp, env, str);
 	free(pwd);
 	free(str);
 	pwd = getcwd(NULL, 0);
-	str = ft_strjoin(" PWD=", pwd);
-	ft_export(exp, env, str);
+	str = ft_strjoin("PWD=", pwd);
+	export_process(exp, env, str);
 	free(pwd);
 	free(str);
 }
@@ -44,7 +44,7 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 	tmp = find_env(exp, "OLDPWD");
 	if (tmp && tmp->value)
 	{
-		//g_exit = 0;
+		exit_value(0);
 		if (!tmp->value[0])
 			set_oldpwd(env, exp, 0);
 		else
@@ -52,13 +52,13 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 			if (try_path(tmp->value))
 			{
 				set_oldpwd(env, exp, old_pwd);
-				ft_pwd();
+				ft_pwd(NULL);
 			}
 		}
 		return ;
 	}
 	ft_fprintf(2, "minishell: cd: OLDPWD not set\n");
-	//g_exit = 1;
+	exit_value(1);
 }
 
 void	cd_home(t_env **exp)
@@ -70,17 +70,19 @@ void	cd_home(t_env **exp)
 		try_path(tmp->value);
 	else
 	{
-		//g_exit = 1;
+		exit_value(1);
 		ft_fprintf(2, "minishell: cd: HOME not set\n");
 	}
 }
 
-void	ft_cd(t_env **env, t_env **exp, char *input)
+void	ft_cd(t_env **env, t_env **exp, char **cmd)
 {
-	if (input[0] == '-' && (!input[1] || input[1] == ' '))
-		cd_prev_dir(env, exp);
-	else if (input[0] == '~' && (!input[1] || input[1] == ' '))
+	if (!cmd[1])
 		cd_home(exp);
-	else if (input[0] != ' ')
-		try_path(input);
+	else if (cmd[1][0] == '-' && !cmd[1][1])
+		cd_prev_dir(env, exp);
+	else if (cmd[1][0] == '~' && !cmd[1][1])
+		cd_home(exp);
+	else if (try_path(cmd[1]))
+		set_oldpwd(env, exp, 0);
 }

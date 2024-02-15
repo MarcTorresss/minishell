@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   exit_value.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 15:44:22 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/14 17:26:06 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/12 14:26:40 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/13 18:46:30 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minishell.h"
 
-char	*ft_strdup(const char *s1)
+int	exit_value(int value)
 {
-	int		i;
-	char	*dup;
+	static int	prev = 0;
+	int			ret;
 
-	i = 0;
-	dup = malloc(ft_strlen(s1) +1);
-	if (!dup)
-	{
-		ft_putstr_fd("Error: malloc failed\n", 2);
-		exit(1);
-	}
-	while (s1[i] != '\0')
-	{
-		dup[i] = s1[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	ret = prev;
+	prev = value;
+	return (ret);
 }

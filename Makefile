@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
 #    Updated: 2024/02/15 12:51:44 by martorre         ###   ########.fr        #
@@ -30,10 +30,10 @@ DIR_PRS		=	parser/
 
 # *******************************	FILES	******************************* #
 
-FILES		=	main.c enviroment.c
+FILES		=	main.c enviroment.c exit_value.c exit_msg.c
 LXR_FILES	=	lexer_utils.c lexer.c
 BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
-#EXPAN_FILES	=	expansor.c
+EXPAN_FILES	=	expansor.c expan_utils.c
 PRS_FILE	=	parser.c parser_utils.c utils.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
@@ -90,6 +90,8 @@ ifeq ($(shell test -e $(DIR_RL)libreadline.a && echo exists),)
 	@cd ./readline/ &> /dev/null && ./configure &> /dev/null
 	@make -C ./readline/ &> /dev/null
 	@echo "${BLUE_BOLD}readline ${GREEN}compiled ✅\n${RESET}"
+else
+	@echo "\n${BLUE_BOLD}readline ${GREEN}already compiled ✅\n${RESET}"
 endif
 
 $(DIR_OBJ)%.o: %.c Makefile $(LIB_A) $(INC)

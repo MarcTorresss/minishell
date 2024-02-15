@@ -14,16 +14,27 @@
 
 int main(int argc, char **argv, char **envd)
 {
-	//t_env	*env;
-	//t_env	*exp;
+	t_env	*env;
+	t_env	*exp;
+	t_cmd	*cmd;
 	char	*prompt;
 	t_lxr	*lxr = NULL;
 	t_cmd	*table = NULL;
 
-	(void)envd;
-	argc++;
-	(*argv)++;
-	//init_envd(envd, &env, &exp);
+	//(void)envd;
+	i = 0;
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		exit_msg("Error: malloc failed\n", 2);
+	(void)argv;
+	if (argc > 1)
+	{
+		printf("Error: minishell does not take any arguments\n");
+		return (1);
+	}
+	env = NULL;
+	exp = NULL;
+	init_envd(envd, &env, &exp);
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");

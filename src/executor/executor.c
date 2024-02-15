@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 15:44:22 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/14 17:26:06 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/14 12:28:54 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/14 14:42:54 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-char	*ft_strdup(const char *s1)
+void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 {
-	int		i;
-	char	*dup;
-
-	i = 0;
-	dup = malloc(ft_strlen(s1) +1);
-	if (!dup)
-	{
-		ft_putstr_fd("Error: malloc failed\n", 2);
-		exit(1);
-	}
-	while (s1[i] != '\0')
-	{
-		dup[i] = s1[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	(void)cmd;
+	(void)env;
+	(void)exp;
+	//ft_isbuiltin(cmd->cmd, env, exp);
 }

@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_join_n_destroy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 15:44:22 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/14 17:26:06 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/13 17:08:00 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/13 17:26:04 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_join_n_destroy(char *s1, char *s2, int to_free)
 {
-	int		i;
-	char	*dup;
+	char	*new;
 
-	i = 0;
-	dup = malloc(ft_strlen(s1) +1);
-	if (!dup)
+	new = ft_strjoin(s1, s2);
+	if (to_free == 1)
+		free(s1);
+	else if (to_free == 2)
+		free(s2);
+	else if (to_free == 3)
 	{
-		ft_putstr_fd("Error: malloc failed\n", 2);
-		exit(1);
+		free(s1);
+		free(s2);
 	}
-	while (s1[i] != '\0')
-	{
-		dup[i] = s1[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
+	return (new);
 }

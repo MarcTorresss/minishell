@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:36:16 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/12 15:49:48 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:19:50 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,30 @@ static void	 remove_from_env(t_env **env, char *name)
 	}
 }
 
-void	ft_unset(t_env **env, t_env **exp, char *input)
+void	ft_unset(t_env **env, t_env **exp, char **cmd)
 {
 	int		i;
+	int		j;
 	char	*name;
 
 	i = 0;
-	if (ft_strlen(input) <= 6)
+	if (!cmd[1])
 		return ;
-	input += 6;
-	while (input[i] != ' ' && input[i])
-		i++;
-	name = ft_substr(input, 0, i);
-	remove_from_env(env, name);
-	remove_from_env(exp, name);
-	free(name);
-	//g_exit = 0;
+	while (cmd[++i])
+	{
+		j = 0;
+		while (cmd[i][j] && (ft_isalnum(cmd[i][j]) || cmd[i][j] == '_'))
+			j++;
+		if (cmd[i][j] || !ft_isdigit(cmd[i][0]))
+		{
+			ft_fprintf(2, "minishell: unset: `%s': not a valid identifier\n", cmd[i]);
+			exit_value(1);
+			return ;
+		}
+		name = ft_strdup(cmd[i]);
+		remove_from_env(env, name);
+		remove_from_env(exp, name);
+		free(name);
+		exit_value(0);
+	}
 }
