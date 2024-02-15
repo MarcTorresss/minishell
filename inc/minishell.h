@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 15:35:40 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:11:00 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,11 @@ int		double_quote_dealer(char *str, int i, int single_f, int double_f);
 int		single_quote_dealer(char *str, int i, int single_f, int double_f);
 char	*remove_char_at(char *str, int i);
 
-/*******************************	****	*******************************/
+/**********************  ENVIRONMENT / BUILTINS  **************************/
 
 void	export_process(t_env **exp, t_env **env, char *cmd);
-void	exit_msg(char *msg, int status);
+void	msg_n_exit(char *msg, int status);
+void	error_msg(char *msg, int status);
 int		forbidden_char(char *input);
 void    init_envd(char **envd, t_env **env, t_env **exp);
 int     ft_isbuiltin(char **cmd, t_env **env, t_env **exp);
@@ -138,7 +139,7 @@ void    ft_export(t_env **exp, t_env **env, char **cmd);
 void	new_env_var(char *name, char *value, t_env **env_var);
 char    *get_name(char *input);
 char    *get_value(char *input);
-int     update_value(char *name, char *value, t_env **exp);
+int		update_value(char *name, char *value, t_env **exp, int append)
 t_env   *find_env(t_env **env, char *name);
 void	ft_pwd(char **cmd);
 void    ft_cd(t_env **env, t_env **exp, char **cmd);

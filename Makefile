@@ -6,7 +6,7 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/15 12:51:44 by martorre         ###   ########.fr        #
+#    Updated: 2024/02/15 17:34:05 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ DIR_PRS		=	parser/
 
 # *******************************	FILES	******************************* #
 
-FILES		=	main.c enviroment.c exit_value.c exit_msg.c
+FILES		=	main.c enviroment.c error.c
 LXR_FILES	=	lexer_utils.c lexer.c
 BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
 EXPAN_FILES	=	expansor.c expan_utils.c

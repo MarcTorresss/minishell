@@ -12,6 +12,28 @@
 
 #include "../inc/minishell.h"
 
+void print_table(t_cmd *table)
+{
+	t_cmd	*tmp;
+	int		i;
+	int		j; 
+	
+	i = 0;
+	j = 0;
+	tmp = table;
+	while (tmp)
+	{
+		j = 0;
+		while (tmp->args[j])
+		{
+			printf("table[%d].args[%d] = %s\n", i, j, tmp->args[j]);
+			j++;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+}
+
 int main(int argc, char **argv, char **envd)
 {
 	t_env	*env;
@@ -24,7 +46,7 @@ int main(int argc, char **argv, char **envd)
 	//(void)envd;
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-		exit_msg("Error: malloc failed\n", 2);
+		msg_n_exit("Error: malloc failed\n", 2);
 	(void)argv;
 	if (argc > 1)
 	{
@@ -39,7 +61,8 @@ int main(int argc, char **argv, char **envd)
 		prompt = readline("\033[1;32mminishell: \033[0m");
 		ft_lexer(prompt, &lxr);
 		ft_parser(&table, &lxr);
-		//ft_isbuiltin(prompt, &env, &exp);
+		expansor(table, &env);
+		print_table(table);
 		ft_clean_lxr_prs(table, lxr);
 		lxr = NULL;
 		table = NULL;

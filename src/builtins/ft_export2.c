@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 16:47:32 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 14:47:25 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:03:39 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,13 @@
 
 char	*get_name(char *input)
 {
-	int		i;
-	char	space_f;
+	int	i;
 
 	i = 0;
-	space_f = 0;
-	while (input[i] && input[i] != '=')
+	while (input[i])
 	{
-		if (input[i] == ' ' && space_f)
+		if (input[i] == '=')
 			break ;
-		if (input[i] != ' ')
-			space_f = 1;
 		i++;
 	}
 	return (ft_substr(input, 1, i - 1));
@@ -33,7 +29,6 @@ char	*get_name(char *input)
 char	*get_value(char *input)
 {
 	int	i;
-	int	j;
 	int	found_f;
 
 	i = 0;
@@ -49,15 +44,10 @@ char	*get_value(char *input)
 	}
 	if (!found_f)
 		return (NULL);
-	j = i;
-	if (!input[j])
-		return (ft_strdup(""));
-	while (input[j] && input[j] != ' ')
-		j++;
-	return (ft_substr(input, i + 1, j - i));
+	return (ft_substr(input, i + 1, ft_strlen(input)));
 }
 
-int	update_value(char *name, char *value, t_env **exp)
+int	update_value(char *name, char *value, t_env **exp, int append)
 {
 	t_env	*tmp;
 	int		exists_f;
@@ -68,9 +58,12 @@ int	update_value(char *name, char *value, t_env **exp)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			if (value)
+			if (value && append)
+				tmp->value = ft_join_n_destroy(tmp->value, value, 3);
+			else
 				tmp->value = value;
 			exists_f = 1;
+			break ;
 		}
 		tmp = tmp->next;
 	}
@@ -79,16 +72,18 @@ int	update_value(char *name, char *value, t_env **exp)
 
 int forbidden_char(char *input)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (ft_isdigit(input[i]))
-		return 1;
+		return (1);
 	while (input[i])
 	{
 		if (input[i] == '=')
-			return 0;
+			return (0);
 		if (!ft_isalnum(input[i]) && input[i] != '_')
-			return 1;
+			return (1);
 		i++;
 	}
-	return 0;
+	return (0);
 }
