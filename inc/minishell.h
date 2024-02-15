@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 18:32:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:56:37 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,17 @@ void    init_envd(char **envd, t_env **env, t_env **exp);
 int     ft_isbuiltin(char **cmd, t_env **env, t_env **exp);
 void    ft_env_del(t_env *env);
 void    ft_unset(t_env **env, t_env **exp, char **cmd);
-void    ft_env(t_env **env);
+void    ft_env(t_env **env, char **cmd);
 void    ft_export(t_env **exp, t_env **env, char **cmd);
 void	new_env_var(char *name, char *value, t_env **env_var);
 char    *get_name(char *input);
 char    *get_value(char *input);
 int     update_value(char *name, char *value, t_env **exp);
 t_env   *find_env(t_env **env, char *name);
-void    ft_pwd(void);
-void    ft_cd(t_env **env, t_env **exp, char *input);
+void	ft_pwd(char **cmd);
+void    ft_cd(t_env **env, t_env **exp, char **cmd);
 int     try_path(char *path);
-void    ft_echo(t_env **exp, char *input);
+void	ft_echo(char **args);
 int		exit_value(int value);
 
 #endif

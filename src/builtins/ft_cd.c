@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 15:59:33 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:55:50 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 	}
 	else
 		pwd = value;
-	str = ft_strjoin(" OLDPWD=", pwd);
+	str = ft_strjoin("OLDPWD=", pwd);
 	export_process(exp, env, str);
 	free(pwd);
 	free(str);
 	pwd = getcwd(NULL, 0);
-	str = ft_strjoin(" PWD=", pwd);
+	str = ft_strjoin("PWD=", pwd);
 	export_process(exp, env, str);
 	free(pwd);
 	free(str);
@@ -52,7 +52,7 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 			if (try_path(tmp->value))
 			{
 				set_oldpwd(env, exp, old_pwd);
-				ft_pwd();
+				ft_pwd(NULL);
 			}
 		}
 		return ;
@@ -75,19 +75,14 @@ void	cd_home(t_env **exp)
 	}
 }
 
-void	ft_cd(t_env **env, t_env **exp, char *cmd)
+void	ft_cd(t_env **env, t_env **exp, char **cmd)
 {
-	if (!cmd)
+	if (!cmd[1])
 		cd_home(exp);
-	else
-	{
-		if (try_path(cmd))
-			set_oldpwd(env, exp, 0);
-	}
-	if (cmd[0] == '-' && (!cmd[1] || cmd[1] == ' '))
+	else if (cmd[1][0] == '-' && !cmd[1][1])
 		cd_prev_dir(env, exp);
-	else if (cmd[0] == '~' && (!cmd[1] || cmd[1] == ' '))
+	else if (cmd[1][0] == '~' && !cmd[1][1])
 		cd_home(exp);
-	else if (cmd[0] != ' ')
-		try_path(cmd);
+	else if (try_path(cmd[1]))
+		set_oldpwd(env, exp, 0);
 }
