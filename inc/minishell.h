@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 12:56:37 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:35:53 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@
 # define CTRL_C SIGINT
 # define CTRL_SLASH SIGQUIT
 
+// ERRORS
+
+#define ERROR_TOKEN_P "syntax error near unexpected token '|'\n"
+#define ERROR_TOKEN_L "syntax error near unexpected token '<'\n"
+#define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
+#define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
+#define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
+#define ERROR_TOKEN_NL "syntax error near unexpected token\n"
+
 typedef enum s_sign
 {
     NOTH = 0,
@@ -48,9 +57,12 @@ typedef enum s_sign
 
 typedef enum s_token_type
 {
-    REDIRECT,
+    HEREDOC,
+    INPUT_REDIR,
+    OUTPUT_REDIR,
+    APPEND_TO_END,
     INVALID,
-    WORD
+    NOTHING
 }   t_type;
 
 typedef struct s_expansion {
@@ -65,7 +77,6 @@ typedef struct  s_lexer
     char            *word;
     t_sign          sign;
     struct s_lexer  *next;
-    struct s_lexer  *prev;
 }       t_lxr;
 
 typedef struct s_env
@@ -76,22 +87,33 @@ typedef struct s_env
 	struct s_env	*prev;
 }       t_env;
 
-typedef struct s_parser
+typedef struct s_comand
 {
-    int             qtt_args;
     char            **args;
 	t_type			type;
-    struct s_parser *next;
+    struct s_comand *next;
 }       t_cmd;
 
 /*******************************	LEXER	*******************************/
 
-int     ft_lexer(char *str, t_lxr *lxr);
+int     ft_lexer(char *str, t_lxr **lxr);
 int     ft_isquote(char c);
 int     ft_isspace(char c);
 int     ft_issign(char c);
+void    lexer_clear(t_lxr *lxr);
 t_lxr   *ft_last_lxr(t_lxr *lxr);
 t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
+void	print_lex(t_lxr *lxr);
+
+/*******************************  PARSER  *******************************/
+
+int     ft_parser(t_cmd *table, t_lxr **lxr);
+int     ft_sizelst(t_lxr *list);
+t_cmd   *init_parser(void);
+t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new);
+char    **free_all(char **mat, int i);
+void    ft_clean_lxr_prs(t_cmd *table, t_lxr *lxr);
+void    parser_clear(t_cmd *table);
 
 /*******************************  EXPANSOR  *******************************/
 

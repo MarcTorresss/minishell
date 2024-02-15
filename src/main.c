@@ -18,8 +18,8 @@ int main(int argc, char **argv, char **envd)
 	t_env	*exp;
 	t_cmd	*cmd;
 	char	*prompt;
-	int		i;
-	//t_lxr	*lxr = NULL;
+	t_lxr	*lxr = NULL;
+	t_cmd	*table = NULL;
 
 	//(void)envd;
 	i = 0;
@@ -38,19 +38,12 @@ int main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		cmd->args = ft_split(prompt, ' ');
-		expansor(cmd, &env);
-		while (cmd->args[i])
-		{
-			printf("%s\n", cmd->args[i]);
-			i++;
-		}
-		i = 0;
-		free(prompt);
-		free(cmd->args);
-
-		//ft_lexer(prompt, lxr);
+		ft_lexer(prompt, &lxr);
+		ft_parser(table, &lxr);
 		//ft_isbuiltin(prompt, &env, &exp);
+		ft_clean_lxr_prs(table, lxr);
+		lxr = NULL;
+		table = NULL;
 		//printf("%s\n", prompt);
 	}
     return 0;

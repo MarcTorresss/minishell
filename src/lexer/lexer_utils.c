@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:26:42 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/12 14:39:15 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:00:33 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new)
 	{
 		last = ft_last_lxr(lxr);
 		last->next = new;
-		last->prev = last;
 	}
 	else
 		lxr = new;
