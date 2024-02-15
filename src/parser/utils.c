@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:38:53 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/15 13:35:25 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:41:18 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void    parser_clear(t_cmd *table)
     {
         temp = table;
         table = table->next;
-        free(tmp);
+        free(temp);
     }
 }
 

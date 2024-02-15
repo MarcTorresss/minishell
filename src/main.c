@@ -22,7 +22,6 @@ int main(int argc, char **argv, char **envd)
 	t_cmd	*table = NULL;
 
 	//(void)envd;
-	i = 0;
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		exit_msg("Error: malloc failed\n", 2);
@@ -39,7 +38,7 @@ int main(int argc, char **argv, char **envd)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
 		ft_lexer(prompt, &lxr);
-		ft_parser(table, &lxr);
+		ft_parser(&table, &lxr);
 		//ft_isbuiltin(prompt, &env, &exp);
 		ft_clean_lxr_prs(table, lxr);
 		lxr = NULL;

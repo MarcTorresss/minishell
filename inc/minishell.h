@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 13:35:53 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:35:40 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	print_lex(t_lxr *lxr);
 
 /*******************************  PARSER  *******************************/
 
-int     ft_parser(t_cmd *table, t_lxr **lxr);
+int     ft_parser(t_cmd **table, t_lxr **lxr);
 int     ft_sizelst(t_lxr *list);
 t_cmd   *init_parser(void);
 t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new);
