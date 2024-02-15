@@ -30,6 +30,9 @@ int main(int argc, char **argv, char **envd)
 		ft_lexer(prompt, &lxr);
 		ft_parser(table, &lxr);
 		//ft_isbuiltin(prompt, &env, &exp);
+		ft_clean_lxr_prs(table, lxr);
+		lxr = NULL;
+		table = NULL;
 		//printf("%s\n", prompt);
 	}
     return 0;

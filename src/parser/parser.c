@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/14 19:44:29 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:50:10 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,32 +67,30 @@ void    ft_isredir(t_cmd *new, int sign)
         new->type = INVALID;
 }
 
-int	add_command(t_lxr *lxr, t_cmd *new)
+int	add_command(t_lxr **lxr, t_cmd *new)
 {
 	int	i;
 
 	i = 0;
-	while (lxr != NULL &&lxr->sign != PIPE)
+	while ((*lxr) != NULL && (*lxr)->sign != PIPE)
 	{
-		if (lxr->sign != NOTH)
-			ft_isredir(new, lxr->sign);
+		if ((*lxr)->sign != NOTH)
+			ft_isredir(new, (*lxr)->sign);
 		else
 		{
-			new->args[i] = ft_strdup(lxr->word);
+			new->args[i] = ft_strdup((*lxr)->word);
 			if (!new->args[i])
 				return (free_all(new->args, i), -1);	
-			printf("\nword = %s\n", new->args[i]);
+			//printf("\nword = %s\n", new->args[i]);
 		}
-		lxr = lxr->next;
+		(*lxr) = (*lxr)->next;
 		i++;
 	}
     return (0);
 }
 
-int	create_command(t_lxr *lxr, t_cmd **new, int qtt_args)
+int	create_command(t_lxr **lxr, t_cmd **new, int qtt_args)
 {
-	//printf("\n%d\n", qtt_args);
-	//printf("word = %s\n", lxr->word);
 	(*new)->args = malloc(sizeof(char *) * (qtt_args + 1));
 	if (!(*new)->args)
 		return (-1);
@@ -100,21 +98,6 @@ int	create_command(t_lxr *lxr, t_cmd **new, int qtt_args)
 	if (add_command(lxr, *new) == -1)
 		return (-1);
     return (0);
-}
-
-void    print_parse(t_cmd *new)
-{
-    int 	i;
-	t_cmd	*tmp;
-    
-    i = 0;
-	tmp = new;
-	printf("\nCom %i -- %s\n",i, new->args[0]);
-    /*while (new->args[i] != NULL)
-    {
-        printf("\nCom %i -- %s\n",i, new->args[i]);
-        i++;
-    }*/
 }
 
 int ft_parser(t_cmd *table, t_lxr **lxr)
@@ -125,7 +108,6 @@ int ft_parser(t_cmd *table, t_lxr **lxr)
 
     tmp = *lxr;
     qtt_args = count_and_check_comands(*lxr);
-	printf("\n%d\n", qtt_args);
     if (qtt_args == -1)
         return (lexer_clear(*lxr), -1);
     while (tmp != NULL)
@@ -134,11 +116,10 @@ int ft_parser(t_cmd *table, t_lxr **lxr)
         if (!new)
             return (-1);
 		table = ft_cmd_addback(table, new);
-		if (create_command(tmp, &new, qtt_args) == -1)
-            return (-1);
-        tmp = tmp->next;
+		if (create_command(&tmp, &new, qtt_args) == -1)
+			return (-1);
+		if (tmp != NULL)
+        	tmp = tmp->next;
     }
-	//print_parse(new);
-	//print_lex(*lxr);
     return (0);
 }

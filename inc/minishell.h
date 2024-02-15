@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 15:37:51 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:35:53 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int     ft_sizelst(t_lxr *list);
 t_cmd   *init_parser(void);
 t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new);
 char    **free_all(char **mat, int i);
-
+void    ft_clean_lxr_prs(t_cmd *table, t_lxr *lxr);
+void    parser_clear(t_cmd *table);
 
 /*******************************	****	*******************************/
 
