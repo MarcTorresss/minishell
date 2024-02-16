@@ -18,7 +18,7 @@ void print_table(t_cmd *table)
 	int		i;
 	int		j; 
 	
-	i = 0;
+	
 	j = 0;
 	tmp = table;
 	while (tmp)

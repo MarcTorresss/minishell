@@ -6,21 +6,26 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 18:11:00 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:21:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "../libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "../libft/libft.h"
 # include <signal.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <errno.h>
+# include <fcntl.h>
 
 //  ASCII
 
@@ -44,6 +49,8 @@
 #define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
 #define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
 #define ERROR_TOKEN_NL "syntax error near unexpected token\n"
+
+// STRUCTURES
 
 typedef enum s_sign
 {
@@ -93,6 +100,20 @@ typedef struct s_comand
 	t_type			type;
     struct s_comand *next;
 }       t_cmd;
+
+typedef struct s_exec
+{
+	char	*path;
+	char	**cmd_paths;
+	char	**cmd_args;
+	int		**pipe;
+	char	*cmd;
+	int		indx;
+	int		infile;
+	int		outfile;
+	int		pid1;
+	int		pid2;
+}	t_exec;
 
 /*******************************	LEXER	*******************************/
 
@@ -146,5 +167,13 @@ void    ft_cd(t_env **env, t_env **exp, char **cmd);
 int     try_path(char *path);
 void	ft_echo(char **args);
 int		exit_value(int value);
+
+/*******************************  EXECUTOR  *******************************/
+
+void	input_check(char **argv, t_exec *exec, int child);
+void	first_child(char **argv, t_exec exec, char **envp);
+void	second_child(char **argv, t_exec exec, char **envp);
+void	error_pipex(int err_type, char *name);
+void	put_exitcode(int err_type);
 
 #endif
