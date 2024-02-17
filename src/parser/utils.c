@@ -29,21 +29,20 @@ void    parser_clear(t_cmd *table)
 {
     int     i;
     t_cmd   *tmp;
-    t_cmd   *temp;
 
-    i = 0;
-    while (table != NULL && table->args[i] != NULL)
-    {
-        tmp = table;
-        free(tmp->args[i]);
-        i++;
-    }
     while (table != NULL)
     {
-        temp = table;
+        i = 0;
+        tmp = table;
+        while (table->args[i] != NULL)
+        {
+            free(tmp->args[i]);
+            i++;
+        }
         table = table->next;
-        free(temp);
+        free(tmp);
     }
+    table = NULL;
 }
 
 void    ft_clean_lxr_prs(t_cmd *table, t_lxr *lxr)

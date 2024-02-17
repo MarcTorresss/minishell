@@ -50,18 +50,17 @@ t_cmd	*ft_last_cmd(t_cmd *table)
 	return (last);
 }
 
-t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new)
+void	ft_cmd_addback(t_cmd **table, t_cmd *new)
 {
 	t_cmd	*last;
 
-	if (table != NULL)
+	if (*table != NULL)
 	{
-		last = ft_last_cmd(table);
+		last = ft_last_cmd(*table);
 		last->next = new;
 	}
 	else
-		table = new;
-	return (table);
+		*table = new;
 }
 
 char	**free_all(char **mat, int i)

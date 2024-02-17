@@ -53,21 +53,30 @@ int count_and_check_comands(t_lxr *lxr)
 	return (qtt_cmd);
 }
 
-void    ft_isredir(t_cmd *new, int sign)
+int	ft_isredir(t_lxr **lxr, t_rd **redir)
 {
-    if (sign == GREAT)
+	t_rd	*new;
+
+	new = init_redir();
+	if (!new)
+		return (-1);
+	ft_addback_redir(new, redir);
+    if (lxr->sign == GREAT)
         new->type = OUTPUT_REDIR;
-	else if (sign == GREAT_T)
+	else if (lxr->sign == GREAT_T)
 		new->type = APPEND_TO_END;
-	else if (sign == LESS)
+	else if (lxr->sign == LESS)
 		new->type = INPUT_REDIR;
-	else if (sign == LESS_T)
+	else if (lxr->sign == LESS_T)
 		new->type = HEREDOC;
-    else
-        new->type = INVALID;
+	new->file = ft_strdup(lxr->next->word);
+	if (!new->file)
+		return (-1);
+	(*lxr) = (*lxr)->next;
+	return (0);
 }
 
-int	add_command(t_lxr **lxr, t_cmd *new)
+int	add_command(t_lxr **lxr, t_cmd *new, t_rd **redir)
 {
 	int	i;
 
@@ -75,7 +84,8 @@ int	add_command(t_lxr **lxr, t_cmd *new)
 	while ((*lxr) != NULL && (*lxr)->sign != PIPE)
 	{
 		if ((*lxr)->sign != NOTH)
-			ft_isredir(new, (*lxr)->sign);
+			if (ft_isredir(*lxr, redir) == -1)
+				return (-1);
 		else
 		{
 			new->args[i] = ft_strdup((*lxr)->word);
@@ -86,16 +96,20 @@ int	add_command(t_lxr **lxr, t_cmd *new)
 		(*lxr) = (*lxr)->next;
 		i++;
 	}
+	new->redir = *redir;
     return (0);
 }
 
 int	create_command(t_lxr **lxr, t_cmd **new, int qtt_args)
 {
+	t_rd	*redir;
+
+	redir = NULL;
 	(*new)->args = malloc(sizeof(char *) * (qtt_args + 1));
 	if (!(*new)->args)
 		return (-1);
 	(*new)->args[qtt_args] = NULL;
-	if (add_command(lxr, *new) == -1)
+	if (add_command(lxr, *new, &redir) == -1)
 		return (-1);
     return (0);
 }
@@ -115,7 +129,7 @@ int ft_parser(t_cmd **table, t_lxr **lxr)
         new = init_parser();
         if (!new)
             return (-1);
-		ft_cmd_addback(*table, new);
+		ft_cmd_addback(table, new);
 		if (create_command(&tmp, &new, qtt_args) == -1)
 			return (-1);
 		if (tmp != NULL)

@@ -87,10 +87,17 @@ typedef struct s_env
 	struct s_env	*prev;
 }       t_env;
 
+typedef struct s_redirect
+{
+    t_type			    type;
+    char                *file;
+    struct  s_redirect  *next;
+}       t_rd;
+
 typedef struct s_comand
 {
     char            **args;
-	t_type			type;
+    t_rd            *redir;
     struct s_comand *next;
 }       t_cmd;
 
@@ -110,7 +117,7 @@ void	print_lex(t_lxr *lxr);
 int     ft_parser(t_cmd **table, t_lxr **lxr);
 int     ft_sizelst(t_lxr *list);
 t_cmd   *init_parser(void);
-t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new);
+void	ft_cmd_addback(t_cmd **table, t_cmd *new);
 char    **free_all(char **mat, int i);
 void    ft_clean_lxr_prs(t_cmd *table, t_lxr *lxr);
 void    parser_clear(t_cmd *table);
