@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/16 16:21:33 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:14:39 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,16 @@
 #define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
 #define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
 #define ERROR_TOKEN_NL "syntax error near unexpected token\n"
+#define ERR_PIPE "pipe issue"
+#define ERR_FORK "fork issue"
+#define ERR_EXEC "exec issue"
+#define ERR_FILE "file issue"
+#define ERR_ARG "too many arguments"
+#define ERR_MALLOC "malloc issue"
+#define ERR_OPEN "open issue"
+#define ERR_CMD_NOT_FOUND "command not found"
+#define ERR_NO_FILE "No such file or directory"
+#define ERR_NO_PERM "Permission denied"
 
 // STRUCTURES
 
@@ -94,26 +104,32 @@ typedef struct s_env
 	struct s_env	*prev;
 }       t_env;
 
+typedef struct s_in_out
+{
+	t_type			type;
+	char			*file;
+	struct s_in_out	*next;
+}		t_io;
+
 typedef struct s_comand
 {
     char            **args;
-	t_type			type;
+	t_io			*redirect;
     struct s_comand *next;
 }       t_cmd;
 
-typedef struct s_exec
+typedef struct s_pipe
 {
-	char	*path;
+	int		pipe_ends[2];
+	pid_t	*pid;
+	int		original_stdout;
+	int		original_stdin;
+	int 	n_cmds;
+	int		infile_fd;
+	int		outfile_fd;
 	char	**cmd_paths;
-	char	**cmd_args;
-	int		**pipe;
-	char	*cmd;
-	int		indx;
-	int		infile;
-	int		outfile;
-	int		pid1;
-	int		pid2;
-}	t_exec;
+	char 	*cmd;
+}	t_pipe;
 
 /*******************************	LEXER	*******************************/
 
@@ -147,12 +163,12 @@ char	*remove_char_at(char *str, int i);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 
+int		is_builtin(char **cmd, t_env **env, t_env **exp);
 void	export_process(t_env **exp, t_env **env, char *cmd);
-void	msg_n_exit(char *msg, int status);
+void	msg_exit(char *msg, char *arg, int status);
 void	error_msg(char *msg, int status);
 int		forbidden_char(char *input);
 void    init_envd(char **envd, t_env **env, t_env **exp);
-int     ft_isbuiltin(char **cmd, t_env **env, t_env **exp);
 void    ft_env_del(t_env *env);
 void    ft_unset(t_env **env, t_env **exp, char **cmd);
 void    ft_env(t_env **env, char **cmd);
@@ -160,7 +176,7 @@ void    ft_export(t_env **exp, t_env **env, char **cmd);
 void	new_env_var(char *name, char *value, t_env **env_var);
 char    *get_name(char *input);
 char    *get_value(char *input);
-int		update_value(char *name, char *value, t_env **exp, int append)
+int		update_value(char *name, char *value, t_env **exp, int append);
 t_env   *find_env(t_env **env, char *name);
 void	ft_pwd(char **cmd);
 void    ft_cd(t_env **env, t_env **exp, char **cmd);
@@ -170,10 +186,15 @@ int		exit_value(int value);
 
 /*******************************  EXECUTOR  *******************************/
 
-void	input_check(char **argv, t_exec *exec, int child);
-void	first_child(char **argv, t_exec exec, char **envp);
-void	second_child(char **argv, t_exec exec, char **envp);
 void	error_pipex(int err_type, char *name);
 void	put_exitcode(int err_type);
+void	get_files_redir(t_io *redir, t_pipe *data);
+void	make_redirections(t_pipe data, t_cmd *cmd, t_env *env);
+char	**env_to_array(t_env *env);
+void	check_file(char *file, int mode);
+void	save_original_stds(t_pipe *data);
+void	restore_original_stds(t_pipe *data);
+void	close_pipes(int fd1, int fd2);
+void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp);
 
 #endif

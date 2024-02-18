@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 12:02:53 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 12:57:05 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:10:35 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_pwd(char **cmd)
 	free(tmp);
 }
 
-int	ft_isbuiltin(char **cmd, t_env **env, t_env **exp)
+int	is_builtin(char **cmd, t_env **env, t_env **exp)
 {
 	if (!ft_strcmp(cmd[0], "pwd"))
 		ft_pwd(cmd);

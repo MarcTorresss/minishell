@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 17:24:45 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 17:28:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:06:06 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ void	error_msg(char *msg, int status)
 	exit_value(status);
 }
 
-void	msg_n_exit(char *msg, int status)
+void	msg_exit(char *msg, char *arg, int status)
 {
-	ft_putstr_fd(msg, 2);
+	if (arg)
+		ft_fprintf(2, "error: '%s': %s\n", msg, arg);
+	else
+		ft_fprintf(2, "error: %s\n", msg);
 	exit(status);
 }
 
