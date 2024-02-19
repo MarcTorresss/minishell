@@ -37,10 +37,11 @@ int main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		ft_lexer(prompt, &lxr);
-		ft_parser(&table, &lxr);
+		if (ft_lexer(prompt, &lxr) == 0)
+			if (ft_parser(&table, &lxr) != -1)
+				printf("comand = %s\n", table->args[0]);
 		//ft_isbuiltin(prompt, &env, &exp);
-		ft_clean_lxr_prs(table, lxr);
+		ft_clean_lxr_prs(&table, &lxr);
 		lxr = NULL;
 		table = NULL;
 		//printf("%s\n", prompt);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/15 12:51:44 by martorre         ###   ########.fr        #
+#    Updated: 2024/02/19 11:24:23 by martorre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ FILES		=	main.c enviroment.c exit_value.c exit_msg.c
 LXR_FILES	=	lexer_utils.c lexer.c
 BLT_FILES	=	builtins.c builtins_utils.c ft_unset.c ft_export1.c ft_export2.c ft_cd.c ft_echo.c
 EXPAN_FILES	=	expansor.c expan_utils.c
-PRS_FILE	=	parser.c parser_utils.c utils.c
+PRS_FILE	=	parser.c parser_utils.c parser_utils2.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
