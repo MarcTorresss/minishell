@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:38:53 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/19 14:54:37 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:42:09 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,11 @@ void    lexer_clear(t_lxr **lxr)
     }
 }
 
-void    parser_clear(t_cmd **table)
-{
-    int     i;
-    t_cmd   *tmp;
-
-    while (*table != NULL)
-    {
-        i = 0;
-        tmp = *table;
-        while ((*table)->args[i] != NULL)
-        {
-            free(tmp->args[i]);
-            i++;
-        }
-        *table = (*table)->next;
-        free(tmp);
-    }
-    free((*table)->args);
-    table = NULL;
-}
-
 void    ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr)
 {
     lexer_clear(lxr);
     (void) table;
     //parser_clear(table);
-}
-
-char	**free_all(char **mat, int i)
-{
-	int	j;
-
-	j = 0;
-	while (j < i)
-	{
-		free(mat[j]);
-		j++;
-	}
-	free(mat);
-	return (NULL);
 }
 
 int	ft_sizelst(t_lxr *list)
@@ -90,4 +55,29 @@ t_rd    *ft_last_rd(t_rd *redir)
     while (last->next != NULL)
         last = last->next;
     return (last);
+}
+
+int check_error(t_lxr *lxr)
+{
+	if (lxr->sign == PIPE)
+		return (ft_fprintf(2, ERROR_TOKEN_P), -1);
+	if (lxr->sign != NOTH && lxr->next == NULL)
+		return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
+	else
+	if (lxr->next != NULL)
+	{
+		if (lxr->sign != NOTH && lxr->next->sign == GREAT)
+			return (ft_fprintf(2, ERROR_TOKEN_G), -1);
+		else if (lxr->sign != NOTH && lxr->next->sign == LESS)
+			return (ft_fprintf(2, ERROR_TOKEN_L), -1);
+		else if (lxr->sign != NOTH && lxr->next->sign == GREAT_T)
+			return (ft_fprintf(2, ERROR_TOKEN_GG), -1);
+		else if (lxr->sign != NOTH && lxr->next->sign == LESS_T)
+			return (ft_fprintf(2, ERROR_TOKEN_LL), -1);
+		else if (lxr->next != NULL && lxr->sign != NOTH && lxr->next->sign == PIPE)
+			return (ft_fprintf(2, ERROR_TOKEN_P), -1);
+		else if (ft_last_lxr(lxr)->sign != NOTH)
+			return (ft_fprintf(2, ERROR_TOKEN_NL), -1);			
+	}
+	return (-1);   
 }

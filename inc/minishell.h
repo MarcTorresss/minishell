@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 15:47:44 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:42:24 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef enum s_sign
 
 typedef enum s_token_type
 {
-	HEREDOC,
+	HEREDOC = 0,
 	INPUT_REDIR,
 	OUTPUT_REDIR,
 	APPEND_TO_END,
@@ -126,6 +126,8 @@ t_rd					*init_redir(void);
 t_rd					*ft_last_rd(t_rd *redir);
 void					ft_addback_redir(t_rd **redir, t_rd *new);
 int						ft_issigntoken(char c);
+int						ft_heredoc(t_cmd *cmd);
+int						check_error(t_lxr *lxr);
 
 /*******************************  EXPANSOR  *******************************/
 

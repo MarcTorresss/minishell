@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:26:52 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/19 11:24:00 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/20 13:30:00 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_cmd	*init_parser(void)
 		return (NULL);
 	new->next = NULL;
 	new->args = NULL;
+	new->redir = NULL;
 	return (new);
 }
 
