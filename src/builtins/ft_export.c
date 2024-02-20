@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export1.c                                       :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 15:42:46 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:21:46 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	swap_data(t_env *nod1, t_env *nod2)
-{
-    char *temp_name;
-    char *temp_value;
-
-	temp_name = nod1->name;
-	temp_value = nod1->value;
-    nod1->name = nod2->name;
-    nod1->value = nod2->value;
-    nod2->name = temp_name;
-    nod2->value = temp_value;
-}
 
 void	export_print(t_env **exp)
 {
@@ -69,29 +56,49 @@ void	 sort_export(t_env **exp)
 	export_print(exp);
 }
 
+int	update_value(char *name, char *value, t_env **exp, int append)
+{
+	t_env	*tmp;
+	int		exists_f;
+
+	tmp = *exp;
+	exists_f = 0;
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->name, name))
+		{
+			if (value && append)
+				tmp->value = ft_join_n_destroy(tmp->value, value, 3);
+			else
+				tmp->value = value;
+			exists_f = 1;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	return (exists_f);
+}
+
 void	export_process(t_env **exp, t_env **env, char *cmd)
 {
 	char	*name;
 	char	*value;
+	int 	append;
 
 	value = NULL;
+	append = 0;
 	if (forbidden_char(cmd))
-	{
-		ft_fprintf(2, "minishell: export: `%s': not a valid identifier\n", cmd);
-		exit_value(1);
-	}
-	else
-	{
-		name = get_name(cmd);
-		value = get_value(cmd);
-		if (!update_value(name, value, exp))
-			new_env_var(name, value, exp);
-		if (!update_value(name, value, env) && value)
-			new_env_var(name, value, env);
-		free(name);
-		free(value);
-		exit_value(0);
-	}
+		msg_exit("export", cmd, "Not a valid identifier", 1);
+	name = get_name(cmd);
+	value = get_value(cmd);
+	if (ft_strncmp(cmd + ft_strlen(name), "+=", 2) == 0)
+		append = 1;
+	if (!update_value(name, value, exp, append))
+		new_env_var(name, value, exp);
+	if (!update_value(name, value, env, append) && value)
+		new_env_var(name, value, env);
+	free(name);
+	free(value);
 }
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)
@@ -100,10 +107,9 @@ void	ft_export(t_env **exp, t_env **env, char **cmd)
 
 	i = 0;
 	if (!cmd[1])
-	{
 		sort_export(exp);
-		exit_value(0);
-	}
-	while (cmd[++i])
-		export_process(exp, env, cmd[i]);
+	else
+		while (cmd[++i])
+			export_process(exp, env, cmd[i]);
+	exit(0);
 }

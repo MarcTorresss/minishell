@@ -6,16 +6,16 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 19:58:09 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:04:23 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void question_mark(char **var_name, char **var_value)
+void	question_mark(char **var_name, char **var_value)
 {
 	*var_name = ft_strdup("?");
-	*var_value = ft_itoa(exit_value(0));
+	*var_value = ft_itoa(exit_status(0));
 }
 
 char	*expand_var(char *str, int *i, t_env **env)
@@ -47,7 +47,7 @@ char	*expand_var(char *str, int *i, t_env **env)
 	return (tmp);
 }
 
-int handle_quotes(t_cmd *cmd, t_expansion *exp)
+int	handle_quotes(t_cmd *cmd, t_expansion *exp)
 {
     exp->single_f = single_quote_dealer(cmd->args[exp->j], exp->i, exp->single_f, exp->double_f);
     exp->double_f = double_quote_dealer(cmd->args[exp->j], exp->i, exp->single_f, exp->double_f);
@@ -60,7 +60,7 @@ int handle_quotes(t_cmd *cmd, t_expansion *exp)
 	return (0);
 }
 
-int handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
+int	handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
 {
     if (cmd->args[exp->j][exp->i] == '$' && !exp->single_f && !ft_isdigit(cmd->args[exp->j][exp->i + 1]) && \
 	(ft_isalnum(cmd->args[exp->j][exp->i + 1]) || cmd->args[exp->j][exp->i + 1] == '_' || cmd->args[exp->j][exp->i + 1] == '?'))
@@ -71,7 +71,7 @@ int handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
 	return (0);
 }
 
-void expansor(t_cmd *cmd, t_env **env)
+void	expansor(t_cmd *cmd, t_env **env)
 {
     t_expansion exp;
 
@@ -92,45 +92,7 @@ void expansor(t_cmd *cmd, t_env **env)
 			exp.i++;
         }
         if (exp.single_f || exp.double_f)
-        {
-            printf("Error: unclosed quote\n");
-            exit_value(1);
-            return ;
-        }
+			return (msg_return("unclosed quotes\n", 0, 1));
         exp.j++;
     }
 }
-// void	expansor(t_cmd *cmd, t_env **env, int i, int j)
-// {
-// 	int		single_f;
-// 	int		double_f;
-
-// 	single_f = 0;
-// 	double_f = 0;
-// 	while (cmd->args[j])
-// 	{
-// 		while (cmd->args[j][i])
-// 		{
-// 			single_f = single_quote_dealer(cmd->args[j], i, single_f, double_f);
-// 			double_f = double_quote_dealer(cmd->args[j], i, single_f, double_f);
-// 			if ((cmd->args[j][i] == '\'' && single_f) || (cmd->args[j][i] == '\"' && double_f) || \
-// 					(!double_f && !single_f && (cmd->args[j][i] == '\'' || cmd->args[j][i] == '\"')))
-// 			{
-// 				cmd->args[j] = remove_char_at(cmd->args[j], i);
-// 				continue ;
-// 			}
-// 			if (cmd->args[j][i] == '$' && !single_f && !ft_isdigit(cmd->args[j][i + 1]) && (ft_isalnum(cmd->args[j][i + 1]) || \
-// 					cmd->args[j][i + 1] == '_' || cmd->args[j][i + 1] == '?'))
-// 				cmd->args[j] = expand_var(cmd->args[j], &i, env);
-// 			i++;
-// 		}
-// 		if (single_f || double_f)
-// 		{
-// 			printf("Error: unclosed quote\n");
-// 			exit_value(1);
-// 			return ;
-// 		}
-// 		i = 0;
-// 		j++;
-// 	}
-// }

@@ -1,37 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 16:14:22 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/19 13:05:17 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/19 15:25:11 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_echo(char **args)
+void	ft_env(t_env **env, char **cmd)
 {
-	int		i;
-	int		n_flag;
-	
-	i = 1;
-	n_flag = 0;
-	if (args[1] && !ft_strcmp(args[1], "-n"))
-	{
-		n_flag = 1;
-		i++;
+	t_env	*tmp;
+
+	tmp = *env;
+	if (cmd[1])
+		msg_exit(0, 0, "env: too many arguments\n", 1);
+	while (tmp)
+	{ 
+		ft_fprintf(1, "%s=", tmp->name);
+		if (tmp->value)
+			ft_fprintf(1, "%s\n", tmp->value);
+		tmp = tmp->next;
 	}
-	while (args[i])
-	{
-		ft_fprintf(1, "%s", args[i]);
-		if (args[i + 1])
-			ft_fprintf(1, " ");
-		i++;
-	}
-	if (!n_flag)
-		ft_fprintf(1, "\n");
-	exit_status(0);
+	exit(0);
 }

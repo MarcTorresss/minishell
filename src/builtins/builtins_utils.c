@@ -6,21 +6,11 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 16:21:44 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:35:36 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_env_del(t_env *env)
-{
-	if (env->name)
-		free(env->name);
-	if (env->value)
-		free(env->value);
-	free(env);
-	env = NULL;
-}
 
 t_env	*find_env(t_env **env, char *name)
 {
@@ -36,22 +26,68 @@ t_env	*find_env(t_env **env, char *name)
 	return (NULL);
 }
 
-int	try_path(char *path)
+void	swap_data(t_env *nod1, t_env *nod2)
 {
-	char	*msg;
+    char *temp_name;
+    char *temp_value;
 
-	msg = ft_strjoin("minishell: cd: ", path);
-	if (chdir(path))
-	{
-		perror(msg);
-		exit_value(1);
-		free(msg);
-	}
-	else
-	{
-		exit_value(0);
-		free(msg);
+	temp_name = nod1->name;
+	temp_value = nod1->value;
+    nod1->name = nod2->name;
+    nod1->value = nod2->value;
+    nod2->name = temp_name;
+    nod2->value = temp_value;
+}
+
+int forbidden_char(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isdigit(input[i]))
 		return (1);
+	while (input[i])
+	{
+		if (input[i] == '=')
+			return (0);
+		if (!ft_isalnum(input[i]) && input[i] != '_')
+			return (1);
+		i++;
 	}
 	return (0);
+}
+
+char	*get_name(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '=')
+			break ;
+		i++;
+	}
+	return (ft_substr(input, 1, i - 1));
+}
+
+char	*get_value(char *input)
+{
+	int	i;
+	int	found_f;
+
+	i = 0;
+	found_f = 0;
+	while (input[i])
+	{
+		if (input[i] == '=')
+		{
+			found_f = 1;
+			break ;
+		}
+		i++;
+	}
+	if (!found_f)
+		return (NULL);
+	return (ft_substr(input, i + 1, ft_strlen(input)));
 }
