@@ -16,15 +16,14 @@ int main(int argc, char **argv, char **envd)
 {
 	t_env	*env;
 	t_env	*exp;
-	t_cmd	*cmd;
+	t_cmd	*cmd = NULL;
 	char	*prompt;
 	t_lxr	*lxr = NULL;
-	t_cmd	*table = NULL;
 
 	//(void)envd;
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		exit_msg("Error: malloc failed\n", 2);
+	//cmd = malloc(sizeof(t_cmd));
+	//if (!cmd)
+	//	exit_msg("Error: malloc failed\n", 2);
 	(void)argv;
 	if (argc > 1)
 	{
@@ -37,13 +36,13 @@ int main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		ft_lexer(prompt, &lxr);
-		ft_parser(&table, &lxr);
+		if (ft_lexer(prompt, &lxr) == 0)
+			if (ft_parser(&cmd, &lxr) != -1)
+				ft_heredoc(cmd);
 		//ft_isbuiltin(prompt, &env, &exp);
-		ft_clean_lxr_prs(table, lxr);
+		ft_clean_lxr_prs(&cmd, &lxr);
 		lxr = NULL;
-		table = NULL;
-		//printf("%s\n", prompt);
+		cmd = NULL;
 	}
     return 0;
 }
