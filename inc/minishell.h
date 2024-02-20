@@ -14,11 +14,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <errno.h>
-# include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
@@ -26,6 +22,11 @@
 # include <sys/uio.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 //  ASCII
 
@@ -48,6 +49,7 @@
 #define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
 #define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
 #define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
+# define ERROR_TOKEN_NL "syntax error near unexpected token `newline'\n"
 #define ERROR_TOKEN_NL "syntax error near unexpected token\n"
 #define ERR_PIPE "pipe issue"
 #define ERR_FORK "fork issue"
@@ -64,45 +66,53 @@
 
 typedef enum s_sign
 {
-    NOTH = 0,
-    PIPE,
-    LESS,
-    LESS_T,
-    GREAT,
-    GREAT_T
-}   t_sign;
+	NOTH = 0,
+	PIPE,
+	LESS,
+	LESS_T,
+	GREAT,
+	GREAT_T
+}						t_sign;
 
 typedef enum s_token_type
 {
-    HEREDOC,
-    INPUT_REDIR,
-    OUTPUT_REDIR,
-    APPEND_TO_END,
-    INVALID,
-    NOTHING
-}   t_type;
+	HEREDOC = 0,
+	INPUT_REDIR,
+	OUTPUT_REDIR,
+	APPEND_TO_END,
+	INVALID,
+	NOTHING
+}						t_type;
 
-typedef struct s_expansion {
-    int i;
-    int j;
-    int single_f;
-    int double_f;
-} t_expansion;
-
-typedef struct  s_lexer
+typedef struct s_expansion
 {
-    char            *word;
-    t_sign          sign;
-    struct s_lexer  *next;
-}       t_lxr;
+	int					i;
+	int					j;
+	int					single_f;
+	int					double_f;
+}						t_expansion;
+
+typedef struct s_lexer
+{
+	char				*word;
+	t_sign				sign;
+	struct s_lexer		*next;
+}						t_lxr;
 
 typedef struct s_env
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-	struct s_env	*prev;
-}       t_env;
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+	struct s_env		*prev;
+}						t_env;
+
+typedef struct s_redirect
+{
+	t_type				type;
+	char				*file;
+	struct s_redirect	*next;
+}						t_rd;
 
 typedef struct s_in_out
 {
@@ -113,10 +123,10 @@ typedef struct s_in_out
 
 typedef struct s_comand
 {
-    char            **args;
-	t_io			*redirect;
-    struct s_comand *next;
-}       t_cmd;
+	char				**args;
+	t_rd				*redir;
+	struct s_comand		*next;
+}						t_cmd;
 
 typedef struct s_pipe
 {
@@ -133,33 +143,41 @@ typedef struct s_pipe
 
 /*******************************	LEXER	*******************************/
 
-int     ft_lexer(char *str, t_lxr **lxr);
-int     ft_isquote(char c);
-int     ft_isspace(char c);
-int     ft_issign(char c);
-void    lexer_clear(t_lxr *lxr);
-t_lxr   *ft_last_lxr(t_lxr *lxr);
-t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
-void	print_lex(t_lxr *lxr);
+int						ft_lexer(char *str, t_lxr **lxr);
+int						ft_isquote(char c);
+int						ft_isspace(char c);
+int						ft_issign(char c);
+void					lexer_clear(t_lxr **lxr);
+t_lxr					*ft_last_lxr(t_lxr *lxr);
+t_lxr					*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
+void					print_lex(t_lxr *lxr);
 
 /*******************************  PARSER  *******************************/
 
-int     ft_parser(t_cmd **table, t_lxr **lxr);
-int     ft_sizelst(t_lxr *list);
-t_cmd   *init_parser(void);
-t_cmd	*ft_cmd_addback(t_cmd *table, t_cmd *new);
-char    **free_all(char **mat, int i);
-void    ft_clean_lxr_prs(t_cmd *table, t_lxr *lxr);
-void    parser_clear(t_cmd *table);
+int						ft_parser(t_cmd **table, t_lxr **lxr);
+int						ft_sizelst(t_lxr *list);
+t_cmd					*init_parser(void);
+void					ft_cmd_addback(t_cmd **table, t_cmd *new);
+char					**free_all(char **mat, int i);
+void					ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr);
+void					parser_clear(t_cmd **table);
+t_rd					*init_redir(void);
+t_rd					*ft_last_rd(t_rd *redir);
+void					ft_addback_redir(t_rd **redir, t_rd *new);
+int						ft_issigntoken(char c);
+int						ft_heredoc(t_cmd *cmd);
+int						check_error(t_lxr *lxr);
 
 /*******************************  EXPANSOR  *******************************/
 
-void	expansor(t_cmd *cmd, t_env **env);
-char	*expand_var(char *str, int *i, t_env **env);
-char	*get_var_name(char *str, int i);
-int		double_quote_dealer(char *str, int i, int single_f, int double_f);
-int		single_quote_dealer(char *str, int i, int single_f, int double_f);
-char	*remove_char_at(char *str, int i);
+void					expansor(t_cmd *cmd, t_env **env);
+char					*expand_var(char *str, int *i, t_env **env);
+char					*get_var_name(char *str, int i);
+int						double_quote_dealer(char *str, int i, int single_f,
+							int double_f);
+int						single_quote_dealer(char *str, int i, int single_f,
+							int double_f);
+char					*remove_char_at(char *str, int i);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 
@@ -198,5 +216,6 @@ void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp);
 int		check_paths(t_pipe *data, t_cmd *cmd);
 int		check_absolute_path(t_cmd *cmd);
 int		get_paths(t_pipe *data, t_env **env);
+
 
 #endif

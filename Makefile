@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
 #    Updated: 2024/02/20 15:11:09 by rbarbier         ###   ########.fr        #
@@ -28,6 +28,7 @@ DIR_BLT		=	builtins/
 DIR_EXPAN	=	expansor/
 DIR_PRS		=	parser/
 DIR_EXEC	=	executor/
+DIR_HRD		=	heredoc/
 
 # *******************************	FILES	******************************* #
 
@@ -37,6 +38,8 @@ LXR_FILES	=	lexer_utils.c lexer.c
 EXPAN_FILES	=	expansor.c expan_utils.c
 BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_cd.c ft_pwd.c ft_env.c
 EXEC_FILES	=	executor.c executor_utils1.c executor_utils2.c child_routine.c redirections.c
+PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_free.c
+HRD_FILE	=	heredoc.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
@@ -44,6 +47,7 @@ EXPAN_SRC	=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_EXPAN),$(EXPAN_FILES)))
 BLT_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_BLT),$(BLT_FILES)))
 PRS_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_PRS),$(PRS_FILE)))
 EXEC_SRC	=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_EXEC),$(EXEC_FILES)))
+HRD_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_HRD),$(HRD_FILE)))
 
 # *********************************	OBJECTS	****************************** #
 
@@ -53,6 +57,7 @@ EXPAN_OBJ	=	$(addprefix $(DIR_OBJ),$(EXPAN_SRC:.c=.o))
 BLT_OBJ		=	$(addprefix $(DIR_OBJ),$(BLT_SRC:.c=.o))
 PRS_OBJ		=	$(addprefix $(DIR_OBJ),$(PRS_SRC:.c=.o))
 EXEC_OBJ	=	$(addprefix $(DIR_OBJ),$(EXEC_SRC:.c=.o))
+HRD_OBJ		=	$(addprefix $(DIR_OBJ),$(HRD_SRC:.c=.o))
 
 LIB_A		:=	$(DIR_RL)libreadline.a $(DIR_RL)libhistory.a $(DIR_LIB)libft.a
 LIB_ADD_DIR	:=	-L$(DIR_RL) -L$(DIR_LIB)
@@ -83,8 +88,8 @@ all : rdline library $(DIR_OBJ) $(NAME)
 library :
 	@$(MAKE) -C $(DIR_LIB) --no-print-directory
 
-$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(PRS_OBJ) $(EXEC_OBJ) 
-	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(EXEC_OBJ) $(PRS_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
+$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(PRS_OBJ) $(HRD_OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(PRS_OBJ) $(HRD_OBJ) (HRD_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
 
 	@echo "${BLUE_BOLD}minishell ${GREEN}compiled ✅\n${RESET}"
 

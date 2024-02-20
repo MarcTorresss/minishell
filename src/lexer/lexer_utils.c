@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:26:42 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/14 12:00:33 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:08:32 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,15 @@ int	ft_isquote(char c)
 
 int	ft_issign(char c)
 {
-	if (c == PIPE_AC || c == GREAT_AC || c == LESS_AC)
+	if (c == '>' || c == '<' || c == '|')
+		return (1);
+	return (0);
+}
+
+int	ft_issigntoken(char c)
+{
+	if (c == PIPE || c == GREAT || c == LESS 
+		|| c == GREAT_T || c == LESS_T)
 		return (1);
 	return (0);
 }

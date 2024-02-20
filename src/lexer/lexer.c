@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/14 13:10:19 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:24:04 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	init_word(char *str)
 	isquote = 0;
 	while  (str[i] != '\0')
 	{
-		if (ft_isspace(str[i]) == 1 || ft_issign(str[i] == 1))
-			return	(i); 
+		if (ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1)
+			return (i); 
 		if (ft_isquote(str[i]) == 1 && isquote == 0)
 		{
 			isquote = 1;
@@ -66,8 +66,12 @@ int	ft_convert(char *str, t_lxr *new)
 		i = init_sign(str, new);
 	else
 	{
+		//printf("Antes -- i = %i\n", i);
 		i = init_word(str);
+		//printf("Desps -- i = %i\n", i);
+		//printf("str = %s\n", str);
 		new->word = ft_substr(str, 0, i);
+		//printf("new->word = %s\n", new->word);
 		if (!new->word)
 			return (-1);
 	}
@@ -105,6 +109,7 @@ int	ft_lexer(char *str, t_lxr **lxr)
 	int		check;
 
 	i = 0;
+	check = 0;
 	while (i <= ft_strlen(str))
 	{
 		if (ft_isspace(str[i]) == 1)
@@ -115,6 +120,10 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			if (!new)
 				return (1);
 			*lxr = ft_lxr_addback(*lxr, new);
+			//printf("MAIN\n");
+			//printf("str = %s\n", str);
+			//printf("i = %zu\n", i);
+			//printf("\n\n");
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
 			if (check != -1)  
 				i += check;
@@ -123,6 +132,6 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			i++;
 		}
 	}
-	//print_lex(lxr);
+	//print_lex(*lxr);
 	return (0);
 }
