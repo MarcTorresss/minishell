@@ -20,6 +20,7 @@ void print_table(t_cmd *table)
 	
 	
 	j = 0;
+	i = 0;
 	tmp = table;
 	while (tmp)
 	{
@@ -45,8 +46,6 @@ int main(int argc, char **argv, char **envd)
 
 	//(void)envd;
 	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		msg_n_exit("Error: malloc failed\n", 2);
 	(void)argv;
 	if (argc > 1)
 	{

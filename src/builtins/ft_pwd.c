@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 16:14:22 by rbarbier         ###   ########.fr       */
+/*   Created: 2024/02/19 13:02:05 by rbarbier          #+#    #+#             */
+/*   Updated: 2024/02/19 16:14:10 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_echo(char **args)
+void	ft_pwd(char **cmd)
 {
-	int		i;
-	int		n_flag;
-	
-	i = 1;
-	n_flag = 0;
-	if (args[1] && !ft_strcmp(args[1], "-n"))
+	char	*tmp;
+
+	if (cmd && cmd[1])
 	{
-		n_flag = 1;
-		i++;
+		ft_fprintf(2, "pwd: too many arguments\n");
+		exit_status(1);
+		return ;
 	}
-	while (args[i])
-	{
-		ft_fprintf(1, "%s", args[i]);
-		if (args[i + 1])
-			ft_fprintf(1, " ");
-		i++;
-	}
-	if (!n_flag)
-		ft_fprintf(1, "\n");
+	tmp = getcwd(NULL, 0);
+	ft_fprintf(1, "%s\n", tmp);
+	free(tmp);
 	exit_status(0);
 }

@@ -6,11 +6,21 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:36:16 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/14 13:19:50 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:49:05 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_env_del(t_env *env)
+{
+	if (env->name)
+		free(env->name);
+	if (env->value)
+		free(env->value);
+	free(env);
+	env = NULL;
+}
 
 static void	 remove_from_env(t_env **env, char *name)
 {
@@ -56,15 +66,11 @@ void	ft_unset(t_env **env, t_env **exp, char **cmd)
 		while (cmd[i][j] && (ft_isalnum(cmd[i][j]) || cmd[i][j] == '_'))
 			j++;
 		if (cmd[i][j] || !ft_isdigit(cmd[i][0]))
-		{
-			ft_fprintf(2, "minishell: unset: `%s': not a valid identifier\n", cmd[i]);
-			exit_value(1);
-			return ;
-		}
+			return (msg_return("unset", cmd[i], 1));
 		name = ft_strdup(cmd[i]);
 		remove_from_env(env, name);
 		remove_from_env(exp, name);
 		free(name);
-		exit_value(0);
+		exit_status(0);
 	}
 }

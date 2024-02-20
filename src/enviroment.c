@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 17:33:06 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:02:12 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	new_env_var(char *name, char *value, t_env **env_var)
 
 	new = malloc(sizeof(t_env));
 	if (!new)
-		msg_n_exit("Error: malloc failed\n", 2);
+		msg_exit(0, 0, ERR_MALLOC, 1);
 	new->name = ft_strdup(name);
 	new->value = NULL;
 	if (value)

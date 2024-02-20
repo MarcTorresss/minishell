@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/15 17:41:37 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:04:23 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	question_mark(char **var_name, char **var_value)
 {
 	*var_name = ft_strdup("?");
-	*var_value = ft_itoa(exit_value(0));
+	*var_value = ft_itoa(exit_status(0));
 }
 
 char	*expand_var(char *str, int *i, t_env **env)
@@ -92,7 +92,7 @@ void	expansor(t_cmd *cmd, t_env **env)
 			exp.i++;
         }
         if (exp.single_f || exp.double_f)
-			return (error_msg("minishell: ERROR: unclosed quote", 1));
+			return (msg_return("unclosed quotes\n", 0, 1));
         exp.j++;
     }
 }

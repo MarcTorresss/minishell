@@ -6,79 +6,67 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/18 18:20:35 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:20:02 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*check_paths(t_pipe data, t_env *env, t_cmd *cmd)
+int	is_builtin(char **cmd, t_env **env, t_env **exp)
 {
-	char	*tmp;
-	char	*path;
-	int		i;
+	if (!ft_strcmp(cmd[0], "pwd"))
+		ft_pwd(cmd);
+	else if (!ft_strcmp(cmd[0], "echo"))
+		ft_echo(cmd);
+	else if (!ft_strcmp(cmd[0], "cd"))
+		ft_cd(env, exp, cmd);
+	else if (!ft_strcmp(cmd[0], "env"))
+		ft_env(env, cmd);
+	else if (!ft_strcmp(cmd[0], "exit"))
+		exit(exit_status(0));
+	else if (!ft_strcmp(cmd[0], "unset"))
+		ft_unset(env, exp, cmd);
+	else if (!ft_strcmp(cmd[0], "export")) 
+		ft_export(exp, env, cmd);
+	else
+		return (0);
+	return (1);
+}
 
-	i = 0;
-	while (data.cmd_paths[i])
-	{
-		tmp = ft_strjoin("/", cmd->args[0]);
-		path = ft_strjoin(data.cmd_paths[i], tmp);
-		if (!tmp || !path)
-			msg_exit(ERR_MALLOC, 0, 1);
-		if (access(path, F_OK) == 0)
+void	is_local_cmd(t_cmd *cmd, t_pipe data, t_env **env, char **envp)
+{
+	if (ft_strchr(cmd->args[0], '/') || !get_paths(&data, env))
+	{ // if the command is an absolute path or the PATH is not set
+		if (check_absolute_path(cmd))
 		{
-			if (access(path, X_OK) == 0)
-				return (path); // return the valid path to the command
-			msg_exit(ERR_NO_PERM, cmd->args[0], 1);
+			execve(cmd->args[0], cmd->args, envp);
+			ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
+			exit(1);
 		}
-		free(tmp);
-		free(path);
-		i++;
+		msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
 	}
-	return (NULL);
 }
 
-int	check_absolute_path(t_cmd *cmd)
+void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 {
-	if (access(cmd->args[0], F_OK) == 0)
+	if (check_paths(&data, cmd)) // if the command is in the PATH
 	{
-		if (access(cmd->args[0], X_OK) == 0)
-			return (1);
-		msg_exit(ERR_NO_PERM, cmd->args[0], 1);
+		execve(data.cmd, cmd->args, envp); // execute the command
+		ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
+		exit(1);
 	}
-	return (0);
-}
-
-void	get_paths(t_pipe *data, t_env *env)
-{
-	t_env	*tmp_env;
-
-	tmp_env = find_env(&env, "PATH");
-	if (!tmp_env)
-		msg_exit(ERR_NO_PATH, 0, 1); // NEED TO BE FIXED
-	data->cmd_paths = ft_split(tmp_env->value, ':');
-	if (!data->cmd_paths)
-		msg_exit(ERR_MALLOC, 0, 1);
+	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
 }
 
 void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 {
 	char	**envp;
 
-	get_files_redir(cmd->redirect, &data);
-	make_redirections(data, cmd, env);
-	if (is_builtin(cmd->args, env, exp));
-		return ; // if the command is a builtin, execute it and return
-	get_paths(&data, env);
-	data.cmd = check_paths(data, env, cmd->args);
 	envp = env_to_array(env);
-	if (data.cmd)
-		execve(data.cmd, cmd->args, envp);
-	else if (check_absolute_path(cmd))
-		execve(cmd->args[0], cmd->args, envp);
-	else
-		msg_exit(ERR_CMD_NOT_FOUND, cmd->args[0], 1);
-	ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
-	exit(1);
-	// free(envp); do i need to free envp?
+	get_files_redir(cmd->redirect, &data);
+	make_redirections(data, cmd);
+	if (is_builtin(cmd->args, env, exp))
+		exit(exit_status(0));
+	is_local_cmd(cmd, data, env, envp);
+	is_global_cmd(cmd, data, envp);
 }
