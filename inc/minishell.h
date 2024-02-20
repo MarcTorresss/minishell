@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:19:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:38:05 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@
 #define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
 #define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
 #define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
-# define ERROR_TOKEN_NL "syntax error near unexpected token `newline'\n"
 #define ERROR_TOKEN_NL "syntax error near unexpected token\n"
 #define ERR_PIPE "pipe issue"
 #define ERR_FORK "fork issue"
@@ -114,12 +113,12 @@ typedef struct s_redirect
 	struct s_redirect	*next;
 }						t_rd;
 
-typedef struct s_in_out
-{
-	t_type			type;
-	char			*file;
-	struct s_in_out	*next;
-}		t_io;
+// typedef struct s_in_out
+// {
+// 	t_type			type;
+// 	char			*file;
+// 	struct s_in_out	*next;
+// }		t_io;
 
 typedef struct s_comand
 {
@@ -143,47 +142,45 @@ typedef struct s_pipe
 
 /*******************************	LEXER	*******************************/
 
-int						ft_lexer(char *str, t_lxr **lxr);
-int						ft_isquote(char c);
-int						ft_isspace(char c);
-int						ft_issign(char c);
-void					lexer_clear(t_lxr **lxr);
-t_lxr					*ft_last_lxr(t_lxr *lxr);
-t_lxr					*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
-void					print_lex(t_lxr *lxr);
+int		ft_lexer(char *str, t_lxr **lxr);
+int		ft_isquote(char c);
+int		ft_isspace(char c);
+int		ft_issign(char c);
+void	lexer_clear(t_lxr **lxr);
+t_lxr	*ft_last_lxr(t_lxr *lxr);
+t_lxr	*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
+void	print_lex(t_lxr *lxr);
 
 /*******************************  PARSER  *******************************/
 
-int						ft_parser(t_cmd **table, t_lxr **lxr);
-int						ft_sizelst(t_lxr *list);
-t_cmd					*init_parser(void);
-void					ft_cmd_addback(t_cmd **table, t_cmd *new);
-char					**free_all(char **mat, int i);
-void					ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr);
-void					parser_clear(t_cmd **table);
-t_rd					*init_redir(void);
-t_rd					*ft_last_rd(t_rd *redir);
-void					ft_addback_redir(t_rd **redir, t_rd *new);
-int						ft_issigntoken(char c);
-int						ft_heredoc(t_cmd *cmd);
-int						check_error(t_lxr *lxr);
+int		ft_parser(t_cmd **table, t_lxr **lxr);
+int		ft_sizelst(t_lxr *list);
+t_cmd	*init_parser(void);
+void	ft_cmd_addback(t_cmd **table, t_cmd *new);
+char	**free_all(char **mat, int i);
+void	ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr);
+void	parser_clear(t_cmd **table);
+t_rd	*init_redir(void);
+t_rd	*ft_last_rd(t_rd *redir);
+void	ft_addback_redir(t_rd **redir, t_rd *new);
+int		ft_issigntoken(char c);
+int		ft_heredoc(t_cmd *cmd);
+int		check_error(t_lxr *lxr);
 
 /*******************************  EXPANSOR  *******************************/
 
-void					expansor(t_cmd *cmd, t_env **env);
-char					*expand_var(char *str, int *i, t_env **env);
-char					*get_var_name(char *str, int i);
-int						double_quote_dealer(char *str, int i, int single_f,
-							int double_f);
-int						single_quote_dealer(char *str, int i, int single_f,
-							int double_f);
-char					*remove_char_at(char *str, int i);
+void	expansor(t_cmd *cmd, t_env **env);
+char	*expand_var(char *str, int *i, t_env **env);
+char	*get_var_name(char *str, int i);
+int		double_quote_dealer(char *str, int i, int single_f, int double_f);
+int		single_quote_dealer(char *str, int i, int single_f, int double_f);
+char	*remove_char_at(char *str, int i);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 
 void	export_process(t_env **exp, t_env **env, char *cmd);
 void	msg_exit(char *cmd, char *arg, char *msg, int status);
-void	msg_return(char *msg, char *arg, int status);
+void	msg_return(char *cmd, char *arg, char *msg, int status);
 int		forbidden_char(char *input);
 void    init_envd(char **envd, t_env **env, t_env **exp);
 void    ft_unset(t_env **env, t_env **exp, char **cmd);
@@ -204,8 +201,8 @@ void	swap_data(t_env *nod1, t_env *nod2);
 
 /*******************************  EXECUTOR  *******************************/
 
-void	get_files_redir(t_io *redir, t_pipe *data);
-void	make_redirections(t_pipe data, t_cmd *cmd);
+void	get_files_redir(t_rd *redir, t_pipe *data);
+void	make_redirections(t_pipe *data, t_cmd *cmd);
 char	**env_to_array(t_env **env);
 void	check_file(char *file, int mode);
 void	save_original_stds(t_pipe *data);
@@ -215,7 +212,7 @@ int		is_builtin(char **cmd, t_env **env, t_env **exp);
 void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp);
 int		check_paths(t_pipe *data, t_cmd *cmd);
 int		check_absolute_path(t_cmd *cmd);
-int		get_paths(t_pipe *data, t_env **env);
-
+char	**get_paths(t_env **env);
+void	executor(t_cmd *cmd, t_env **env, t_env **exp);
 
 #endif

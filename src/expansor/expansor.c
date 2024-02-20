@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:04:23 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:44:44 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	expansor(t_cmd *cmd, t_env **env)
 			exp.i++;
         }
         if (exp.single_f || exp.double_f)
-			return (msg_return("unclosed quotes\n", 0, 1));
+			return (msg_return(0, 0, "quote not closed", 1));
         exp.j++;
     }
 }

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:05:17 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 15:25:11 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:34:26 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	ft_env(t_env **env, char **cmd)
 			ft_fprintf(1, "%s\n", tmp->value);
 		tmp = tmp->next;
 	}
-	exit(0);
+	exit_status(0);
 }

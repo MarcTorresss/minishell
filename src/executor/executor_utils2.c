@@ -6,25 +6,22 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:58:04 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:13:07 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:27:05 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_paths(t_pipe *data, t_cmd *cmd) // t_env *env?
+int	check_paths(t_pipe *data, t_cmd *cmd)
 {
-	char	*tmp;
 	char	*path;
 	int		i;
 
 	i = 0;
 	while (data->cmd_paths[i])
 	{
-		tmp = ft_strjoin("/", cmd->args[0]);
-		path = ft_strjoin(data->cmd_paths[i], tmp);
-		if (!tmp || !path)
-			msg_exit(0, 0, ERR_MALLOC, 1);
+		path = ft_strjoin("/", cmd->args[0]);
+		path = ft_join_n_destroy(data->cmd_paths[i], path, 2);
 		if (access(path, F_OK) == 0)
 		{
 			if (access(path, X_OK) == 0)
@@ -34,7 +31,6 @@ int	check_paths(t_pipe *data, t_cmd *cmd) // t_env *env?
 			}
 			msg_exit(cmd->args[0], 0, ERR_NO_PERM, 1);
 		}
-		free(tmp);
 		free(path);
 		i++;
 	}
@@ -52,13 +48,12 @@ int	check_absolute_path(t_cmd *cmd)
 	return (0);
 }
 
-int	get_paths(t_pipe *data, t_env **env)
+char	**get_paths(t_env **env)
 {
 	t_env	*tmp_env;
 
 	tmp_env = find_env(env, "PATH");
 	if (!tmp_env)
-		return (1);
-	data->cmd_paths = ft_split(tmp_env->value, ':');
-	return (0);
+		return (NULL);
+	return (ft_split(tmp_env->value, ':'));
 }

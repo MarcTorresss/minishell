@@ -59,6 +59,8 @@ int main(int argc, char **argv, char **envd)
 		if (ft_lexer(prompt, &lxr) == 0)
 			if (ft_parser(&cmd, &lxr) != -1)
 				ft_heredoc(cmd);
+		expansor(cmd, &env);
+		executor(cmd, &env, &exp);
 		ft_clean_lxr_prs(&cmd, &lxr);
 		lxr = NULL;
 		cmd = NULL;

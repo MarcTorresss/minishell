@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:41:44 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:19:03 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:32:01 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	check_file(char *file, int mode)
 	}
 	else // output
 	{
-		if (access(file, F_OK) != 0 && access(file, W_OK) != 0)
+		if (access(file, F_OK) == 0 && access(file, W_OK) != 0)
 			msg_exit(file, 0, ERR_NO_PERM, 1);
 	}
 }

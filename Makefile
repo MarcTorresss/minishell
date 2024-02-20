@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/20 15:11:09 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/20 16:31:50 by rbarbier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
 INCLUDE	=	-I./inc -I./readline
 RM		=	rm -fr
 
@@ -34,9 +34,9 @@ DIR_HRD		=	heredoc/
 
 FILES		=	main.c enviroment.c error.c
 LXR_FILES	=	lexer_utils.c lexer.c
-#PRS_FILE	=	parser.c parser_utils.c utils.c
+PRS_FILE	=	parser.c parser_utils.c utils.c
 EXPAN_FILES	=	expansor.c expan_utils.c
-BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_cd.c ft_pwd.c ft_env.c
+BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_pwd.c ft_env.c
 EXEC_FILES	=	executor.c executor_utils1.c executor_utils2.c child_routine.c redirections.c
 PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_free.c
 HRD_FILE	=	heredoc.c
@@ -88,8 +88,8 @@ all : rdline library $(DIR_OBJ) $(NAME)
 library :
 	@$(MAKE) -C $(DIR_LIB) --no-print-directory
 
-$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(PRS_OBJ) $(HRD_OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(PRS_OBJ) $(HRD_OBJ) (HRD_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
+$(NAME) : $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(EXEC_OBJ) $(PRS_OBJ) $(HRD_OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) $(LXR_OBJ) $(BLT_OBJ) $(EXPAN_OBJ) $(EXEC_OBJ) $(PRS_OBJ) $(HRD_OBJ) $(LIB_ADD_DIR) $(LIB_SEARCH) $(LIB_A) -o $@
 
 	@echo "${BLUE_BOLD}minishell ${GREEN}compiled ✅\n${RESET}"
 
