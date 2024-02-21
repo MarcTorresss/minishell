@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 16:14:22 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:38:35 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_echo(char **args)
 {
-	int		i;
-	int		n_flag;
-	
+	int i;
+	int n_flag;
+
 	i = 1;
 	n_flag = 0;
 	if (args[1] && !ft_strcmp(args[1], "-n"))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 18:10:13 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:38:28 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 		else
 		{
 			if (chdir(tmp->value))
-				return (msg_return("cd", tmp->value, "No such file or directory", 1));
+				return (msg_return("cd", tmp->value,
+						"No such file or directory", 1));
 			set_oldpwd(env, exp, old_pwd);
 			ft_pwd(0);
 		}
@@ -66,7 +67,8 @@ void	cd_home(t_env **exp)
 	if (tmp && tmp->value && tmp->value[0])
 	{
 		if (chdir(tmp->value))
-			return (msg_return("cd", tmp->value, "No such file or directory", 1));
+			return (msg_return("cd", tmp->value, "No such file or directory",
+					1));
 		set_oldpwd(exp, exp, 0);
 	}
 	else

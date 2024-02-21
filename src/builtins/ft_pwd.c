@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:02:05 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 18:14:25 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:38:58 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_pwd(char **cmd)
 {
-	char	*tmp;
+	char *tmp;
 
 	if (cmd && cmd[1])
 		return (msg_return("pwd", 0, "too many arguments", 1));

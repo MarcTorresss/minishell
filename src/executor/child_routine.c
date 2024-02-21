@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 19:40:47 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:42:15 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_builtin(char **cmd, t_env **env, t_env **exp)
 		exit(exit_status(0));
 	else if (!ft_strcmp(cmd[0], "unset"))
 		ft_unset(env, exp, cmd);
-	else if (!ft_strcmp(cmd[0], "export")) 
+	else if (!ft_strcmp(cmd[0], "export"))
 		ft_export(exp, env, cmd);
 	else
 		return (0);
@@ -35,12 +35,14 @@ int	is_builtin(char **cmd, t_env **env, t_env **exp)
 
 void	is_local_cmd(t_cmd *cmd, t_pipe data, char **envp)
 {
-	if (ft_strchr(cmd->args[0], '/') || data.cmd_paths == NULL || data.cmd_paths[0] == NULL)
+	if (ft_strchr(cmd->args[0], '/') || data.cmd_paths == NULL
+		|| data.cmd_paths[0] == NULL)
 	{ // if the command is an absolute path or the PATH is not set
 		if (check_absolute_path(cmd))
 		{
 			execve(cmd->args[0], cmd->args, envp);
-			ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
+			ft_fprintf(2, "%s:  option -- %c\n", cmd->args[0],
+				cmd->args[0][1]);
 			exit(1);
 		}
 		msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
@@ -51,9 +53,11 @@ void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 {
 	if (check_paths(&data, cmd)) // if the command is in the PATH
 	{
-		//printf("hola\n");
+		// printf("hola\n");
+		//printf("args[0] = %s\n", cmd->args[1]);
 		execve(data.cmd, cmd->args, envp); // execute the command
-		ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
+		ft_fprintf(2, "%s: illegal  -- %c\n", cmd->args[0],
+			cmd->args[0][1]);
 		exit(1);
 	}
 	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);

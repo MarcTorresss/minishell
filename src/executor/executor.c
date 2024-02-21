@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 19:36:53 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:38:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	wait_processes(pid_t *pid, int *ret_value)
+void	wait_processes(pid_t *pid, int *ret_value, int n_cmds)
 {
 	int		status;
 	int		i;
 
 	i = 0;
-	while (i < 2)
+	while (i < n_cmds)
 	{
 		waitpid(pid[i], &status, 0);
 		if (WIFEXITED(status))
@@ -74,7 +74,7 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
 		cmd = cmd->next;
 		i++;
 	}
-	wait_processes(data.pid, &ret_value);
+	wait_processes(data.pid, &ret_value, data.n_cmds);
 	reset_original_stds(&data);
 	exit_status(ret_value);
 }
