@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/21 12:46:00 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:48:27 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,16 @@ void	print_lex(t_lxr *lxr)
 
 }
 
+int	ft_scape_space(char *str, int i)
+{
+	while (str[i] == ' ')
+		i++;
+	if (str[i] == '\0')
+		return (-1);
+	add_history(str);
+	return (0);
+}
+
 int	ft_lexer(char *str, t_lxr **lxr)
 {
 	t_lxr	*new;
@@ -105,7 +115,9 @@ int	ft_lexer(char *str, t_lxr **lxr)
 	int		check;
 
 	i = 0;
-	check = 0;
+	check = ft_scape_space(str, i);
+	if (check == -1)
+		return (1);
 	while (i < ft_strlen(str))
 	{
 		if (ft_isspace(str[i]) == 1)
@@ -124,6 +136,6 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			i++;
 		}
 	}
-	print_lex(*lxr);
+	//print_lex(*lxr);
 	return (0);
 }

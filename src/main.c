@@ -56,14 +56,16 @@ int main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		add_history(prompt);
+		//printf("\n%i\n", ft_lexer(prompt, &lxr)); 
 		if (ft_lexer(prompt, &lxr) == 0)
+		{
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
-				  ft_heredoc(cmd);
-          expansor(cmd, &env);
-		      executor(cmd, &env, &exp);
-      }
+				ft_heredoc(cmd);
+          		expansor(cmd, &env);
+		    	executor(cmd, &env, &exp);
+      		}
+		}
 		ft_clean_lxr_prs(&cmd, &lxr);
 		lxr = NULL;
 		cmd = NULL;

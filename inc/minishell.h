@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 19:38:05 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:05:11 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,8 +187,6 @@ void	ft_pwd(char **cmd);
 void    ft_cd(t_env **env, t_env **exp, char **cmd);
 void	ft_echo(char **args);
 int		exit_status(int value);
-void	ft_env(t_env **env, char **cmd);
-void	ft_pwd(char **cmd);
 void	swap_data(t_env *nod1, t_env *nod2);
 
 /*******************************  EXECUTOR  *******************************/
@@ -206,19 +204,5 @@ int		check_paths(t_pipe *data, t_cmd *cmd);
 int		check_absolute_path(t_cmd *cmd);
 char	**get_paths(t_env **env);
 void	executor(t_cmd *cmd, t_env **env, t_env **exp);
-void					executor(t_cmd *cmd, t_env **env, t_env **exp);
-void					get_files_redir(t_io *redir, t_pipe *data);
-void					make_redirections(t_pipe data, t_cmd *cmd);
-char					**env_to_array(t_env **env);
-void					check_file(char *file, int mode);
-void					save_original_stds(t_pipe *data);
-void					reset_original_stds(t_pipe *data);
-void					close_pipes(int fd1, int fd2);
-int						is_builtin(char **cmd, t_env **env, t_env **exp);
-void					child(t_pipe data, t_cmd *cmd, t_env **env,
-							t_env **exp);
-int						check_paths(t_pipe *data, t_cmd *cmd);
-int						check_absolute_path(t_cmd *cmd);
-int						get_paths(t_pipe *data, t_env **env);
 
 #endif

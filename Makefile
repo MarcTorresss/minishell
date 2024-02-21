@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/20 16:31:50 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/21 13:18:31 by martorre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror #-g -fsanitize=address
 INCLUDE	=	-I./inc -I./readline
 RM		=	rm -fr
 
@@ -39,6 +39,7 @@ BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_pwd.c f
 EXEC_FILES	=	executor.c executor_utils1.c executor_utils2.c child_routine.c redirections.c
 PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_free.c
 HRD_FILE	=	heredoc.c
+EXPAN_FILES	=	expan_utils.c expansor.c
 
 FILES_SRC	=	$(addprefix $(DIR_SRC),$(FILES))
 LXR_SRC		=	$(addprefix $(DIR_SRC),$(addprefix $(DIR_LXR),$(LXR_FILES)))
