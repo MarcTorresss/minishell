@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 16:17:15 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:08:39 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*expand_var(char *str, int *i, t_env **env)
 	}
 	tmp = ft_join_n_destroy(ft_substr(str, 0, *i), var_value, 1);
 	tmp = ft_join_n_destroy(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1, ft_strlen(str)), 3);
-	if (*i == 0 && var_value[0] == '\0')
+	if (ft_strlen(var_value) == 0)
 		*i += 1;
 	*i = *i + ft_strlen(var_value) - 1;
 	free(str);
@@ -41,61 +41,67 @@ char	*expand_var(char *str, int *i, t_env **env)
 	return (tmp);
 }
 
-int	handle_quotes(t_cmd *cmd, t_expansion *exp)
+int	handle_quotes(char *str, int *i, int *single_f, int *double_f)
 {
-    exp->single_f = single_quote_dealer(cmd->args[exp->j], exp->i, exp->single_f, exp->double_f);
-    exp->double_f = double_quote_dealer(cmd->args[exp->j], exp->i, exp->single_f, exp->double_f);
-    if ((cmd->args[exp->j][exp->i] == '\'' && exp->single_f) || (cmd->args[exp->j][exp->i] == '\"' && exp->double_f) || \
-            (!exp->double_f && !exp->single_f && (cmd->args[exp->j][exp->i] == '\'' || cmd->args[exp->j][exp->i] == '\"')))
+	*single_f = single_quote_dealer(str, *i, *single_f, *double_f);
+	*double_f = double_quote_dealer(str, *i, *single_f, *double_f);
+	if ((str[*i] == '\'' && *single_f) || (str[*i] == '\"' && *double_f) || \
+			(!*double_f && !*single_f && (str[*i] == '\'' || str[*i] == '\"')))
 	{
-        cmd->args[exp->j] = remove_char_at(cmd->args[exp->j], exp->i);
+		str = remove_char_at(str, *i);
 		return (1);
 	}
 	return (0);
 }
 
-int	handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
+int	handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 {
-    if (cmd->args[exp->j][exp->i] == '$' && !exp->single_f && !ft_isdigit(cmd->args[exp->j][exp->i + 1]) && \
-	(ft_isalnum(cmd->args[exp->j][exp->i + 1]) || cmd->args[exp->j][exp->i + 1] == '_' || cmd->args[exp->j][exp->i + 1] == '?'))
+	if (!str[*i] || !str[*i + 1])
+		return (0);
+    if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1]) && \
+	(ft_isalnum(str[*i + 1]) || str[*i + 1] == '_' || str[*i + 1] == '?'))
 	{
-        cmd->args[exp->j] = expand_var(cmd->args[exp->j], &exp->i, env);
+        str = expand_var(str, i, env);
 		return (1);
 	}
 	return (0);
 }
 
-void	iter_n_expand(t_cmd *cmd, t_env **env)
+void	expand(char *str, t_env **env)
 {
-    t_expansion exp;
+	int	single_f;
+	int	double_f;
+	int	i;			
 
-    exp.j = 0;
-    while (cmd->args[exp.j])
-    {
-        exp.i = 0;
-        exp.single_f = 0;
-        exp.double_f = 0;
-        while (cmd->args[exp.j][exp.i])
-        {
-			if (handle_quotes(cmd, &exp) || handle_dollar_sign(cmd, env, &exp))
-			{
-				if (cmd->args[exp.j][exp.i] == '\0' || cmd->args == NULL)
-					break ;
-				continue ;
-			}
-			exp.i++;
-        }
-        if (exp.single_f || exp.double_f)
-			return (msg_return(0, 0, "quote not closed", 1));
-        exp.j++;
-    }
+	single_f = 0;
+	double_f = 0;
+	i = 0;
+	while (str[i])
+	{
+		handle_quotes(str, &i, &single_f, &double_f);
+		handle_dollar_sign(str, env, &i, single_f);
+		if (!str[i])
+			break ;
+		i++;
+	}
+	if (single_f || double_f)
+		return (msg_return(0, 0, "quote not closed", 1));
 }
 
 void	expansor(t_cmd *cmd, t_env **env)
 {
+	int	i;
+
+	i = 0;
 	while (cmd)
 	{
-		iter_n_expand(cmd, env);
+		while (cmd->args[i])
+			expand(cmd->args[i++], env);
+		while (cmd->redir)
+		{
+			expand(cmd->redir->file, env);
+			cmd->redir = cmd->redir->next;
+		}
 		cmd = cmd->next;
 	}
 }

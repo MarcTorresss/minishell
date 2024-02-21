@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 15:49:26 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:21:27 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
 }
 
+void	unlink_heredoc(t_rd *redir)
+{
+	t_rd	*tmp;
+
+	tmp = redir;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC)
+			unlink(tmp->file);
+		tmp = tmp->next;
+	}
+}
+
 void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 {
 	char	**envp;
@@ -72,4 +85,5 @@ void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 		exit(exit_status(0));
 	is_local_cmd(cmd, data, envp);
 	is_global_cmd(cmd, data, envp);
+	unlink_heredoc(cmd->redir);
 }

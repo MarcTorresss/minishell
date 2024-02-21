@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 15:43:51 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:21:50 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	get_files_redir(t_rd *redir, t_pipe *data)
 {
 	while (redir)
 	{
-		if (redir->type == INPUT_REDIR)
+		if (redir->type == INPUT_REDIR || redir->type == HEREDOC)
 			input_file(data, redir->file);
 		else if (redir->type == OUTPUT_REDIR || redir->type == APPEND_TO_END)
 			outfile_file(data, redir->file, redir->type);
