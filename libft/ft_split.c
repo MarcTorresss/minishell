@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:17:30 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/19 15:50:57 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:36:24 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	j = 0;
 	index = -1;
-	while (i <= ft_strlen(s))
+	while (i <= ft_strlenz(s))
 	{
 		if (s[i] != c && index < 0)
 			index = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		else if ((s[i] == c || i == ft_strlenz(s)) && index >= 0)
 		{
 			split[j++] = word_dup(s, index, i);
 			index = -1;

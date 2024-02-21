@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:48:57 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/13 17:27:33 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:35:49 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *haystack, char *needle, size_t len);
 void	ft_bzero(void *s, size_t n);
-size_t	ft_strlen(const char *s);
+size_t	ft_strlenz(const char *s);
+int		ft_strlen(const char *s);
 char	*ft_strdup(const char *s1);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
