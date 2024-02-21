@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/20 15:24:04 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:46:00 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,13 @@ int	ft_convert(char *str, t_lxr *new)
 	if (ft_issign(str[i]) == 1)
 		i = init_sign(str, new);
 	else
-	{
-		//printf("Antes -- i = %i\n", i);
+	{;
 		i = init_word(str);
-		//printf("Desps -- i = %i\n", i);
-		//printf("str = %s\n", str);
 		new->word = ft_substr(str, 0, i);
-		//printf("new->word = %s\n", new->word);
 		if (!new->word)
 			return (-1);
 	}
-	return (i);
+	return (i - 1);
 }
 
 t_lxr	*init_lxr(void)
@@ -105,12 +101,12 @@ void	print_lex(t_lxr *lxr)
 int	ft_lexer(char *str, t_lxr **lxr)
 {
 	t_lxr	*new;
-	size_t	i;
+	int		i;
 	int		check;
 
 	i = 0;
 	check = 0;
-	while (i <= ft_strlen(str))
+	while (i < ft_strlen(str))
 	{
 		if (ft_isspace(str[i]) == 1)
 			i++;
@@ -120,10 +116,6 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			if (!new)
 				return (1);
 			*lxr = ft_lxr_addback(*lxr, new);
-			//printf("MAIN\n");
-			//printf("str = %s\n", str);
-			//printf("i = %zu\n", i);
-			//printf("\n\n");
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
 			if (check != -1)  
 				i += check;
@@ -132,6 +124,6 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			i++;
 		}
 	}
-	//print_lex(*lxr);
+	print_lex(*lxr);
 	return (0);
 }

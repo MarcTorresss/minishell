@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:58:12 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/14 17:18:16 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:36:01 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	j = 0;
 	if (s == NULL)
 		return (NULL);
-	while (i < len && start < ft_strlen(s) && s[start + i])
+	while (i < len && start < ft_strlenz(s) && s[start + i])
 		i++;
 	new = malloc(i +1);
 	if (!new)
@@ -30,7 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		ft_putstr_fd("Error: malloc failed\n", 2);
 		exit(1);
 	}
-	while (j < i && start < ft_strlen((char *)s))
+	while (j < i && start < ft_strlenz((char *)s))
 	{
 		new[j] = s[start + j];
 		j++;

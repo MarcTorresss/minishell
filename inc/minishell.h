@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:19:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:51:06 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,15 @@
 
 # include "../libft/libft.h"
 # include <errno.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <sys/wait.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
 //  ASCII
@@ -44,23 +42,23 @@
 
 // ERRORS
 
-#define ERROR_TOKEN_P "syntax error near unexpected token '|'\n"
-#define ERROR_TOKEN_L "syntax error near unexpected token '<'\n"
-#define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
-#define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
-#define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
+# define ERROR_TOKEN_P "syntax error near unexpected token '|'\n"
+# define ERROR_TOKEN_L "syntax error near unexpected token '<'\n"
+# define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
+# define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
+# define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
 # define ERROR_TOKEN_NL "syntax error near unexpected token `newline'\n"
-#define ERROR_TOKEN_NL "syntax error near unexpected token\n"
-#define ERR_PIPE "pipe issue"
-#define ERR_FORK "fork issue"
-#define ERR_EXEC "exec issue"
-#define ERR_FILE "file issue"
-#define ERR_ARG "too many arguments"
-#define ERR_MALLOC "malloc issue"
-#define ERR_OPEN "open issue"
-#define ERR_CMD_NOT_FOUND "command not found"
-#define ERR_NO_FILE "No such file or directory"
-#define ERR_NO_PERM "Permission denied"
+# define ERROR_TOKEN_UN "syntax error near unexpected token\n"
+# define ERR_PIPE "pipe issue"
+# define ERR_FORK "fork issue"
+# define ERR_EXEC "exec issue"
+# define ERR_FILE "file issue"
+# define ERR_ARG "too many arguments"
+# define ERR_MALLOC "malloc issue"
+# define ERR_OPEN "open issue"
+# define ERR_CMD_NOT_FOUND "command not found"
+# define ERR_NO_FILE "No such file or directory"
+# define ERR_NO_PERM "Permission denied"
 
 // STRUCTURES
 
@@ -116,10 +114,10 @@ typedef struct s_redirect
 
 typedef struct s_in_out
 {
-	t_type			type;
-	char			*file;
-	struct s_in_out	*next;
-}		t_io;
+	t_type				type;
+	char				*file;
+	struct s_in_out		*next;
+}						t_io;
 
 typedef struct s_comand
 {
@@ -130,16 +128,16 @@ typedef struct s_comand
 
 typedef struct s_pipe
 {
-	int		pipe_ends[2];
-	pid_t	*pid;
-	int		original_stdout;
-	int		original_stdin;
-	int 	n_cmds;
-	int		infile_fd;
-	int		outfile_fd;
-	char	**cmd_paths;
-	char 	*cmd;
-}	t_pipe;
+	int					pipe_ends[2];
+	pid_t				*pid;
+	int					original_stdout;
+	int					original_stdin;
+	int					n_cmds;
+	int					infile_fd;
+	int					outfile_fd;
+	char				**cmd_paths;
+	char				*cmd;
+}						t_pipe;
 
 /*******************************	LEXER	*******************************/
 
@@ -181,41 +179,43 @@ char					*remove_char_at(char *str, int i);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 
-void	export_process(t_env **exp, t_env **env, char *cmd);
-void	msg_exit(char *cmd, char *arg, char *msg, int status);
-void	msg_return(char *msg, char *arg, int status);
-int		forbidden_char(char *input);
-void    init_envd(char **envd, t_env **env, t_env **exp);
-void    ft_unset(t_env **env, t_env **exp, char **cmd);
-void    ft_env(t_env **env, char **cmd);
-void    ft_export(t_env **exp, t_env **env, char **cmd);
-void	new_env_var(char *name, char *value, t_env **env_var);
-char    *get_name(char *input);
-char    *get_value(char *input);
-int		update_value(char *name, char *value, t_env **exp, int append);
-t_env   *find_env(t_env **env, char *name);
-void	ft_pwd(char **cmd);
-void    ft_cd(t_env **env, t_env **exp, char **cmd);
-void	ft_echo(char **args);
-int		exit_status(int value);
-void	ft_env(t_env **env, char **cmd);
-void	ft_pwd(char **cmd);
-void	swap_data(t_env *nod1, t_env *nod2);
+void					export_process(t_env **exp, t_env **env, char *cmd);
+void					msg_exit(char *cmd, char *arg, char *msg, int status);
+void					msg_return(char *msg, char *arg, int status);
+int						forbidden_char(char *input);
+void					init_envd(char **envd, t_env **env, t_env **exp);
+void					ft_unset(t_env **env, t_env **exp, char **cmd);
+void					ft_env(t_env **env, char **cmd);
+void					ft_export(t_env **exp, t_env **env, char **cmd);
+void					new_env_var(char *name, char *value, t_env **env_var);
+char					*get_name(char *input);
+char					*get_value(char *input);
+int						update_value(char *name, char *value, t_env **exp,
+							int append);
+t_env					*find_env(t_env **env, char *name);
+void					ft_pwd(char **cmd);
+void					ft_cd(t_env **env, t_env **exp, char **cmd);
+void					ft_echo(char **args);
+int						exit_status(int value);
+void					ft_env(t_env **env, char **cmd);
+void					ft_pwd(char **cmd);
+void					swap_data(t_env *nod1, t_env *nod2);
 
 /*******************************  EXECUTOR  *******************************/
 
-void	get_files_redir(t_io *redir, t_pipe *data);
-void	make_redirections(t_pipe data, t_cmd *cmd);
-char	**env_to_array(t_env **env);
-void	check_file(char *file, int mode);
-void	save_original_stds(t_pipe *data);
-void	reset_original_stds(t_pipe *data);
-void	close_pipes(int fd1, int fd2);
-int		is_builtin(char **cmd, t_env **env, t_env **exp);
-void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp);
-int		check_paths(t_pipe *data, t_cmd *cmd);
-int		check_absolute_path(t_cmd *cmd);
-int		get_paths(t_pipe *data, t_env **env);
-
+void					executor(t_cmd *cmd, t_env **env, t_env **exp);
+void					get_files_redir(t_io *redir, t_pipe *data);
+void					make_redirections(t_pipe data, t_cmd *cmd);
+char					**env_to_array(t_env **env);
+void					check_file(char *file, int mode);
+void					save_original_stds(t_pipe *data);
+void					reset_original_stds(t_pipe *data);
+void					close_pipes(int fd1, int fd2);
+int						is_builtin(char **cmd, t_env **env, t_env **exp);
+void					child(t_pipe data, t_cmd *cmd, t_env **env,
+							t_env **exp);
+int						check_paths(t_pipe *data, t_cmd *cmd);
+int						check_absolute_path(t_cmd *cmd);
+int						get_paths(t_pipe *data, t_env **env);
 
 #endif
