@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 19:40:47 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:49:26 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 	if (check_paths(&data, cmd)) // if the command is in the PATH
 	{
 		//printf("hola\n");
+
 		execve(data.cmd, cmd->args, envp); // execute the command
 		ft_fprintf(2, "%s: illegal option -- %c\n", cmd->args[0], cmd->args[0][1]);
 		exit(1);

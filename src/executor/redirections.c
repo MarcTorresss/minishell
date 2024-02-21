@@ -6,37 +6,43 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 19:44:03 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:43:51 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	input_file(t_pipe *data, char *file)
+{
+	if (data->infile_fd)
+		close(data->infile_fd);
+	check_file(file, 1);
+	data->infile_fd = open(file, O_RDONLY);
+	if (data->infile_fd < 0)
+		msg_exit(file, 0, ERR_NO_FILE, 1);
+}
+
+void	outfile_file(t_pipe *data, char *file, int type)
+{
+	if (data->outfile_fd)
+		close(data->outfile_fd);
+	check_file(file, 0);
+	if (type == APPEND_TO_END)
+		data->outfile_fd = open(file, O_APPEND | O_CREAT | O_RDWR, 0000644);
+	else
+		data->outfile_fd = open(file, O_TRUNC | O_CREAT | O_RDWR, 0000644);
+	if (data->outfile_fd < 0)
+		msg_exit(file, 0, ERR_NO_FILE, 1);
+}
 
 void	get_files_redir(t_rd *redir, t_pipe *data)
 {
 	while (redir)
 	{
 		if (redir->type == INPUT_REDIR)
-		{
-			if (data->infile_fd)
-				close(data->infile_fd);
-			check_file(redir->file, 1);
-			data->infile_fd = open(redir->file, O_RDONLY);
-			if (data->infile_fd < 0)
-				msg_exit(redir->file, 0, ERR_NO_FILE, 1);
-		}
+			input_file(data, redir->file);
 		else if (redir->type == OUTPUT_REDIR || redir->type == APPEND_TO_END)
-		{
-			if (data->outfile_fd)
-				close(data->outfile_fd);
-			check_file(redir->file, 0);
-			if (redir->type == APPEND_TO_END)
-				data->outfile_fd = open(redir->file, O_APPEND | O_CREAT | O_RDWR, 0000644);
-			else
-				data->outfile_fd = open(redir->file, O_TRUNC | O_CREAT | O_RDWR, 0000644);
-			if (data->outfile_fd < 0)
-				msg_exit(redir->file, 0, ERR_NO_FILE, 1);
-		}
+			outfile_file(data, redir->file, redir->type);
 		redir = redir->next;
 	}
 }

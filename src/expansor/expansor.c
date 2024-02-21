@@ -6,17 +6,11 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 16:44:44 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:17:15 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	question_mark(char **var_name, char **var_value)
-{
-	*var_name = ft_strdup("?");
-	*var_value = ft_itoa(exit_status(0));
-}
 
 char	*expand_var(char *str, int *i, t_env **env)
 {
@@ -71,7 +65,7 @@ int	handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
 	return (0);
 }
 
-void	expansor(t_cmd *cmd, t_env **env)
+void	iter_n_expand(t_cmd *cmd, t_env **env)
 {
     t_expansion exp;
 
@@ -95,4 +89,13 @@ void	expansor(t_cmd *cmd, t_env **env)
 			return (msg_return(0, 0, "quote not closed", 1));
         exp.j++;
     }
+}
+
+void	expansor(t_cmd *cmd, t_env **env)
+{
+	while (cmd)
+	{
+		iter_n_expand(cmd, env);
+		cmd = cmd->next;
+	}
 }

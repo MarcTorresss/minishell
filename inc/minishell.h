@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 13:05:11 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:16:30 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ char	*get_var_name(char *str, int i);
 int		double_quote_dealer(char *str, int i, int single_f, int double_f);
 int		single_quote_dealer(char *str, int i, int single_f, int double_f);
 char	*remove_char_at(char *str, int i);
+void	question_mark(char **var_name, char **var_value);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 
