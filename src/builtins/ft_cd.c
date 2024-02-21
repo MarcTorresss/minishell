@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 14:36:28 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:10:13 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	set_oldpwd(t_env **env, t_env **exp, char *value)
 	char	*pwd;
 
 	if (!value)
-	{
-		printf("\n");
 		pwd = getcwd(NULL, 0);
-	}
 	else
 		pwd = value;
 	str = ft_strjoin("OLDPWD=", pwd);
@@ -45,18 +42,20 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 	if (tmp && tmp->value)
 	{
 		if (!tmp->value[0])
+		{
 			set_oldpwd(env, exp, 0);
+			ft_fprintf(1, "\n");
+		}
 		else
 		{
 			if (chdir(tmp->value))
-				return (msg_return("cd", tmp->value, 1));
+				return (msg_return("cd", tmp->value, "No such file or directory", 1));
 			set_oldpwd(env, exp, old_pwd);
 			ft_pwd(0);
 		}
 	}
 	else
-		msg_return("cd: OLDPWD not set", 0, 1);
-	exit_status(0);
+		msg_return("cd", 0, "OLDPWD not set", 1);
 }
 
 void	cd_home(t_env **exp)
@@ -67,16 +66,16 @@ void	cd_home(t_env **exp)
 	if (tmp && tmp->value && tmp->value[0])
 	{
 		if (chdir(tmp->value))
-			return (msg_return("cd", tmp->value, 1));
+			return (msg_return("cd", tmp->value, "No such file or directory", 1));
 		set_oldpwd(exp, exp, 0);
 	}
 	else
-		msg_return("cd: HOME not set", 0, 1);
-	exit_status(0);
+		msg_return("cd", 0, "HOME not set", 1);
 }
 
 void	ft_cd(t_env **env, t_env **exp, char **cmd)
 {
+	exit_status(0);
 	if (!cmd[1] || (cmd[1][0] == '~' && !cmd[1][1]))
 		return (cd_home(exp));
 	else if (cmd[1][0] == '-' && !cmd[1][1])
@@ -84,7 +83,7 @@ void	ft_cd(t_env **env, t_env **exp, char **cmd)
 	else
 	{
 		if (chdir(cmd[1]))
-			return (msg_return("cd", cmd[1], 1));
+			return (msg_return("cd", cmd[1], "No such file or directory", 1));
 		set_oldpwd(env, exp, 0);
 	}
 }

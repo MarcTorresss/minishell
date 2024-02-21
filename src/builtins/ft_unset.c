@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:36:16 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 14:49:05 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:22:47 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	ft_unset(t_env **env, t_env **exp, char **cmd)
 		j = 0;
 		while (cmd[i][j] && (ft_isalnum(cmd[i][j]) || cmd[i][j] == '_'))
 			j++;
-		if (cmd[i][j] || !ft_isdigit(cmd[i][0]))
-			return (msg_return("unset", cmd[i], 1));
+		if (cmd[i][j] || ft_isdigit(cmd[i][0]))
+			return (msg_return("unset", cmd[i], "not a valid identifier", 1));
 		name = ft_strdup(cmd[i]);
 		remove_from_env(env, name);
 		remove_from_env(exp, name);

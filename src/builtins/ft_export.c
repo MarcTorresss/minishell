@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 15:21:46 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:35:33 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,15 @@ int	update_value(char *name, char *value, t_env **exp, int append)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			if (value && append)
-				tmp->value = ft_join_n_destroy(tmp->value, value, 3);
-			else
-				tmp->value = value;
+			if (append)
+				tmp->value = ft_join_n_destroy(tmp->value, value, 1);
+			else if (value && tmp->value)
+			{
+				free(tmp->value);
+				tmp->value = ft_strdup(value);
+			}
+			else if (value)
+				tmp->value = ft_strdup(value);
 			exists_f = 1;
 			break ;
 		}
@@ -88,7 +93,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 	value = NULL;
 	append = 0;
 	if (forbidden_char(cmd))
-		msg_exit("export", cmd, "Not a valid identifier", 1);
+		msg_return("export", cmd, "not a valid identifier", 1);
 	name = get_name(cmd);
 	value = get_value(cmd);
 	if (ft_strncmp(cmd + ft_strlen(name), "+=", 2) == 0)
@@ -97,8 +102,10 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 		new_env_var(name, value, exp);
 	if (!update_value(name, value, env, append) && value)
 		new_env_var(name, value, env);
-	free(name);
-	free(value);
+	if (value)
+		free(value);
+	if (name)
+		free(name);
 }
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)
@@ -106,10 +113,12 @@ void	ft_export(t_env **exp, t_env **env, char **cmd)
 	int		i;
 
 	i = 0;
-	if (!cmd[1])
+	if (!cmd[1] || !cmd[1][0])
 		sort_export(exp);
 	else
+	{
+		exit_status(0);
 		while (cmd[++i])
 			export_process(exp, env, cmd[i]);
-	exit(0);
+	}
 }

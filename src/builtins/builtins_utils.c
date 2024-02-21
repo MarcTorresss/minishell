@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/19 13:35:36 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:46:57 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int forbidden_char(char *input)
 		return (1);
 	while (input[i])
 	{
-		if (input[i] == '=')
+		if ((input[i] == '=' || (input[i] == '+' && input[i + 1] == '=')) && i != 0)
 			return (0);
 		if (!ft_isalnum(input[i]) && input[i] != '_')
 			return (1);
@@ -64,11 +64,11 @@ char	*get_name(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '=')
+		if (input[i] == '=' || (input[i] == '+' && input[i + 1] == '='))
 			break ;
 		i++;
 	}
-	return (ft_substr(input, 1, i - 1));
+	return (ft_substr(input, 0, i));
 }
 
 char	*get_value(char *input)

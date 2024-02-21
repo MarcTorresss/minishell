@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_join_n_destroy.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:08:00 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/18 16:19:11 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:32:47 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,19 @@ char	*ft_join_n_destroy(char *s1, char *s2, int to_free)
 {
 	char	*new;
 
-	new = ft_strjoin(s1, s2);
-	if (to_free == 1)
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		new = ft_strdup(s2);
+	else if (!s2)
+		new = ft_strdup(s1);
+	else	
+		new = ft_strjoin(s1, s2);
+	if (to_free == 1 && s1)
 		free(s1);
-	else if (to_free == 2)
+	else if (to_free == 2 && s2)
 		free(s2);
-	else if (to_free == 3)
+	else if (to_free == 3 && s1 && s2)
 	{
 		free(s1);
 		free(s2);

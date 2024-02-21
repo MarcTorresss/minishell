@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:10:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/20 19:36:53 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_data(t_pipe *data, t_cmd *cmd)
 	data->n_cmds = i;
 	data->pipe_ends[0] = -1;
 	data->pipe_ends[1] = -1;
+	data->infile_fd = 0;
+	data->outfile_fd = 0;
 	data->cmd = NULL;
 	data->pid = malloc(sizeof(pid_t) * data->n_cmds);
 	if (!data->pid)
