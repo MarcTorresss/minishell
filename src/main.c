@@ -13,6 +13,16 @@
 
 #include "../inc/minishell.h"
 
+void	print_lex(t_lxr *lxr)
+{
+	ft_fprintf(1, "\nStack Lxr\n");
+	while (lxr != NULL)
+	{
+		ft_fprintf(1, "\nword = %s -> sig = %d\n", lxr->word, lxr->sign);
+		lxr = lxr->next;
+	}
+}
+
 void	print_parser(t_cmd *cmd)
 {
 	int	i = 0;
@@ -33,11 +43,11 @@ void	print_parser(t_cmd *cmd)
 				ft_fprintf(1, "tmp->redir->file = %s\n", tmp->file);
 				tmp = tmp->next;
 			}
-			while (cmd->args[j][i] != '\0')
+			/*while (cmd->args[j][i] != '\0')
 			{
 				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i, cmd->args[j][i]);
 				i++;
-			}
+			}*/
 			j++;
 		}
 		cmd = cmd->next;
@@ -71,6 +81,7 @@ int	main(int argc, char **argv, char **envd)
 		{
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
+				//print_lex(lxr);
 				print_parser(cmd);
 				ft_heredoc(cmd);
 				expansor(cmd, &env);

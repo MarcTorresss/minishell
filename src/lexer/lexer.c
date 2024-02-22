@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/21 19:19:16 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:59:59 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,6 @@ t_lxr	*init_lxr(void)
 	return (new);
 }
 
-void	print_lex(t_lxr *lxr)
-{
-	ft_fprintf(1, "\nStack Lxr\n");
-	while (lxr != NULL)
-	{
-		ft_fprintf(1, "\nword = %s -> sig = %d\n", lxr->word, lxr->sign);
-		lxr = lxr->next;
-	}
-
-}
-
 int	ft_scape_space(char *str, int i)
 {
 	while (str[i] == ' ')
@@ -136,6 +125,5 @@ int	ft_lexer(char *str, t_lxr **lxr)
 			i++;
 		}
 	}
-	// print_lex(*lxr);
 	return (0);
 }
