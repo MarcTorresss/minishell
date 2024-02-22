@@ -27,11 +27,13 @@ void	print_parser(t_cmd *cmd)
 {
 	int	i = 0;
 	int	j = 0;
+	int	z = 0;
 	t_rd	*tmp;
 	
 	while (cmd != NULL)
 	{
 		j = 0;
+		ft_fprintf(1, "\nTOKENNN ---- %i\n", z);
 		tmp = cmd->redir;
 		while (cmd->args[j] != NULL)
 		{
@@ -49,6 +51,7 @@ void	print_parser(t_cmd *cmd)
 				i++;
 			}*/
 			j++;
+			z++;
 		}
 		cmd = cmd->next;
 	}
@@ -84,7 +87,7 @@ int	main(int argc, char **argv, char **envd)
 				//print_lex(lxr);
 				print_parser(cmd);
 				ft_heredoc(cmd);
-				expansor(cmd, &env);
+				//expansor(cmd, &env);
 				executor(cmd, &env, &exp);
 			}
 		}

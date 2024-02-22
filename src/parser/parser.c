@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/22 12:28:04 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 15:42:38 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,25 @@ int	ft_isredir(t_lxr **lxr, t_rd **redir)
 	return (0);
 }
 
-int	add_command(t_lxr **lxr, t_cmd *new, t_rd **redir)
+int	add_command(t_lxr **lxr, t_cmd **new, t_rd **redir)
 {
 	int	i;
 
 	i = 0;
-	while ((*lxr) != NULL)
+	if ((*lxr)->sign != NOTH)
 	{
-		if ((*lxr)->sign == PIPE)
-			(*lxr) = (*lxr)->next;
-		if ((*lxr)->sign != NOTH)
-		{
-			if (ft_isredir(lxr, redir) == -1)
-				return (-1);
-		}
-		else
-		{
-			new->args[i] = ft_strdup((*lxr)->word);
-			if (!new->args[i])
-				return (free_all(new->args, i), -1);	
-			i++;
-		}
-		(*lxr) = (*lxr)->next;
+		if (ft_isredir(lxr, redir) == -1)
+			return (-1);
 	}
-	
-	new->redir = *redir;
+	else
+	{
+		(*new)->args[i] = ft_strdup((*lxr)->word);
+		if (!(*new)->args[i])
+			return (free_all((*new)->args, i), -1);	
+		i++;
+	}
+	(*lxr) = (*lxr)->next;
+	(*new)->redir = *redir;
     return (0);
 }
 
@@ -111,7 +105,7 @@ int	create_command(t_lxr **lxr, t_cmd **new, int qtt_args)
 			return (-1);
 		(*new)->args[qtt_args] = NULL;
 	}
-	if (add_command(lxr, *new, &redir) == -1)
+	if (add_command(lxr, new, &redir) == -1)
 		return (-1);
     return (0);
 }
@@ -121,17 +115,19 @@ int	count_args(t_lxr *lxr)
 	t_lxr	*tmp;
 	int	i;
 
-	tmp = lxr;
 	i = 0;
-
+	tmp = lxr;
+	//ft_fprintf(1, "lxr->word = %s\n", lxr->word);
+	//ft_fprintf(1, "lxr->sign = %d\n", lxr->sign);
 	while (tmp != NULL)
 	{
 		if (tmp->sign == NOTH)
 			i++;
-		if (tmp->sign != NOTH && tmp->sign != PIPE && tmp->next != NULL)
+		if (tmp->sign != NOTH && tmp->next != NULL)
 			tmp = tmp->next;
 		tmp = tmp->next;
 	}
+	ft_fprintf(1, "i = %d\n", i);
 	return (i);
 }
 
@@ -143,10 +139,12 @@ int ft_parser(t_cmd **table, t_lxr **lxr)
 	int		check;
 
     tmp = *lxr;
-	qtt_args = count_args(tmp);
-	printf("qtt_args = %d\n", qtt_args);
     while (tmp != NULL)
     {
+		ft_fprintf(1, "lxr->word = %s\n", tmp->word);
+		ft_fprintf(1, "lxr->sign = %d\n", tmp->sign);
+		qtt_args = count_args(tmp);
+		printf("qtt_args = %d\n", qtt_args);
     	check = check_comands(*lxr);
 		if (check == -1)
 			return (lexer_clear(lxr), -1);
