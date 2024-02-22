@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 16:47:20 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:38:40 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,9 @@ int	handle_dollar_sign(t_cmd *cmd, t_env **env, t_expansion *exp)
 void	expansor(t_cmd *cmd, t_env **env)
 {
     t_expansion exp;
-	int			i = 0;
-	int			j = 0;
 
     exp.j = 0;
 	(void)env;
-	while (cmd != NULL)
-	{
-		while (cmd->args[j] != NULL)
-		{
-			i = 0;
-			while (cmd->args[j][i] != '\0')
-			{
-				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i, cmd->args[j][i]);
-				i++;
-			}
-			j++;
-		}
-		cmd = cmd->next;
-	}
-	
-	/*
     while (cmd->args[exp.j])
     {
         exp.i = 0;
@@ -113,5 +95,5 @@ void	expansor(t_cmd *cmd, t_env **env)
         if (exp.single_f || exp.double_f)
 			return (msg_return(0, 0, "quote not closed", 1));
         exp.j++;
-    }*/
+    }
 }

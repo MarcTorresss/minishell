@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:38:53 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/21 18:40:30 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:56:20 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void    lexer_clear(t_lxr **lxr)
 void    ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr)
 {
     lexer_clear(lxr);
-	parser_clear(table);
+	(void) table;
+	//parser_clear(table);
 }
 
 int	ft_sizelst(t_lxr *list)

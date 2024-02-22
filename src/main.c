@@ -13,25 +13,34 @@
 
 #include "../inc/minishell.h"
 
-void	print_table(t_cmd *table)
+void	print_parser(t_cmd *cmd)
 {
-	t_cmd	*tmp;
-	int		i;
-	int		j;
-
-	j = 0;
-	i = 0;
-	tmp = table;
-	while (tmp)
+	int	i = 0;
+	int	j = 0;
+	t_rd	*tmp;
+	
+	while (cmd != NULL)
 	{
 		j = 0;
-		while (tmp->args[j])
+		tmp = cmd->redir;
+		while (cmd->args[j] != NULL)
 		{
-			printf("table[%d].args[%d] = %s\n", i, j, tmp->args[j]);
+			i = 0;
+			ft_fprintf(1, "cmd->args[%d] = %s\n", j, cmd->args[j]);
+			while (tmp != NULL)
+			{
+				ft_fprintf(1, "tmp->redir->type = %d\n", tmp->type);
+				ft_fprintf(1, "tmp->redir->file = %s\n", tmp->file);
+				tmp = tmp->next;
+			}
+			while (cmd->args[j][i] != '\0')
+			{
+				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i, cmd->args[j][i]);
+				i++;
+			}
 			j++;
 		}
-		tmp = tmp->next;
-		i++;
+		cmd = cmd->next;
 	}
 }
 
@@ -42,12 +51,11 @@ int	main(int argc, char **argv, char **envd)
 	t_cmd	*cmd;
 	char	*prompt;
 	t_lxr	*lxr;
-	int		i = 0;
-	int		j = 0;
-	t_cmd	*tmp;
 
 	cmd = NULL;
 	lxr = NULL;
+	env = NULL;
+	exp = NULL;
 	//(void)envd;
 	(void)argv;
 	if (argc > 1)
@@ -55,8 +63,6 @@ int	main(int argc, char **argv, char **envd)
 		printf("Error: minishell does not take any arguments\n");
 		return (1);
 	}
-	env = NULL;
-	exp = NULL;
 	init_envd(envd, &env, &exp);
 	while (1)
 	{
@@ -65,29 +71,10 @@ int	main(int argc, char **argv, char **envd)
 		{
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
+				print_parser(cmd);
 				ft_heredoc(cmd);
-				tmp = cmd;
-				while (tmp != NULL)
-				{
-					j = 0;
-					while (tmp->args[j] != NULL)
-					{
-						i = 0;
-						if (tmp->redir)
-							ft_fprintf(1, "tmp->redir = %d\n", tmp->redir->type);
-						else
-							ft_fprintf(1, "tmp->args[%d] = %s\n", j, tmp->args[j]);
-						while (tmp->args[j][i] != '\0')
-						{
-							ft_fprintf(1, "tmp->args[%d][%d] = %c\n", j, i, tmp->args[j][i]);
-							i++;
-						}
-						j++;
-					}
-					tmp = tmp->next;
-				}
-				//expansor(cmd, &env);
-				//executor(cmd, &env, &exp);
+				expansor(cmd, &env);
+				executor(cmd, &env, &exp);
 			}
 		}
 		ft_clean_lxr_prs(&cmd, &lxr);

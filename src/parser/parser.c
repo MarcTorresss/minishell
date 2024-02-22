@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/21 19:47:01 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 12:28:04 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,10 @@ int	add_command(t_lxr **lxr, t_cmd *new, t_rd **redir)
 	int	i;
 
 	i = 0;
-	while ((*lxr) != NULL && (*lxr)->sign != PIPE)
+	while ((*lxr) != NULL)
 	{
+		if ((*lxr)->sign == PIPE)
+			(*lxr) = (*lxr)->next;
 		if ((*lxr)->sign != NOTH)
 		{
 			if (ft_isredir(lxr, redir) == -1)
@@ -88,10 +90,11 @@ int	add_command(t_lxr **lxr, t_cmd *new, t_rd **redir)
 			new->args[i] = ft_strdup((*lxr)->word);
 			if (!new->args[i])
 				return (free_all(new->args, i), -1);	
+			i++;
 		}
 		(*lxr) = (*lxr)->next;
-		i++;
 	}
+	
 	new->redir = *redir;
     return (0);
 }
@@ -121,11 +124,12 @@ int	count_args(t_lxr *lxr)
 	tmp = lxr;
 	i = 0;
 
-	//necesito un previous para contar argumentos
 	while (tmp != NULL)
 	{
 		if (tmp->sign == NOTH)
 			i++;
+		if (tmp->sign != NOTH && tmp->sign != PIPE && tmp->next != NULL)
+			tmp = tmp->next;
 		tmp = tmp->next;
 	}
 	return (i);
