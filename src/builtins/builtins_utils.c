@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 17:46:57 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:38:07 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ t_env	*find_env(t_env **env, char *name)
 
 void	swap_data(t_env *nod1, t_env *nod2)
 {
-    char *temp_name;
-    char *temp_value;
+	char	*temp_name;
+	char	*temp_value;
 
 	temp_name = nod1->name;
 	temp_value = nod1->value;
-    nod1->name = nod2->name;
-    nod1->value = nod2->value;
-    nod2->name = temp_name;
-    nod2->value = temp_value;
+	nod1->name = nod2->name;
+	nod1->value = nod2->value;
+	nod2->name = temp_name;
+	nod2->value = temp_value;
 }
 
-int forbidden_char(char *input)
+int	forbidden_char(char *input)
 {
 	int	i;
 
@@ -48,7 +48,8 @@ int forbidden_char(char *input)
 		return (1);
 	while (input[i])
 	{
-		if ((input[i] == '=' || (input[i] == '+' && input[i + 1] == '=')) && i != 0)
+		if ((input[i] == '=' || (input[i] == '+' && input[i + 1] == '='))
+			&& i != 0)
 			return (0);
 		if (!ft_isalnum(input[i]) && input[i] != '_')
 			return (1);

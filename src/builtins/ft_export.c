@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 18:35:33 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:38:52 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	export_print(t_env **exp)
 	{
 		ft_fprintf(1, "declare -x %s", tmp->name);
 		if (tmp->value)
-			ft_fprintf(1 ,"=\"%s\"\n", tmp->value);
+			ft_fprintf(1, "=\"%s\"\n", tmp->value);
 		else
-			ft_fprintf(1 ,"\n");
+			ft_fprintf(1, "\n");
 		tmp = tmp->next;
 	}
 }
 
-void	 sort_export(t_env **exp)
+void	sort_export(t_env **exp)
 {
 	t_env	*node;
 	t_env	*start;
@@ -44,7 +44,8 @@ void	 sort_export(t_env **exp)
 		sorted_f = 0;
 		while (node->next)
 		{
-			if (ft_strncmp(node->name, node->next->name, ft_strlen(node->name) + 1) > 0)
+			if (ft_strncmp(node->name, node->next->name, ft_strlen(node->name)
+					+ 1) > 0)
 			{
 				swap_data(node, node->next);
 				sorted_f = 1;
@@ -88,7 +89,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 {
 	char	*name;
 	char	*value;
-	int 	append;
+	int		append;
 
 	value = NULL;
 	append = 0;
@@ -110,7 +111,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!cmd[1] || !cmd[1][0])

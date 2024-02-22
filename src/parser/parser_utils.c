@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:26:52 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/20 13:30:00 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/22 11:40:50 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_rd    *init_redir(void)
         return (NULL);
     new->next = NULL;
     new->file = NULL;
+	new->type = 10;
     return (new);
 }
 

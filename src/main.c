@@ -7,42 +7,55 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:45:55 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/02/04 12:28:49 by rbarbier         ###   ########.fr       */
-/*                                                                 +           */
+/*                                                                
+	+           */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void print_table(t_cmd *table)
+void	print_parser(t_cmd *cmd)
 {
-	t_cmd	*tmp;
-	int		i;
-	int		j; 
+	int	i = 0;
+	int	j = 0;
+	t_rd	*tmp;
 	
-	
-	j = 0;
-	i = 0;
-	tmp = table;
-	while (tmp)
+	while (cmd != NULL)
 	{
 		j = 0;
-		while (tmp->args[j])
+		tmp = cmd->redir;
+		while (cmd->args[j] != NULL)
 		{
-			printf("table[%d].args[%d] = %s\n", i, j, tmp->args[j]);
+			i = 0;
+			ft_fprintf(1, "cmd->args[%d] = %s\n", j, cmd->args[j]);
+			while (tmp != NULL)
+			{
+				ft_fprintf(1, "tmp->redir->type = %d\n", tmp->type);
+				ft_fprintf(1, "tmp->redir->file = %s\n", tmp->file);
+				tmp = tmp->next;
+			}
+			while (cmd->args[j][i] != '\0')
+			{
+				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i, cmd->args[j][i]);
+				i++;
+			}
 			j++;
 		}
-		tmp = tmp->next;
-		i++;
+		cmd = cmd->next;
 	}
 }
 
-int main(int argc, char **argv, char **envd)
+int	main(int argc, char **argv, char **envd)
 {
 	t_env	*env;
 	t_env	*exp;
-	t_cmd	*cmd = NULL;
+	t_cmd	*cmd;
 	char	*prompt;
-	t_lxr	*lxr = NULL;
+	t_lxr	*lxr;
 
+	cmd = NULL;
+	lxr = NULL;
+	env = NULL;
+	exp = NULL;
 	//(void)envd;
 	(void)argv;
 	if (argc > 1)
@@ -50,25 +63,23 @@ int main(int argc, char **argv, char **envd)
 		printf("Error: minishell does not take any arguments\n");
 		return (1);
 	}
-	env = NULL;
-	exp = NULL;
 	init_envd(envd, &env, &exp);
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
-		//printf("\n%i\n", ft_lexer(prompt, &lxr)); 
 		if (ft_lexer(prompt, &lxr) == 0)
 		{
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
+				print_parser(cmd);
 				ft_heredoc(cmd);
-          		expansor(cmd, &env);
-		    	executor(cmd, &env, &exp);
-      		}
+				expansor(cmd, &env);
+				executor(cmd, &env, &exp);
+			}
 		}
 		ft_clean_lxr_prs(&cmd, &lxr);
 		lxr = NULL;
 		cmd = NULL;
 	}
-    return 0;
+	return (0);
 }

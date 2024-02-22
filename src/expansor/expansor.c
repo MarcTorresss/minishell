@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/02/21 19:08:39 by rbarbier         ###   ########.fr       */
@@ -91,7 +91,6 @@ void	expand(char *str, t_env **env)
 void	expansor(t_cmd *cmd, t_env **env)
 {
 	int	i;
-
 	i = 0;
 	while (cmd)
 	{
