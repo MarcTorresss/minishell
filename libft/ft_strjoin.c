@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:52:55 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/19 15:55:45 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:08:26 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		len1;
 	int		len2;
 	char	*str;
-	
+
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (len1 + len2 + 1));

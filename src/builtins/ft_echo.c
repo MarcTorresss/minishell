@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 16:14:58 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:35 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:09:31 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_echo(char **args)
 {
-	int i;
-	int n_flag;
+	int	i;
+	int	n_flag;
 
 	i = 1;
 	n_flag = 0;

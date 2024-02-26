@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 16:16:30 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:07:27 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void					lexer_clear(t_lxr **lxr);
 t_lxr					*ft_last_lxr(t_lxr *lxr);
 t_lxr					*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
 void					print_lex(t_lxr *lxr);
+t_lxr					*init_lxr(void);
+int						init_word(char *str);
 
 /*******************************  PARSER  *******************************/
 
@@ -158,16 +160,20 @@ void					ft_addback_redir(t_rd **redir, t_rd *new);
 int						ft_issigntoken(char c);
 int						ft_heredoc(t_cmd *cmd);
 int						check_error(t_lxr *lxr);
+int						count_args(t_lxr *lxr);
+int						check_signs(t_lxr *lxr, int qtt);
 
 /*******************************  EXPANSOR  *******************************/
 
-void	expansor(t_cmd *cmd, t_env **env);
-char	*expand_var(char *str, int *i, t_env **env);
-char	*get_var_name(char *str, int i);
-int		double_quote_dealer(char *str, int i, int single_f, int double_f);
-int		single_quote_dealer(char *str, int i, int single_f, int double_f);
-char	*remove_char_at(char *str, int i);
-void	question_mark(char **var_name, char **var_value);
+void					expansor(t_cmd *cmd, t_env **env);
+char					*expand_var(char *str, int *i, t_env **env);
+char					*get_var_name(char *str, int i);
+int						double_quote_dealer(char *str, int i, int single_f,
+							int double_f);
+int						single_quote_dealer(char *str, int i, int single_f,
+							int double_f);
+char					*remove_char_at(char *str, int i);
+void					question_mark(char **var_name, char **var_value);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 

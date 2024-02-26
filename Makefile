@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/21 18:40:11 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/02/26 16:57:44 by martorre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,11 +33,10 @@ DIR_HRD		=	heredoc/
 # *******************************	FILES	******************************* #
 
 FILES		=	main.c enviroment.c error.c
-LXR_FILES	=	lexer_utils.c lexer.c
-PRS_FILE	=	parser.c parser_utils.c utils.c
+LXR_FILES	=	lexer.c lexer_utils.c lexer_utils2.c
 BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_pwd.c ft_env.c
 EXEC_FILES	=	executor.c executor_utils1.c executor_utils2.c child_routine.c redirections.c
-PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_free.c
+PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_utils3.c parser_clean.c
 HRD_FILE	=	heredoc.c
 EXPAN_FILES	=	expan_utils.c expansor.c
 

@@ -1,13 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-<<<<<<<< HEAD:src/expansor/expansor.c
-/*   expansor.c                                         :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/08 13:38:59 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:18:33 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +32,21 @@ void	expand_env(t_cmd *cmd, t_env *env)
 		i++;
 	}
 }
-========
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 17:20:13 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/06 17:20:13 by marvin           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../inc/minishell.h"
 
 void	signal_hand_default(int signum)
 {
-    if (signum == CTRL_C)
-    {
-        ft_printf("\n");
-        rl_replace_line("", 1);
+	if (signum == CTRL_C)
+	{
+		ft_printf("\n");
+		rl_replace_line("", 1);
 		rl_on_new_line(); // cursor nueva linia
-		rl_redisplay(); // redibuja la pantalla de entrada mostrando los cambios echos
-    }
+		rl_redisplay();  
+			// redibuja la pantalla de entrada mostrando los cambios echos
+	}
 }
 
 int	init_signals(int status)
 {
-    siganl(CTRL_C, signal_hand_default);
-    return (1);
+	siganl(CTRL_C, signal_hand_default);
+	return (1);
 }
->>>>>>>> lexer:src/prompt/signals.c

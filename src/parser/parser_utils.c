@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 16:26:52 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/22 11:40:50 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:18:39 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,22 @@ void	ft_cmd_addback(t_cmd **table, t_cmd *new)
 		*table = new;
 }
 
-t_rd    *init_redir(void)
+t_rd	*init_redir(void)
 {
-    t_rd    *new;
+	t_rd	*new;
 
-    new = malloc(sizeof(t_rd));
-    if (!new)
-        return (NULL);
-    new->next = NULL;
-    new->file = NULL;
+	new = malloc(sizeof(t_rd));
+	if (!new)
+		return (NULL);
+	new->next = NULL;
+	new->file = NULL;
 	new->type = 10;
-    return (new);
+	return (new);
 }
 
-void    ft_addback_redir(t_rd **redir, t_rd *new)
+void	ft_addback_redir(t_rd **redir, t_rd *new)
 {
-    t_rd	*last;
+	t_rd	*last;
 
 	if (*redir != NULL)
 	{

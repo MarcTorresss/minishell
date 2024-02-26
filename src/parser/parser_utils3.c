@@ -1,47 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_free.c                                      :+:      :+:    :+:   */
+/*   parser_utils3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:16:16 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/20 11:11:06 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:56:50 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	**free_all(char **mat, int i)
+int	count_args(t_lxr *lxr)
 {
-	int	j;
+	t_lxr	*tmp;
+	int		i;
 
-	j = 0;
-	while (j < i)
+	i = 0;
+	tmp = lxr;
+	while (tmp != NULL && tmp->sign != PIPE)
 	{
-		free(mat[j]);
-		j++;
+		if (tmp->sign == NOTH)
+			i++;
+		if (tmp->sign != NOTH && tmp->next != NULL)
+			tmp = tmp->next;
+		tmp = tmp->next;
 	}
-	free(mat);
-	return (NULL);
+	return (i);
 }
-void    parser_clear(t_cmd **table)
-{
-    int     i;
-    t_cmd   *tmp;
 
-    while (*table != NULL)
-    {
-        tmp = *table;
-        i = 0;
-        while ((*table)->args && (*table)->args[i] != NULL)
-        {
-            free(tmp->args[i]);
-            i++;
-        }
-        free((*table)->args);
-        *table = (*table)->next;
-        free(tmp);
-    }
-    *table = NULL;
+int	check_signs(t_lxr *lxr, int qtt)
+{
+	t_lxr	*last;
+
+	last = ft_last_lxr(lxr);
+	if ((qtt == 0 && ft_issigntoken(lxr->sign) == 1)
+		|| ft_issigntoken(last->sign) == 1)
+		return (check_error(lxr), -1);
+	return (0);
 }
