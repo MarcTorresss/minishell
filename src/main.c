@@ -7,7 +7,7 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:45:55 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/02/04 12:28:49 by rbarbier         ###   ########.fr       */
-/*                                                                
+/*
 	+           */
 /* ************************************************************************** */
 
@@ -25,13 +25,18 @@ void	print_lex(t_lxr *lxr)
 
 void	print_parser(t_cmd *cmd)
 {
-	int	i = 0;
-	int	j = 0;
+	int		i;
+	int		j;
+	int		z;
 	t_rd	*tmp;
-	
+
+	i = 0;
+	j = 0;
+	z = 0;
 	while (cmd != NULL)
 	{
 		j = 0;
+		ft_fprintf(1, "\nTOKENNN ---- %i\n", z);
 		tmp = cmd->redir;
 		while (cmd->args[j] != NULL)
 		{
@@ -45,10 +50,12 @@ void	print_parser(t_cmd *cmd)
 			}
 			/*while (cmd->args[j][i] != '\0')
 			{
-				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i, cmd->args[j][i]);
+				ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i,
+					cmd->args[j][i]);
 				i++;
 			}*/
 			j++;
+			z++;
 		}
 		cmd = cmd->next;
 	}
@@ -77,12 +84,17 @@ int	main(int argc, char **argv, char **envd)
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
+		if (prompt == NULL)
+		{
+			ft_fprintf(1, "exit\n");
+			break ;
+		}
 		if (ft_lexer(prompt, &lxr) == 0)
 		{
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
 				//print_lex(lxr);
-				print_parser(cmd);
+				//print_parser(cmd);
 				ft_heredoc(cmd);
 				expansor(cmd, &env);
 				executor(cmd, &env, &exp);

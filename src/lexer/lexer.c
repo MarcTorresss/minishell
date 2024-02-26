@@ -6,34 +6,11 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/22 12:59:59 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:43:54 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	init_word(char *str)
-{
-	int	i;
-	int	isquote;
-
-	i = 0;
-	isquote = 0;
-	while  (str[i] != '\0')
-	{
-		if (ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1)
-			return (i); 
-		if (ft_isquote(str[i]) == 1 && isquote == 0)
-		{
-			isquote = 1;
-			i++;
-		}
-		else if ((ft_isquote(str[i] == 1) && isquote == 1))
-			break ;
-		i++;
-	}
-	return (i);
-}
 
 int	init_sign(char *str, t_lxr *new)
 {
@@ -59,32 +36,19 @@ int	init_sign(char *str, t_lxr *new)
 
 int	ft_convert(char *str, t_lxr *new)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (ft_issign(str[i]) == 1)
 		i = init_sign(str, new);
 	else
-	{;
+	{
 		i = init_word(str);
 		new->word = ft_substr(str, 0, i);
 		if (!new->word)
 			return (-1);
 	}
 	return (i - 1);
-}
-
-t_lxr	*init_lxr(void)
-{
-	t_lxr	*new;
-
-	new = malloc(sizeof(t_lxr));
-	if (!new)
-		return (NULL);
-	new->word = NULL;
-	new->next = NULL;
-	new->sign = NOTH;
-	return (new);
 }
 
 int	ft_scape_space(char *str, int i)
@@ -104,8 +68,7 @@ int	ft_lexer(char *str, t_lxr **lxr)
 	int		check;
 
 	i = 0;
-	check = ft_scape_space(str, i);
-	if (check == -1)
+	if (ft_scape_space(str, i) == -1)
 		return (1);
 	while (i < ft_strlen(str))
 	{
@@ -118,7 +81,7 @@ int	ft_lexer(char *str, t_lxr **lxr)
 				return (1);
 			*lxr = ft_lxr_addback(*lxr, new);
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
-			if (check != -1)  
+			if (check != -1)
 				i += check;
 			else
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:13:43 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/20 13:32:33 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:07:22 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	ft_start_heredoc(t_rd *redir, char *path)
 			close(fd);
 			return (0);
 		}
-		ft_putendl_fd(line, fd); // pone \n dps de la linea
-		// write(fd, line, ft_strlen(line));
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
@@ -51,7 +50,8 @@ int	ft_heredoc(t_cmd *cmd)
 		while (tmp)
 		{
 			if (tmp->type == HEREDOC)
-				if (ft_start_heredoc(tmp, ft_strjoin("/tmp/mini_here", ft_itoa(i++))) == -1)
+				if (ft_start_heredoc(tmp, ft_strjoin("/tmp/mini_here",
+							ft_itoa(i++))) == -1)
 					return (-1);
 			tmp = tmp->next;
 		}

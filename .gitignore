@@ -5,3 +5,5 @@
 *.a
 /readline
 /proba
+/tester
+*.php

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 15:44:58 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:11:04 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	wait_processes(pid_t *pid, int *ret_value, int n_cmds)
 {
-	int		status;
-	int		i;
+	int	status;
+	int	i;
 
 	i = 0;
 	while (i < n_cmds)
@@ -30,7 +30,7 @@ void	wait_processes(pid_t *pid, int *ret_value, int n_cmds)
 void	init_data(t_pipe *data, t_cmd *cmd)
 {
 	t_cmd	*tmp;
-	int i;
+	int		i;
 
 	i = 0;
 	tmp = cmd;
@@ -69,7 +69,8 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
 			msg_exit(0, 0, ERR_FORK, 1);
 		if (data.pid[i] == 0)
 			child(data, cmd, env, exp);
-		dup2(data.pipe_ends[0], STDIN_FILENO); // redirect INPUT for the next process
+		dup2(data.pipe_ends[0], STDIN_FILENO);
+			// redirect INPUT for the next process
 		close_pipes(data.pipe_ends[0], data.pipe_ends[1]);
 		cmd = cmd->next;
 		i++;
@@ -82,6 +83,6 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
 void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 {
 	if (is_builtin(cmd->args, env, exp) && !cmd->next)
-		return ; // if the command is a builtin and there is no pipe
+		return ;// if the command is a builtin and there is no pipe
 	breeder(cmd, env, exp);
 }

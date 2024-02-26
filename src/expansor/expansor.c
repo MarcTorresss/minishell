@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 19:08:39 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/02/26 19:20:36 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ char	*expand_var(char *str, int *i, t_env **env)
 			var_value = ft_strdup(tmp_env->value);
 	}
 	tmp = ft_join_n_destroy(ft_substr(str, 0, *i), var_value, 1);
-	tmp = ft_join_n_destroy(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1, ft_strlen(str)), 3);
+	tmp = ft_join_n_destroy(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1,
+				ft_strlen(str)), 3);
 	if (ft_strlen(var_value) == 0)
 		*i += 1;
 	*i = *i + ft_strlen(var_value) - 1;
@@ -45,8 +46,9 @@ int	handle_quotes(char *str, int *i, int *single_f, int *double_f)
 {
 	*single_f = single_quote_dealer(str, *i, *single_f, *double_f);
 	*double_f = double_quote_dealer(str, *i, *single_f, *double_f);
-	if ((str[*i] == '\'' && *single_f) || (str[*i] == '\"' && *double_f) || \
-			(!*double_f && !*single_f && (str[*i] == '\'' || str[*i] == '\"')))
+	if ((str[*i] == '\'' && *single_f) || (str[*i] == '\"' && *double_f)
+		|| (!*double_f && !*single_f && (str[*i] == '\''
+				|| str[*i] == '\"')))
 	{
 		str = remove_char_at(str, *i);
 		return (1);
@@ -58,10 +60,11 @@ int	handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 {
 	if (!str[*i] || !str[*i + 1])
 		return (0);
-    if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1]) && \
-	(ft_isalnum(str[*i + 1]) || str[*i + 1] == '_' || str[*i + 1] == '?'))
+	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1])
+		&& (ft_isalnum(str[*i + 1]) || str[*i + 1] == '_'
+			|| str[*i + 1] == '?'))
 	{
-        str = expand_var(str, i, env);
+		str = expand_var(str, i, env);
 		return (1);
 	}
 	return (0);
@@ -71,7 +74,7 @@ void	expand(char *str, t_env **env)
 {
 	int	single_f;
 	int	double_f;
-	int	i;			
+	int	i;
 
 	single_f = 0;
 	double_f = 0;
@@ -91,6 +94,7 @@ void	expand(char *str, t_env **env)
 void	expansor(t_cmd *cmd, t_env **env)
 {
 	int	i;
+
 	i = 0;
 	while (cmd)
 	{
