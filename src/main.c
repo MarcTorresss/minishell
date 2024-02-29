@@ -95,6 +95,7 @@ int	main(int argc, char **argv, char **envd)
 			{
 				//print_lex(lxr);
 				//print_parser(cmd);
+				init_signals(1);
 				ft_heredoc(cmd);
 				expansor(cmd, &env);
 				executor(cmd, &env, &exp);

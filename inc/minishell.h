@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:07:27 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:13:44 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include "../readline/history.h"
+# include "../readline/readline.h"
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -162,6 +162,7 @@ int						ft_heredoc(t_cmd *cmd);
 int						check_error(t_lxr *lxr);
 int						count_args(t_lxr *lxr);
 int						check_signs(t_lxr *lxr, int qtt);
+int						init_signals(int status);
 
 /*******************************  EXPANSOR  *******************************/
 

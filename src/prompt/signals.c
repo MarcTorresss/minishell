@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:18:33 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:44:21 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	expand_env(t_cmd *cmd, t_env *env)
 		{
 			tmp2 = ft_strdup(cmd->args[i] + 1);
 			free(cmd->args[i]);
-			cmd->args[i] = ft_strdup(find_env(env, tmp2)->value);
+			cmd->args[i] = ft_strdup(find_env(&env, tmp2)->value);
 			free(tmp2);
 		}
 		i++;
@@ -37,16 +37,17 @@ void	signal_hand_default(int signum)
 {
 	if (signum == CTRL_C)
 	{
-		ft_printf("\n");
+		ft_fprintf(1, "\n");
 		rl_replace_line("", 1);
-		rl_on_new_line(); // cursor nueva linia
-		rl_redisplay();  
-			// redibuja la pantalla de entrada mostrando los cambios echos
+		rl_on_new_line();// cursor nueva linia
+		rl_redisplay(); // redibuja la pantalla de entrada mostrando los cambios echos
 	}
 }
 
 int	init_signals(int status)
 {
-	siganl(CTRL_C, signal_hand_default);
+	(void)status;
+	signal(CTRL_C, signal_hand_default);
+	signal(CTRL_SLASH, signal_hand_default);
 	return (1);
 }
