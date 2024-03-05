@@ -3,11 +3,11 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
+#    By: martorre <martorre@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/01 12:48:11 by martorre          #+#    #+#              #
-#    Updated: 2024/02/28 15:46:02 by rbarbier         ###   ########.fr        #
-#    Updated: 2024/02/28 17:37:11 by martorre         ###   ########.fr        #                                                                            #
+#    Created: 2024/03/05 17:31:34 by martorre          #+#    #+#              #
+#    Updated: 2024/03/05 17:31:38 by martorre         ###   ########.fr        #
+#                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
