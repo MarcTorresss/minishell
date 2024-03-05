@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/29 14:44:21 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:41:45 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,17 @@ void	signal_hand_default(int signum)
 	}
 }
 
+void	signal_hand(int signum)
+{
+	if (signum == CTRL_C)
+		ft_fprintf(1, "\n");
+}
+
 int	init_signals(int status)
 {
 	(void)status;
 	signal(CTRL_C, signal_hand_default);
+	//signal(CTRL_C, signal_hand);
 	signal(CTRL_SLASH, signal_hand_default);
 	return (1);
 }
