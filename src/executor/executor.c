@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:11:04 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:17:11 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,16 @@ void	wait_processes(pid_t *pid, int *ret_value, int n_cmds)
 		if (WIFEXITED(status))
 			*ret_value = WEXITSTATUS(status);
 		i++;
+	}
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			*ret_value = 131;
+			ft_fprintf(2, "Quit: %d\n", WTERMSIG(status));
+		}
+		else if (WTERMSIG(status) == SIGINT)
+			*ret_value = 130;
 	}
 }
 

@@ -7,7 +7,6 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/03/05 13:20:32 by rbarbier         ###   ########.fr       */
-/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -16,8 +15,8 @@
 # include "../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-# include <readline/readline.h>
+# include "../readline/history.h"
+# include "../readline/readline.h"
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -162,6 +161,7 @@ int						ft_heredoc(t_cmd *cmd);
 int						check_error(t_lxr *lxr);
 int						count_args(t_lxr *lxr);
 int						check_signs(t_lxr *lxr, int qtt);
+int						init_signals(int status);
 
 /*******************************  EXPANSOR  *******************************/
 

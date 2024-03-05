@@ -5,9 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/28 18:53:24 by rbarbier         ###   ########.fr       */
-/*                                                                            */
+/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             *//*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
@@ -48,16 +46,17 @@ int	init_word(char *str)
 	isquote = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isquote(str[i]) == 1 && isquote == 0)
+    if (ft_isquote(str[i]) == 1 && isquote == 0 && str[i + 1] != '\0')
 		{
 			isquote = 1;
 			i++;
 		}
 		if ((ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1) && isquote == 0)
 			return (i);
-		else if ((ft_isquote(str[i] == 1) && isquote == 1))
+		else if ((ft_isquote(str[i]) == 1) && isquote == 1)
 			break ;
 		i++;
 	}
+	i++;
 	return (i);
 }
