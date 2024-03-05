@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:20:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:01:34 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 {
 	if (!str[*i] || !str[*i + 1])
 		return (0);
-	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1])
+	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1]) 
 		&& (ft_isalnum(str[*i + 1]) || str[*i + 1] == '_'
 			|| str[*i + 1] == '?'))
 	{

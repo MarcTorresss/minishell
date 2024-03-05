@@ -74,6 +74,7 @@ int	main(int argc, char **argv, char **envd)
 	env = NULL;
 	exp = NULL;
 	//(void)envd;
+	rl_catch_signals = 0;
 	(void)argv;
 	if (argc > 1)
 	{
@@ -81,6 +82,7 @@ int	main(int argc, char **argv, char **envd)
 		return (1);
 	}
 	init_envd(envd, &env, &exp);
+	init_signals(1);
 	while (1)
 	{
 		prompt = readline("\033[1;32mminishell: \033[0m");
