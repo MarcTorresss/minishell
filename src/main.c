@@ -98,7 +98,8 @@ int	main(int argc, char **argv, char **envd)
 				//print_lex(lxr);
 				//print_parser(cmd);
 				ft_heredoc(cmd);
-				expansor(cmd, &env);
+				if (expansor(cmd, &env))
+					continue ;
 				executor(cmd, &env, &exp);
 			}
 		}

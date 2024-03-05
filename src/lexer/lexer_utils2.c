@@ -3,11 +3,9 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/05 13:27:28 by martorre         ###   ########.fr       */
-/*                                                                            */
+/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             *//*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
@@ -48,7 +46,7 @@ int	init_word(char *str)
 	isquote = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_isquote(str[i]) == 1 && isquote == 0 && str[i + 1] != '\0')
+    if (ft_isquote(str[i]) == 1 && isquote == 0 && str[i + 1] != '\0')
 		{
 			isquote = 1;
 			i++;
