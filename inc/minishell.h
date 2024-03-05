@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 10:44:42 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:07:27 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:20:32 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int						check_signs(t_lxr *lxr, int qtt);
 
 /*******************************  EXPANSOR  *******************************/
 
-void					expansor(t_cmd *cmd, t_env **env);
+int						expansor(t_cmd *cmd, t_env **env);
 char					*expand_var(char *str, int *i, t_env **env);
 char					*get_var_name(char *str, int i);
 int						double_quote_dealer(char *str, int i, int single_f,

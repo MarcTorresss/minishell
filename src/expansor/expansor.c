@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:20:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:27:09 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*expand_var(char *str, int *i, t_env **env)
 	char	*var_value;
 	char	*tmp;
 	t_env	*tmp_env;
-
 	if (str[*i + 1] == '?')
 		question_mark(&var_name, &var_value);
 	else
+
 	{
 		var_name = get_var_name(str, *i + 1);
 		tmp_env = find_env(env, var_name);
@@ -42,35 +42,29 @@ char	*expand_var(char *str, int *i, t_env **env)
 	return (tmp);
 }
 
-int	handle_quotes(char *str, int *i, int *single_f, int *double_f)
+char	*handle_quotes(char *str, int i, int *single_f, int *double_f)
 {
-	*single_f = single_quote_dealer(str, *i, *single_f, *double_f);
-	*double_f = double_quote_dealer(str, *i, *single_f, *double_f);
-	if ((str[*i] == '\'' && *single_f) || (str[*i] == '\"' && *double_f)
-		|| (!*double_f && !*single_f && (str[*i] == '\''
-				|| str[*i] == '\"')))
-	{
-		str = remove_char_at(str, *i);
-		return (1);
-	}
-	return (0);
+	if (!str[i])
+		return (str);
+	*single_f = single_quote_dealer(str, i, *single_f, *double_f);
+	*double_f = double_quote_dealer(str, i, *single_f, *double_f);
+	if ((str[i] == '\'' && *single_f) || (str[i] == '\"' && *double_f) \
+	|| (!*double_f && !*single_f && (str[i] == '\'' || str[i] == '\"')))
+		return (remove_char_at(str, i));
+	return (str);
 }
 
-int	handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
+char	*handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 {
 	if (!str[*i] || !str[*i + 1])
-		return (0);
-	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1])
-		&& (ft_isalnum(str[*i + 1]) || str[*i + 1] == '_'
-			|| str[*i + 1] == '?'))
-	{
-		str = expand_var(str, i, env);
-		return (1);
-	}
-	return (0);
+		return (str);
+	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1]) \
+	&& (ft_isalnum(str[*i + 1]) || str[*i + 1] == '_' || str[*i + 1] == '?'))
+		return (expand_var(str, i, env));
+	return (str);
 }
 
-void	expand(char *str, t_env **env)
+int	expand(char **str, int j, t_env **env)
 {
 	int	single_f;
 	int	double_f;
@@ -79,19 +73,23 @@ void	expand(char *str, t_env **env)
 	single_f = 0;
 	double_f = 0;
 	i = 0;
-	while (str[i])
+	// while (str[i])
+	// 	printf("%c", str[i++]);
+	while (str[j][i])
 	{
-		handle_quotes(str, &i, &single_f, &double_f);
-		handle_dollar_sign(str, env, &i, single_f);
-		if (!str[i])
+		str[j] = handle_quotes(str[j], i, &single_f, &double_f);
+		str[j] = handle_dollar_sign(str[j], env, &i, single_f);
+		if (!str[j][i])
 			break ;
 		i++;
 	}
 	if (single_f || double_f)
-		return (msg_return(0, 0, "quote not closed", 1));
+		return (msg_return(0, 0, "quote not closed", 1), 1);
+	else
+		return (0);
 }
 
-void	expansor(t_cmd *cmd, t_env **env)
+int	expansor(t_cmd *cmd, t_env **env)
 {
 	int	i;
 
@@ -99,12 +97,14 @@ void	expansor(t_cmd *cmd, t_env **env)
 	while (cmd)
 	{
 		while (cmd->args[i])
-			expand(cmd->args[i++], env);
-		while (cmd->redir)
-		{
-			expand(cmd->redir->file, env);
-			cmd->redir = cmd->redir->next;
-		}
+			if (expand(cmd->args, i++, env))
+				return (1);
+		// while (cmd->redir)
+		// {
+		// 	expand(cmd->redir->file, env);
+		// 	cmd->redir = cmd->redir->next;
+		// }
 		cmd = cmd->next;
 	}
+	return (0);
 }
