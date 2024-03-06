@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/05 16:17:11 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:52:04 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,11 @@ void	init_data(t_pipe *data, t_cmd *cmd)
 		msg_exit(0, 0, ERR_MALLOC, 1);
 }
 
-void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
+void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 {
-	t_pipe	data;
 	int		i;
 	int		ret_value;
 
-	init_data(&data, cmd);
-	save_original_stds(&data);
 	i = 0;
 	while (cmd)
 	{
@@ -79,8 +76,7 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
 			msg_exit(0, 0, ERR_FORK, 1);
 		if (data.pid[i] == 0)
 			child(data, cmd, env, exp);
-		dup2(data.pipe_ends[0], STDIN_FILENO);
-			// redirect INPUT for the next process
+		dup2(data.pipe_ends[0], STDIN_FILENO); // redirect INPUT for the next process
 		close_pipes(data.pipe_ends[0], data.pipe_ends[1]);
 		cmd = cmd->next;
 		i++;
@@ -90,9 +86,29 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp)
 	exit_status(ret_value);
 }
 
+int	builtin_check(char *str)
+{
+	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "echo")
+		|| !ft_strcmp(str, "cd") || !ft_strcmp(str, "env")
+		|| !ft_strcmp(str, "exit") || !ft_strcmp(str, "unset")
+		|| !ft_strcmp(str, "export"))
+		return (1);
+	return (0);
+}
+
 void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 {
-	if (is_builtin(cmd->args, env, exp) && !cmd->next)
+	t_pipe	data;
+
+	init_data(&data, cmd);
+	save_original_stds(&data);
+	if (builtin_check(*cmd->args) && !cmd->next)
+	{
+		get_files_redir(cmd->redir, &data); 
+		make_redirections(&data, cmd);
+		is_builtin(cmd->args, env, exp);
+		reset_original_stds(&data);
 		return ;// if the command is a builtin and there is no pipe
-	breeder(cmd, env, exp);
+	}
+	breeder(cmd, env, exp, data);
 }

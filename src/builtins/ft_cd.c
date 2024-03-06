@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:28 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 13:15:56 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,16 @@ void	cd_prev_dir(t_env **env, t_env **exp)
 void	cd_home(t_env **exp)
 {
 	t_env	*tmp;
-
+	char	*old_pwd;
+	
+	old_pwd = getcwd(NULL, 0);
 	tmp = find_env(exp, "HOME");
 	if (tmp && tmp->value && tmp->value[0])
 	{
 		if (chdir(tmp->value))
 			return (msg_return("cd", tmp->value, "No such file or directory",
 					1));
-		set_oldpwd(exp, exp, 0);
+		set_oldpwd(exp, exp, old_pwd);
 	}
 	else
 		msg_return("cd", 0, "HOME not set", 1);

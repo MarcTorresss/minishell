@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/05 17:31:15 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:20:44 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,8 @@ int	main(int argc, char **argv, char **envd)
 				//print_lex(lxr);
 				//print_parser(cmd);
 				ft_heredoc(cmd);
-				if (expansor(cmd, &env))
-					continue ;
-				executor(cmd, &env, &exp);
+				if (!expansor(cmd, &env))
+					executor(cmd, &env, &exp);
 			}
 		}
 		ft_clean_lxr_prs(&cmd, &lxr);
