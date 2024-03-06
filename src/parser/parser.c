@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/02/26 17:42:22 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:49:36 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,14 @@ int	ft_parser(t_cmd **table, t_lxr **lxr)
 
 	tmp = *lxr;
 	(void)table;
+	if (check_pipes(*lxr) == -1)
+		return (-1);
 	while (tmp != NULL)
 	{
 		qtt_args = count_args(tmp);
 		check = check_comands(*lxr);
 		if (check == -1)
-			return (lexer_clear(lxr), -1);
+			return (-1);
 		new = init_parser();
 		if (!new)
 			return (-1);

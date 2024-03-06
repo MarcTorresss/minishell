@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/05 17:31:28 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:41:27 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@
 
 // ERRORS
 
-# define ERROR_TOKEN_P "syntax error near unexpected token '|'\n"
-# define ERROR_TOKEN_L "syntax error near unexpected token '<'\n"
-# define ERROR_TOKEN_LL "syntax error near unexpected token '<<'\n"
-# define ERROR_TOKEN_G "syntax error near unexpected token '>'\n"
-# define ERROR_TOKEN_GG "syntax error near unexpected token '>>'\n"
+# define ERROR_TOKEN_P "syntax error near unexpected token `|'\n"
+# define ERROR_TOKEN_L "syntax error near unexpected token `<'\n"
+# define ERROR_TOKEN_LL "syntax error near unexpected token `<<'\n"
+# define ERROR_TOKEN_G "syntax error near unexpected token `>'\n"
+# define ERROR_TOKEN_GG "syntax error near unexpected token `>>'\n"
 # define ERROR_TOKEN_NL "syntax error near unexpected token `newline'\n"
 # define ERROR_TOKEN_UN "syntax error near unexpected token\n"
 # define ERR_PIPE "pipe issue"
@@ -164,7 +164,7 @@ int						check_error(t_lxr *lxr);
 int						count_args(t_lxr *lxr);
 int						check_signs(t_lxr *lxr, int qtt);
 int						init_signals(int status);
-
+int						check_pipes(t_lxr *lxr);
 /*******************************  EXPANSOR  *******************************/
 
 int						expansor(t_cmd *cmd, t_env **env);
