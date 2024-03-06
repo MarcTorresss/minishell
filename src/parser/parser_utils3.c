@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:16:16 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 18:17:43 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:32:10 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_pipes(t_lxr *lxr)
 	tmp = lxr;
 	while (tmp != NULL)
 	{
-		if (tmp->sign != NOTH && tmp->next->sign != NOTH)
+		if (tmp->sign == PIPE && tmp->next->sign != NOTH)
 			return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
 		tmp = tmp->next;
 	}
