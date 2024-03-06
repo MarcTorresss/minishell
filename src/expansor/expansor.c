@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 15:09:54 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:01:22 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 	return (str);
 }
 
-int	expand(char **str, int j, t_env **env)
+int	expand(char **str, int j, t_env **env, int quote_rem)
 {
 	int	single_f;
 	int	double_f;
@@ -83,7 +83,8 @@ int	expand(char **str, int j, t_env **env)
 	// 	printf("%c", str[i++]);
 	while (str[j][i])
 	{
-		str[j] = handle_quotes(str[j], &i, &single_f, &double_f);
+		if (quote_rem)
+			str[j] = handle_quotes(str[j], &i, &single_f, &double_f);
 		str[j] = handle_dollar_sign(str[j], env, &i, single_f);
 		//str[j] = handle_quotes(str[j], i, &single_f, &double_f);
 		if (i >= 0 && !str[j][i])
@@ -100,11 +101,11 @@ int	expansor(t_cmd *cmd, t_env **env)
 {
 	int	i;
 
-	i = 0;
 	while (cmd)
 	{
+		i = 0;
 		while (cmd->args[i])
-			if (expand(cmd->args, i++, env))
+			if (expand(cmd->args, i++, env, 1))
 				return (1);
 		// while (cmd->redir)
 		// {

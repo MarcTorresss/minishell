@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/20 15:02:12 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:27:24 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,17 @@ void	init_SHLVL(t_env **env, t_env **exp)
 	t_env	*tmp;
 	int		shlvl;
 
-	tmp = find_env(exp, "SHLVL");
+	tmp = find_env(env, "SHLVL");
 	if (tmp && tmp->value && ft_isdigit(tmp->value[0]))
 	{
 		shlvl = ft_atoi(tmp->value);
 		shlvl++;
 		free(tmp->value);
 		tmp->value = ft_itoa(shlvl);
+		tmp = find_env(exp, "SHLVL");
+		free(tmp->value);
+		tmp->value = ft_itoa(shlvl);
+		return ;
 	}
 	export_process(exp, env, "SHLVL=1");
 }

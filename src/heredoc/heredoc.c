@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:13:43 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 18:17:23 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:06:44 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_start_heredoc(t_rd *redir, char *path)
+int	ft_start_heredoc(t_rd *redir, char *path, t_env **env)
 {
 	int		fd;
 	char	*line;
@@ -31,6 +31,8 @@ int	ft_start_heredoc(t_rd *redir, char *path)
 			close(fd);
 			return (0);
 		}
+		if (!(ft_strchr(redir->file, '\'')) && !(ft_strchr(redir->file, '\"')))	
+			expand(&line, 0, env, 0);
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
@@ -38,7 +40,7 @@ int	ft_start_heredoc(t_rd *redir, char *path)
 	return (0);
 }
 
-int	ft_heredoc(t_cmd *cmd)
+int	ft_heredoc(t_cmd *cmd, t_env **env)
 {
 	t_rd	*tmp;
 	int		i;
@@ -51,7 +53,7 @@ int	ft_heredoc(t_cmd *cmd)
 		{
 			if (tmp->type == HEREDOC)
 				if (ft_start_heredoc(tmp, ft_strjoin("/tmp/mini_here",
-							ft_itoa(i++))) == -1)
+							ft_itoa(i++)), env) == -1)
 					return (-1);
 			tmp = tmp->next;
 		}

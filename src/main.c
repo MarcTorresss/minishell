@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 18:19:10 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:49 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int	main(int argc, char **argv, char **envd)
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
 				//print_lex(lxr);
-				//print_parser(cmd);
-				ft_heredoc(cmd);
+				/print_parser(cmd);en
+				ft_heredoc(cmd, &env);
 				if (!expansor(cmd, &env))
 					executor(cmd, &env, &exp);
 			}
