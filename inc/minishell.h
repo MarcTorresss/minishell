@@ -6,10 +6,10 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 12:43:36 by rbarbier         ###   ########.fr       */
-/*   Updated: 2024/03/06 15:41:27 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:38 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -160,7 +160,7 @@ t_rd					*init_redir(void);
 t_rd					*ft_last_rd(t_rd *redir);
 void					ft_addback_redir(t_rd **redir, t_rd *new);
 int						ft_issigntoken(char c);
-int						ft_heredoc(t_cmd *cmd);
+int						ft_heredoc(t_cmd *cmd, t_env **env);
 int						check_error(t_lxr *lxr);
 int						count_args(t_lxr *lxr);
 int						check_signs(t_lxr *lxr, int qtt);
@@ -177,6 +177,7 @@ int						single_quote_dealer(char *str, int i, int single_f,
 							int double_f);
 char					*remove_char_at(char *str, int i);
 void					question_mark(char **var_name, char **var_value);
+int						expand(char **str, int j, t_env **env, int quote_rem);
 
 /**********************  ENVIRONMENT / BUILTINS  **************************/
 

@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/06 12:52:04 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:56:08 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 			msg_exit(0, 0, ERR_FORK, 1);
 		if (data.pid[i] == 0)
 			child(data, cmd, env, exp);
-		dup2(data.pipe_ends[0], STDIN_FILENO); // redirect INPUT for the next process
+		dup2(data.pipe_ends[0], STDIN_FILENO);
 		close_pipes(data.pipe_ends[0], data.pipe_ends[1]);
 		cmd = cmd->next;
 		i++;

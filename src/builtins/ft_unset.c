@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:36:16 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:39:05 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 16:50:32 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_env_del(t_env *env)
 	env = NULL;
 }
 
-static void	remove_from_env(t_env **env, char *name)
+void	remove_from_env(t_env **env, char *name)
 {
 	t_env	*tmp;
 
@@ -44,7 +44,7 @@ static void	remove_from_env(t_env **env, char *name)
 				tmp->prev->next = tmp->next;
 				if (tmp->next)
 					tmp->next->prev = tmp->prev;
-				ft_env_del(tmp);
+				return (ft_env_del(tmp));
 			}
 			tmp = tmp->next;
 		}
