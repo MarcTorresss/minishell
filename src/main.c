@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envd)
 			if (ft_parser(&cmd, &lxr) != -1)
 			{
 				//print_lex(lxr);
-				//print_parser(cmd);
+				print_parser(cmd);
 				ft_heredoc(cmd);
 				if (!expansor(cmd, &env))
 					executor(cmd, &env, &exp);
