@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/05 17:31:59 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/06 15:09:54 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,27 @@ char	*expand_var(char *str, int *i, t_env **env)
 	return (tmp);
 }
 
-char	*handle_quotes(char *str, int i, int *single_f, int *double_f)
+char	*handle_quotes(char *str, int *i, int *single_f, int *double_f)
 {
-	if (!str[i])
+	char	*tmp;
+
+	if (!str[*i])
 		return (str);
-	*single_f = single_quote_dealer(str, i, *single_f, *double_f);
-	*double_f = double_quote_dealer(str, i, *single_f, *double_f);
-	if ((str[i] == '\'' && *single_f) || (str[i] == '\"' && *double_f) \
-	|| (!*double_f && !*single_f && (str[i] == '\'' || str[i] == '\"')))
-		return (remove_char_at(str, i));
+	*single_f = single_quote_dealer(str, *i, *single_f, *double_f);
+	*double_f = double_quote_dealer(str, *i, *single_f, *double_f);
+	if ((str[*i] == '\'' && *single_f) || (str[*i] == '\"' && *double_f) \
+	|| (!*double_f && !*single_f && (str[*i] == '\'' || str[*i] == '\"')))
+	{
+		tmp = remove_char_at(str, *i);
+		*i = *i - 1;
+		return (tmp);
+	}
 	return (str);
 }
 
 char	*handle_dollar_sign(char *str, t_env **env, int *i, int single_f)
 {
-	if (!str[*i] || !str[*i + 1])
+	if (*i == -1 || !str[*i] || !str[*i + 1])
 		return (str);
 	if (str[*i] == '$' && !single_f && !ft_isdigit(str[*i + 1]) \
 	&& (ft_isalnum(str[*i + 1]) || str[*i + 1] == '_' || str[*i + 1] == '?'))
@@ -77,9 +83,10 @@ int	expand(char **str, int j, t_env **env)
 	// 	printf("%c", str[i++]);
 	while (str[j][i])
 	{
-		str[j] = handle_quotes(str[j], i, &single_f, &double_f);
+		str[j] = handle_quotes(str[j], &i, &single_f, &double_f);
 		str[j] = handle_dollar_sign(str[j], env, &i, single_f);
-		if (!str[j][i])
+		//str[j] = handle_quotes(str[j], i, &single_f, &double_f);
+		if (i >= 0 && !str[j][i])
 			break ;
 		i++;
 	}

@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
+/*   Updated: 2024/03/06 12:43:36 by rbarbier         ###   ########.fr       */
 /*   Updated: 2024/03/06 15:41:27 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -203,6 +204,7 @@ void					swap_data(t_env *nod1, t_env *nod2);
 
 void					get_files_redir(t_rd *redir, t_pipe *data);
 void					make_redirections(t_pipe *data, t_cmd *cmd);
+void					unlink_heredoc(t_rd *redir);
 char					**env_to_array(t_env **env);
 void					check_file(char *file, int mode);
 void					save_original_stds(t_pipe *data);
