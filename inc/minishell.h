@@ -6,11 +6,9 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 11:34:21 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:41:54 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -168,7 +166,6 @@ int						check_signs(t_lxr *lxr, int qtt);
 int						init_signals(int status);
 int						check_pipes(t_lxr *lxr);
 void					print_parser(t_cmd *cmd);
-
 
 /*******************************  EXPANSOR  *******************************/
 

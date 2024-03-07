@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/06 12:40:35 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:54:43 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	is_builtin(char **cmd, t_env **env, t_env **exp)
 {
+	if (cmd == NULL)
+		return (exit_status(1), 1);
 	if (!ft_strcmp(cmd[0], "pwd"))
 		ft_pwd(cmd);
 	else if (!ft_strcmp(cmd[0], "echo"))
@@ -35,6 +37,8 @@ int	is_builtin(char **cmd, t_env **env, t_env **exp)
 
 void	is_local_cmd(t_cmd *cmd, t_pipe data, char **envp)
 {
+	if (cmd->args == NULL)
+		exit (1);
 	if (ft_strchr(cmd->args[0], '/') || data.cmd_paths == NULL
 		|| data.cmd_paths[0] == NULL)
 	{ // if the command is an absolute path or the PATH is not set

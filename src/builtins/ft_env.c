@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:05:17 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:41 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:46:03 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_env(t_env **env, char **cmd)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
 	if (cmd[1])
