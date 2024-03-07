@@ -198,6 +198,7 @@ int						update_value(char *name, char *value, t_env **exp,
 t_env					*find_env(t_env **env, char *name);
 void					ft_pwd(char **cmd);
 void					ft_cd(t_env **env, t_env **exp, char **cmd);
+void					ft_exit(char **cmd);
 void					ft_echo(char **args);
 int						exit_status(int value);
 void					swap_data(t_env *nod1, t_env *nod2);
