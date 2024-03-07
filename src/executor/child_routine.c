@@ -25,7 +25,7 @@ int	is_builtin(char **cmd, t_env **env, t_env **exp)
 	else if (!ft_strcmp(cmd[0], "env"))
 		ft_env(env, cmd);
 	else if (!ft_strcmp(cmd[0], "exit"))
-		exit(exit_status(0));
+		ft_exit(cmd);
 	else if (!ft_strcmp(cmd[0], "unset"))
 		ft_unset(env, exp, cmd);
 	else if (!ft_strcmp(cmd[0], "export"))
