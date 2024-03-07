@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/04 14:45:23 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:53:01 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,9 @@ int	ft_lexer(char *str, t_lxr **lxr)
 				return (1);
 			*lxr = ft_lxr_addback(*lxr, new);
 			check = ft_convert(ft_substr(str, i, ft_strlen(str)), new);
-			if (check != -1)
-				i += check;
-			else
+			if (check == -1)
 				return (1);
+			i += check;
 			i++;
 		}
 	}

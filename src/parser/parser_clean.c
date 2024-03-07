@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 16:56:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/26 19:18:45 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:29:22 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_len_array(char **array)
 	int	i;
 
 	i = 0;
+	if (!array)
+		return (0);
 	while (array[i])
 		i++;
 	return (i);

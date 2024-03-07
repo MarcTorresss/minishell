@@ -3,9 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             *//*                                                                            */
+/*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             */
+/*   Updated: 2024/03/07 15:48:58 by martorre         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
@@ -46,14 +48,16 @@ int	init_word(char *str)
 	isquote = 0;
 	while (str[i] != '\0')
 	{
-    if (ft_isquote(str[i]) == 1 && isquote == 0 && str[i + 1] != '\0')
+		if (ft_isquote(str[i]) == 1 && isquote == 0 && str[i + 1] != '\0')
 		{
 			isquote += 1;
 			i++;
 		}
-		if (ft_isquote(str[i]) == 1 && isquote == 1 && ft_isspace(str[i + 1]) == 1)
+		if (ft_isquote(str[i]) == 1 && isquote == 1 && ft_isspace(str[i
+					+ 1]) == 1)
 			break ;
-		if ((ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1) && isquote % 2 == 0)
+		if ((ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1) && isquote
+			% 2 == 0)
 			return (i);
 		i++;
 	}

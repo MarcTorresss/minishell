@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/06 16:56:08 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:47:19 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	init_data(t_pipe *data, t_cmd *cmd)
 
 void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 {
-	int		i;
-	int		ret_value;
+	int	i;
+	int	ret_value;
 
 	i = 0;
 	while (cmd)
@@ -88,10 +88,9 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 
 int	builtin_check(char *str)
 {
-	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "echo")
-		|| !ft_strcmp(str, "cd") || !ft_strcmp(str, "env")
-		|| !ft_strcmp(str, "exit") || !ft_strcmp(str, "unset")
-		|| !ft_strcmp(str, "export"))
+	if (!ft_strcmp(str, "pwd") || !ft_strcmp(str, "echo") || !ft_strcmp(str,
+			"cd") || !ft_strcmp(str, "env") || !ft_strcmp(str, "exit")
+		|| !ft_strcmp(str, "unset") || !ft_strcmp(str, "export"))
 		return (1);
 	return (0);
 }
@@ -104,11 +103,11 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 	save_original_stds(&data);
 	if (builtin_check(*cmd->args) && !cmd->next)
 	{
-		get_files_redir(cmd->redir, &data); 
+		get_files_redir(cmd->redir, &data);
 		make_redirections(&data, cmd);
 		is_builtin(cmd->args, env, exp);
 		reset_original_stds(&data);
-		return ;// if the command is a builtin and there is no pipe
+		return ; // if the command is a builtin and there is no pipe
 	}
 	breeder(cmd, env, exp, data);
 }

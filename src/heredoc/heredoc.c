@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:13:43 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 17:06:44 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:49:23 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_start_heredoc(t_rd *redir, char *path, t_env **env)
 			close(fd);
 			return (0);
 		}
-		if (!(ft_strchr(redir->file, '\'')) && !(ft_strchr(redir->file, '\"')))	
+		if (!(ft_strchr(redir->file, '\'')) && !(ft_strchr(redir->file, '\"')))
 			expand(&line, 0, env, 0);
 		ft_putendl_fd(line, fd);
 		free(line);

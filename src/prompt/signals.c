@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/04 15:41:45 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:22:55 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	signal_hand_default(int signum)
 	{
 		ft_fprintf(1, "\n");
 		rl_replace_line("", 1);
-		rl_on_new_line();// cursor nueva linia
-		rl_redisplay(); // redibuja la pantalla de entrada mostrando los cambios echos
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 
@@ -54,7 +54,7 @@ int	init_signals(int status)
 {
 	(void)status;
 	signal(CTRL_C, signal_hand_default);
-	//signal(CTRL_C, signal_hand);
+	// signal(CTRL_C, signal_hand);
 	signal(CTRL_SLASH, signal_hand_default);
 	return (1);
 }

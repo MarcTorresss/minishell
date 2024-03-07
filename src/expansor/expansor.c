@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 17:01:22 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/07 13:30:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	expansor(t_cmd *cmd, t_env **env)
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->args[i])
+		while (cmd->args && cmd->args[i])
 			if (expand(cmd->args, i++, env, 1))
 				return (1);
 		// while (cmd->redir)

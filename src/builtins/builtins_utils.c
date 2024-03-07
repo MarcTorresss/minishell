@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 11:13:29 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 15:44:29 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	forbidden_char(char *input)
 char	*get_name(char *input)
 {
 	int	i;
-
+	
 	i = 0;
 	if (input == NULL)
 		return (NULL);
