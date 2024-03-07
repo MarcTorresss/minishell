@@ -99,19 +99,22 @@ int	expand(char **str, int j, t_env **env, int quote_rem)
 
 int	expansor(t_cmd *cmd, t_env **env)
 {
-	int	i;
+	int		i;
+	t_rd	*tmp;
 
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->args && cmd->args[i])
+		while (cmd->args[i])
 			if (expand(cmd->args, i++, env, 1))
 				return (1);
-		// while (cmd->redir)
-		// {
-		// 	expand(cmd->redir->file, env);
-		// 	cmd->redir = cmd->redir->next;
-		// }
+		tmp = cmd->redir;
+		while (tmp)
+		{
+			if (expand(&(tmp->file), 0, env, 1))
+				return (1);
+			tmp = tmp->next;
+		}
 		cmd = cmd->next;
 	}
 	return (0);
