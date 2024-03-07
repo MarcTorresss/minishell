@@ -48,6 +48,14 @@ void	init_SHLVL(t_env **env, t_env **exp)
 	{
 		shlvl = ft_atoi(tmp->value);
 		shlvl++;
+		if (shlvl < 0)
+			shlvl = 0;
+		if (shlvl > 999)
+		{
+			ft_fprintf(2, "minishell: warning: shell level (%d)", shlvl);
+			ft_fprintf(2, " too high, resetting to 1\n");
+			shlvl = 1;
+		}
 		free(tmp->value);
 		tmp->value = ft_itoa(shlvl);
 		tmp = find_env(exp, "SHLVL");
@@ -62,6 +70,7 @@ void	init_envd(char **envd, t_env **env, t_env **exp)
 {
 	char	*name;
 	char	*value;
+	char	*pwd;
 	int		i;
 
 	i = 0;
@@ -73,5 +82,8 @@ void	init_envd(char **envd, t_env **env, t_env **exp)
 		new_env_var(name, value, exp);
 		i++;
 	}
+	pwd = getcwd(NULL, 0);
+	export_process(exp, env, ft_strjoin("PWD=", pwd));
+	free(pwd);
 	init_SHLVL(env, exp);
 }
