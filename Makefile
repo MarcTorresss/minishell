@@ -35,7 +35,7 @@ DIR_PROM	=	prompt/
 
 FILES		=	main.c enviroment.c error.c
 LXR_FILES	=	lexer.c lexer_utils.c lexer_utils2.c
-BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_pwd.c ft_env.c
+BLT_FILES	=	builtins_utils.c ft_unset.c ft_export.c ft_cd.c ft_echo.c ft_pwd.c ft_env.c ft_exit.c
 EXEC_FILES	=	executor.c executor_utils1.c executor_utils2.c child_routine.c redirections.c
 PRS_FILE	=	parser.c parser_utils.c parser_utils2.c parser_utils3.c parser_clean.c
 HRD_FILE	=	heredoc.c
