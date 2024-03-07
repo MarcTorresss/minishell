@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/06 15:49:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:46:28 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	create_command(t_lxr **lxr, t_cmd **new, int qtt_args)
 		(*new)->args = malloc(sizeof(char *) * (qtt_args + 1));
 		if (!(*new)->args)
 			return (-1);
-		//printf("qtt_args = %d\n", qtt_args);
 		(*new)->args[qtt_args] = NULL;
 	}
 	if (add_command(lxr, new, &redir) == -1)

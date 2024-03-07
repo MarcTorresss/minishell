@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 12:20:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:07 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:13:29 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	forbidden_char(char *input)
 	int	i;
 
 	i = 0;
+	if (input == NULL)
+		return (0);
 	if (ft_isdigit(input[i]))
 		return (1);
 	while (input[i])
@@ -63,6 +65,8 @@ char	*get_name(char *input)
 	int	i;
 
 	i = 0;
+	if (input == NULL)
+		return (NULL);
 	while (input[i])
 	{
 		if (input[i] == '=' || (input[i] == '+' && input[i + 1] == '='))
@@ -79,6 +83,8 @@ char	*get_value(char *input)
 
 	i = 0;
 	found_f = 0;
+	if (input == NULL)
+		return (NULL);
 	while (input[i])
 	{
 		if (input[i] == '=')

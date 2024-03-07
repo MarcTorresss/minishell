@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/06 17:03:38 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:34:21 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ t_lxr					*ft_lxr_addback(t_lxr *lxr, t_lxr *new);
 void					print_lex(t_lxr *lxr);
 t_lxr					*init_lxr(void);
 int						init_word(char *str);
+void					print_lex(t_lxr *lxr);
 
 /*******************************  PARSER  *******************************/
 
@@ -166,6 +167,9 @@ int						count_args(t_lxr *lxr);
 int						check_signs(t_lxr *lxr, int qtt);
 int						init_signals(int status);
 int						check_pipes(t_lxr *lxr);
+void					print_parser(t_cmd *cmd);
+
+
 /*******************************  EXPANSOR  *******************************/
 
 int						expansor(t_cmd *cmd, t_env **env);

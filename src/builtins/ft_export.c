@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/21 14:38:52 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:15:27 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	update_value(char *name, char *value, t_env **exp, int append)
 
 	tmp = *exp;
 	exists_f = 0;
+	if (!name)
+		return (0);
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->name, name))
