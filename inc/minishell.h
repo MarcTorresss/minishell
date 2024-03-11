@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 15:41:54 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:56:16 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@
 
 // ERRORS
 
-# define ERROR_TOKEN_P "syntax error near unexpected token `|'\n"
-# define ERROR_TOKEN_L "syntax error near unexpected token `<'\n"
-# define ERROR_TOKEN_LL "syntax error near unexpected token `<<'\n"
-# define ERROR_TOKEN_G "syntax error near unexpected token `>'\n"
-# define ERROR_TOKEN_GG "syntax error near unexpected token `>>'\n"
-# define ERROR_TOKEN_NL "syntax error near unexpected token `newline'\n"
-# define ERROR_TOKEN_UN "syntax error near unexpected token\n"
+# define ERROR_TOKEN_P "minishell: syntax error near unexpected token `|'\n"
+# define ERROR_TOKEN_L "minishell: syntax error near unexpected token `<'\n"
+# define ERROR_TOKEN_LL "minishell: syntax error near unexpected token `<<'\n"
+# define ERROR_TOKEN_G "minishell: syntax error near unexpected token `>'\n"
+# define ERROR_TOKEN_GG "minishell: syntax error near unexpected token `>>'\n"
+# define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'\n"
+# define ERROR_TOKEN_UN "minishell: syntax error near unexpected token\n"
 # define ERR_PIPE "pipe issue"
 # define ERR_FORK "fork issue"
 # define ERR_EXEC "exec issue"
