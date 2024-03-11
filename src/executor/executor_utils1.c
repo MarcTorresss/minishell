@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:41:44 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:11:24 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:27:42 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	check_file(char *file, int mode)
 		if (access(file, R_OK) != 0)
 			msg_exit(file, 0, ERR_NO_PERM, 1);
 	}
-	else // output
+	else if (mode == 2)
 	{
 		if (access(file, F_OK) == 0 && access(file, W_OK) != 0)
 			msg_exit(file, 0, ERR_NO_PERM, 1);

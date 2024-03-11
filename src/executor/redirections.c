@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 15:47:30 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:29:16 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	input_file(t_pipe *data, char *file)
+void	input_file(t_pipe *data, char *file, int heredoc)
 {
 	if (data->infile_fd)
 		close(data->infile_fd);
-	check_file(file, 1);
+	check_file(file, heredoc);
 	data->infile_fd = open(file, O_RDONLY);
 	if (data->infile_fd < 0)
 		msg_exit(file, 0, ERR_NO_FILE, 1);
@@ -39,8 +39,10 @@ void	get_files_redir(t_rd *redir, t_pipe *data)
 {
 	while (redir)
 	{
-		if (redir->type == INPUT_REDIR || redir->type == HEREDOC)
-			input_file(data, redir->file);
+		if (redir->type == INPUT_REDIR)
+			input_file(data, redir->file, 1);
+		else if (redir->type == HEREDOC)
+			input_file(data, redir->file, 0);
 		else if (redir->type == OUTPUT_REDIR || redir->type == APPEND_TO_END)
 			outfile_file(data, redir->file, redir->type);
 		redir = redir->next;

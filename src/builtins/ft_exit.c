@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:26:25 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 15:48:18 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:46:44 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	numeric_check(char *arg)
 	int		i;
 
 	i = 0;
-	if (arg[i] == '-')
+	if ((arg[i] == '+' && arg[i + 1] != 0) || (arg[i] == '-' && arg[i + 1] != 0))
 		i++;
 	while (arg[i])
 	{
@@ -61,18 +61,24 @@ void	ft_exit(char **cmd)
 
 	i = 0;
 	ret = 0;
-	if (cmd[1])
+	if (cmd[1] && !ft_strcmp(cmd[1], "--"))
+		return (ft_fprintf(1, "exit\n"), exit(0), (void)0);
+	else if (cmd[1] && !cmd[1][0])
+	{
+		ft_fprintf(2, "exit\nminishell: exit: : numeric argument required\n");
+		exit(255);
+	}
+	else if (cmd[1])
 	{
 		numeric_check(cmd[1]);
 		limit_number(cmd[1]);
 		ret = ft_atoi(cmd[1]);
 	}
-	if (cmd[1] && cmd[2])
+	else if (cmd[1] && cmd[2])
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
-		exit_status(1);
-		return ;
+		return (exit_status(1), (void)0);
 	}
-	ft_fprintf(2, "exit\n");
+	ft_fprintf(1, "exit\n");
 	exit(ret);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 13:05:17 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 15:46:03 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:36:01 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_env(t_env **env, char **cmd)
 
 	tmp = *env;
 	if (cmd[1])
-		msg_exit(0, 0, "env: too many arguments\n", 1);
+		return (msg_return(0, 0, "env: too many arguments", 1));
 	while (tmp)
 	{
 		ft_fprintf(1, "%s=", tmp->name);
