@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/07 13:45:11 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:29:21 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,7 @@ int	ft_parser(t_cmd **table, t_lxr **lxr)
 		if (tmp != NULL)
 			tmp = tmp->next;
 	}
+	//print_lex(*lxr);
+	//print_parser(*table);
 	return (0);
 }
