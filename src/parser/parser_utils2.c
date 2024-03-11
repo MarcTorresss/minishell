@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:38:53 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 12:01:38 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:52:57 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_error(t_lxr *lxr)
 		return (ft_fprintf(2, ERROR_TOKEN_P), -1);
 	if (lxr->sign != NOTH && lxr->next == NULL)
 		return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
-	else if (lxr->next != NULL)
+	while (lxr->next != NULL)
 	{
 		if (lxr->sign != NOTH && lxr->next->sign == GREAT)
 			return (ft_fprintf(2, ERROR_TOKEN_G), -1);
@@ -77,6 +77,7 @@ int	check_error(t_lxr *lxr)
 			return (ft_fprintf(2, ERROR_TOKEN_P), -1);
 		else if (ft_last_lxr(lxr)->sign != NOTH)
 			return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
+		lxr = lxr->next;
 	}
 	return (-1);
 }
