@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 13:54:43 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 14:19:52 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 		ft_fprintf(2, "%s: illegal  -- %c\n", cmd->args[0], cmd->args[0][1]);
 		exit(1);
 	}
-	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
+	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 127);
 }
 
 void	unlink_heredoc(t_rd *redir)
