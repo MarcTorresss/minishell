@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 11:15:27 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:09:04 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 		free(value);
 	if (name)
 		free(name);
+	free(cmd);
 }
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)

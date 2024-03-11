@@ -6,12 +6,12 @@
 #    By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/05 17:31:34 by martorre          #+#    #+#              #
-#    Updated: 2024/03/11 13:17:26 by rbarbier         ###   ########.fr        #
+#    Updated: 2024/03/11 16:06:06 by martorre         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS	=	-Wall -Wextra -Werror #-g -fsanitize=address
 INCLUDE	=	-I./inc -I./readline
 RM		=	rm -fr
 

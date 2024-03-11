@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/06 17:27:24 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:00:46 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,14 @@ void	init_envd(char **envd, t_env **env, t_env **exp)
 	int		i;
 
 	i = 0;
+	value = NULL;
 	while (envd[i])
 	{
 		name = ft_substr(envd[i], 0, ft_strchr(envd[i], '=') - envd[i]);
 		value = getenv(name);
 		new_env_var(name, value, env);
 		new_env_var(name, value, exp);
+		free(name);
 		i++;
 	}
 	pwd = getcwd(NULL, 0);

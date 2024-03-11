@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 11:07:06 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 15:53:01 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:25:51 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ int	ft_convert(char *str, t_lxr *new)
 		i = init_word(str);
 		new->word = ft_substr(str, 0, i);
 		if (!new->word)
-			return (-1);
+			return (free(str), -1);
 	}
+	free(str);
 	return (i - 1);
 }
 

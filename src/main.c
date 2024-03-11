@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/11 15:52:37 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:10:04 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,12 @@ int	main(int argc, char **argv, char **envd)
 					executor(cmd, &env, &exp);
 			}
 		}
-		ft_clean_lxr_prs(&cmd, &lxr);
+		lexer_clear(&lxr);
+		parser_clear(&cmd);
+		//ft_clean_lxr_prs(&cmd, &lxr);
 		lxr = NULL;
 		cmd = NULL;
+		free(prompt);
 	}
-	return (0);
+	exit(exit_status(0));
 }
