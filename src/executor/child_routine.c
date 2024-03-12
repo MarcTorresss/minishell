@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/11 14:19:52 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:25:26 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 	char	**envp;
 
 	envp = env_to_array(env);
+	init_signals(0);
 	get_files_redir(cmd->redir, &data);
 	make_redirections(&data, cmd);
 	data.cmd_paths = get_paths(env);

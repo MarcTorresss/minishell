@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:11:39 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/11 14:27:51 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:26:32 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ int	init_word(char *str)
 		{
 			isquote += 1;
 			i++;
+			if (ft_isquote(str[i]) == 1)
+				isquote += 1;
 		}
 		if (ft_isquote(str[i]) == 1 && isquote == 1 && ft_isspace(str[i
 					+ 1]) == 1)
 			break ;
-		if ((ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1) && isquote
-			% 2 == 0)
+		if ((ft_isspace(str[i]) == 1 || ft_issign(str[i]) == 1) && isquote % 2 == 0)
 			return (i);
 		i++;
 	}

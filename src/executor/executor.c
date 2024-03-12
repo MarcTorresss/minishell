@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 12:21:05 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:22:36 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 	int	ret_value;
 
 	i = 0;
+	init_signals(0);
 	while (cmd)
 	{
 		if (cmd->next)
@@ -83,6 +84,7 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 	}
 	wait_processes(data.pid, &ret_value, data.n_cmds);
 	reset_original_stds(&data);
+	init_signals(1);
 	exit_status(ret_value);
 }
 
@@ -101,7 +103,7 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 
 	init_data(&data, cmd);
 	save_original_stds(&data);
-	if (builtin_check(*cmd->args) && !cmd->next)
+	if (cmd->args != NULL && builtin_check(*cmd->args) && !cmd->next)
 	{
 		get_files_redir(cmd->redir, &data);
 		make_redirections(&data, cmd);

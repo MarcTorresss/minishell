@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/11 16:48:59 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:53:25 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ int	ft_parser(t_cmd **table, t_lxr **lxr)
 	t_cmd	*new;
 	t_lxr	*tmp;
 	int		qtt_args;
-	int		check;
+	int		check = 0;
 
 	tmp = *lxr;
 	(void)table;
-	/*if (check_pipes(*lxr) == -1)
-		return (-1);*/
+	if (check_pipes(*lxr) == -1)
+		return (-1);
 	while (tmp != NULL)
 	{
 		qtt_args = count_args(tmp);
@@ -129,7 +129,5 @@ int	ft_parser(t_cmd **table, t_lxr **lxr)
 		if (tmp != NULL)
 			tmp = tmp->next;
 	}
-	//print_lex(*lxr);
-	//print_parser(*table);
 	return (0);
 }
