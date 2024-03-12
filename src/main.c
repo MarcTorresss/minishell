@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 13:00:17 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:39:50 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	print_parser(t_cmd *cmd)
 			ft_fprintf(1, "tmp->redir->file = %s\n", tmp->file);
 			tmp = tmp->next;
 		}
-		/*while (cmd->args[j][i] != '\0')
-		{
-			ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i,
-				cmd->args[j][i]);
-			i++;
-		}*/
+		// while (cmd->args[j][i] != '\0')
+		// {
+		// 	ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i,
+		// 		cmd->args[j][i]);
+		// 	i++;
+		// }
 		j++;
 		z++;
 		cmd = cmd->next;
