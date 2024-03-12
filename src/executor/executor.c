@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 15:47:19 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:21:05 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,9 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 		make_redirections(&data, cmd);
 		is_builtin(cmd->args, env, exp);
 		reset_original_stds(&data);
+		free(data.pid);
 		return ; // if the command is a builtin and there is no pipe
 	}
 	breeder(cmd, env, exp, data);
+	free(data.pid);
 }
