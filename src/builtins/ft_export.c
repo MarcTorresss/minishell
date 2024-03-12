@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 12:55:41 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:08:48 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 		free(value);
 	if (name)
 		free(name);
-	free(cmd);
+	//free(cmd);
 }
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)
