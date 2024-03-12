@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:41:44 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/11 15:27:42 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:59:20 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	close_pipes(int fd1, int fd2)
 
 void	check_file(char *file, int mode)
 {
-	if (mode == 1) // input
+	if (mode == 1)
 	{
 		if (access(file, F_OK) != 0)
 			msg_exit(file, 0, ERR_NO_FILE, 1);

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 12:58:02 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:56:10 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	new_env_var(char *name, char *value, t_env **env_var)
 	}
 }
 
-void	init_SHLVL(t_env **env, t_env **exp)
+void	init_shlvl(t_env **env, t_env **exp)
 {
 	t_env	*tmp;
 	int		shlvl;
@@ -87,5 +87,5 @@ void	init_envd(char **envd, t_env **env, t_env **exp)
 	pwd = getcwd(NULL, 0);
 	export_process(exp, env, ft_strjoin("PWD=", pwd));
 	free(pwd);
-	init_SHLVL(env, exp);
+	init_shlvl(env, exp);
 }

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 11:16:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/07 15:49:52 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:54:35 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	cd_home(t_env **exp)
 {
 	t_env	*tmp;
 	char	*old_pwd;
-	
+
 	old_pwd = getcwd(NULL, 0);
 	tmp = find_env(exp, "HOME");
 	if (tmp && tmp->value && tmp->value[0])

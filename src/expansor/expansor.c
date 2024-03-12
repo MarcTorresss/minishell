@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 12:55:27 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:46:13 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char	*expand_var(char *str, int *i, t_env **env)
 	char	*var_value;
 	char	*tmp;
 	t_env	*tmp_env;
+
 	if (str[*i + 1] == '?')
 		question_mark(&var_name, &var_value);
 	else
-
 	{
 		var_name = get_var_name(str, *i + 1);
 		tmp_env = find_env(env, var_name);

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 15:25:26 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:44:14 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	is_local_cmd(t_cmd *cmd, t_pipe data, char **envp)
 		exit (1);
 	if (ft_strchr(cmd->args[0], '/') || data.cmd_paths == NULL
 		|| data.cmd_paths[0] == NULL)
-	{ // if the command is an absolute path or the PATH is not set
+	{
 		if (check_absolute_path(cmd))
 		{
 			execve(cmd->args[0], cmd->args, envp);
@@ -54,9 +54,9 @@ void	is_local_cmd(t_cmd *cmd, t_pipe data, char **envp)
 
 void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 {
-	if (check_paths(&data, cmd)) // if the command is in the PATH
+	if (check_paths(&data, cmd))
 	{
-		execve(data.cmd, cmd->args, envp); // execute the command
+		execve(data.cmd, cmd->args, envp);
 		ft_fprintf(2, "%s: illegal  -- %c\n", cmd->args[0], cmd->args[0][1]);
 		exit(1);
 	}

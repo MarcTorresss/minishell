@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 12:18:54 by marvin            #+#    #+#             */
-/*   Updated: 2024/03/12 14:53:25 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:45:02 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	ft_parser(t_cmd **table, t_lxr **lxr)
 	t_cmd	*new;
 	t_lxr	*tmp;
 	int		qtt_args;
-	int		check = 0;
+	int		check;
 
 	tmp = *lxr;
 	(void)table;

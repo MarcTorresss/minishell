@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/11 16:48:10 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:10:26 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define ERROR_TOKEN_LL "minishell: syntax error near unexpected token `<<'\n"
 # define ERROR_TOKEN_G "minishell: syntax error near unexpected token `>'\n"
 # define ERROR_TOKEN_GG "minishell: syntax error near unexpected token `>>'\n"
-# define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'\n"
+# define ERROR_TOKEN_NL "error: syntax error near unexpected token `newline'\n"
 # define ERROR_TOKEN_UN "minishell: syntax error near unexpected token\n"
 # define ERR_PIPE "pipe issue"
 # define ERR_FORK "fork issue"
@@ -59,6 +59,7 @@
 # define ERR_CMD_NOT_FOUND "command not found"
 # define ERR_NO_FILE "No such file or directory"
 # define ERR_NO_PERM "Permission denied"
+# define LIMIT "exit\nminishell: exit: %s: numeric argument required\n"
 
 // STRUCTURES
 
@@ -202,6 +203,7 @@ void					ft_exit(char **cmd);
 void					ft_echo(char **args);
 int						exit_status(int value);
 void					swap_data(t_env *nod1, t_env *nod2);
+void					export_print(t_env **exp);
 
 /*******************************  EXECUTOR  *******************************/
 

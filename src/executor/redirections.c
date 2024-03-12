@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/11 16:23:01 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:47:41 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,27 @@ void	get_files_redir(t_rd *redir, t_pipe *data)
 		redir = redir->next;
 	}
 }
+// if theres an output file
+// if this is not the last command
+// redirect OUTPUT to the writting end of the pipe
+// if theres an input file
+// close reading end (this process wont read from this pipe)
+// close writting end (writting end already redirected)
 
 void	make_redirections(t_pipe *data, t_cmd *cmd)
 {
-	if (data->outfile_fd) // if theres an output file
+	if (data->outfile_fd)
 	{
 		dup2(data->outfile_fd, STDOUT_FILENO);
 		close(data->outfile_fd);
 	}
-	else if (cmd->next != NULL)                 
-		// if this is not the last command
+	else if (cmd->next != NULL)
 		dup2(data->pipe_ends[1], STDOUT_FILENO);
-			// redirect OUTPUT to the writting end of the pipe
-	if (data->infile_fd)                         // if theres an input file
+	if (data->infile_fd)
 	{
 		dup2(data->infile_fd, STDIN_FILENO);
 		close(data->infile_fd);
 	}
 	close(data->pipe_ends[0]);
-		// close reading end (this process wont read from this pipe)
 	close(data->pipe_ends[1]);
-		// close writting end (writting end already redirected)
 }

@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:08:37 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 15:12:18 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:45:33 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	init_signals(int status)
 {
 	if (status == 1)
 		signal(CTRL_C, signal_hand_default);
-	else 
+	else
 		signal(CTRL_C, signal_hand);
 	signal(CTRL_SLASH, signal_hand_default);
 	return (1);

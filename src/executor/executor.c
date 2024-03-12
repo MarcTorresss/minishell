@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 16:22:36 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:49:58 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	builtin_check(char *str)
 	return (0);
 }
 
+// if the command is a builtin and there is no pipe
 void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 {
 	t_pipe	data;
@@ -110,7 +111,7 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 		is_builtin(cmd->args, env, exp);
 		reset_original_stds(&data);
 		free(data.pid);
-		return ; // if the command is a builtin and there is no pipe
+		return ;
 	}
 	breeder(cmd, env, exp, data);
 	free(data.pid);
