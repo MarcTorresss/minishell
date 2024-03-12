@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/12 13:08:48 by rbarbier         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/12 13:03:53 by martorre         ###   ########.fr       */
+>>>>>>> 46e56a41cecd99706c18479ebb6ec91e4d5c48f7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +113,10 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 		free(value);
 	if (name)
 		free(name);
+<<<<<<< HEAD
 	//free(cmd);
+=======
+>>>>>>> 46e56a41cecd99706c18479ebb6ec91e4d5c48f7
 }
 
 void	ft_export(t_env **exp, t_env **env, char **cmd)
