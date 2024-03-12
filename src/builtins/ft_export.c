@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 13:01:29 by rbarbier          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/03/12 12:19:36 by rbarbier         ###   ########.fr       */
+=======
 /*   Updated: 2024/03/11 18:09:04 by martorre         ###   ########.fr       */
+>>>>>>> b15a75ab5e8f6fa438dc95465dabd3e3ed19d920
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +100,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 	value = NULL;
 	append = 0;
 	if (forbidden_char(cmd))
-		msg_return("export", cmd, "not a valid identifier", 1);
+		return (msg_return("export", cmd, "not a valid identifier", 1), (void)0);
 	name = get_name(cmd);
 	value = get_value(cmd);
 	if (ft_strncmp(cmd + ft_strlen(name), "+=", 2) == 0)

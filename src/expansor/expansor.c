@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/03/12 12:35:29 by rbarbier         ###   ########.fr       */
+=======
 /*   Updated: 2024/03/11 15:03:45 by martorre         ###   ########.fr       */
+>>>>>>> b15a75ab5e8f6fa438dc95465dabd3e3ed19d920
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +37,10 @@ char	*expand_var(char *str, int *i, t_env **env)
 	tmp = ft_join_n_destroy(ft_substr(str, 0, *i), var_value, 1);
 	tmp = ft_join_n_destroy(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1,
 				ft_strlen(str)), 3);
-	if (ft_strlen(var_value) == 0)
-		*i += 1;
+	// if (ft_strlen(var_value) == 0)
+	// 	*i += 1;
 	*i = *i + ft_strlen(var_value) - 1;
-	free(str);
-	free(var_name);
-	free(var_value);
-	return (tmp);
+	return (free(str), free(var_name), free(var_value), tmp);
 }
 
 char	*handle_quotes(char *str, int *i, int *single_f, int *double_f)
@@ -79,14 +80,11 @@ int	expand(char **str, int j, t_env **env, int quote_rem)
 	single_f = 0;
 	double_f = 0;
 	i = 0;
-	// while (str[i])
-	// 	printf("%c", str[i++]);
 	while (str[j][i])
 	{
 		if (quote_rem)
 			str[j] = handle_quotes(str[j], &i, &single_f, &double_f);
 		str[j] = handle_dollar_sign(str[j], env, &i, single_f);
-		//str[j] = handle_quotes(str[j], i, &single_f, &double_f);
 		if (i >= 0 && !str[j][i])
 			break ;
 		i++;
