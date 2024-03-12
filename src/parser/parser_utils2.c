@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:38:53 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 12:01:38 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:03:08 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	lexer_clear(t_lxr **lxr)
 void	ft_clean_lxr_prs(t_cmd **table, t_lxr **lxr)
 {
 	lexer_clear(lxr);
+	//(void)table;
 	parser_clear(table);
 }
 
@@ -62,7 +63,7 @@ int	check_error(t_lxr *lxr)
 		return (ft_fprintf(2, ERROR_TOKEN_P), -1);
 	if (lxr->sign != NOTH && lxr->next == NULL)
 		return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
-	else if (lxr->next != NULL)
+	while (lxr->next != NULL)
 	{
 		if (lxr->sign != NOTH && lxr->next->sign == GREAT)
 			return (ft_fprintf(2, ERROR_TOKEN_G), -1);
@@ -77,6 +78,7 @@ int	check_error(t_lxr *lxr)
 			return (ft_fprintf(2, ERROR_TOKEN_P), -1);
 		else if (ft_last_lxr(lxr)->sign != NOTH)
 			return (ft_fprintf(2, ERROR_TOKEN_NL), -1);
+		lxr = lxr->next;
 	}
 	return (-1);
 }

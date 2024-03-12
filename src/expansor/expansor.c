@@ -6,7 +6,11 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/12 12:35:29 by rbarbier         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/11 15:03:45 by martorre         ###   ########.fr       */
+>>>>>>> b15a75ab5e8f6fa438dc95465dabd3e3ed19d920
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +103,7 @@ int	expansor(t_cmd *cmd, t_env **env)
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->args[i])
+		while (cmd->args && cmd->args[i])
 			if (expand(cmd->args, i++, env, 1))
 				return (1);
 		tmp = cmd->redir;

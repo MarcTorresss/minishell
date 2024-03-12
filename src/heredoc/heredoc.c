@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:13:43 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/07 15:49:23 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:34:28 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ int	ft_heredoc(t_cmd *cmd, t_env **env)
 		while (tmp)
 		{
 			if (tmp->type == HEREDOC)
+			{
 				if (ft_start_heredoc(tmp, ft_strjoin("/tmp/mini_here",
 							ft_itoa(i++)), env) == -1)
 					return (-1);
+				free(tmp->file);
+				tmp->file = ft_strjoin("/tmp/mini_here", ft_itoa(i - 1));
+			}
 			tmp = tmp->next;
 		}
 		cmd = cmd->next;
