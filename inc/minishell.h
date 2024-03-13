@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 17:10:26 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:22:02 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define ERR_NO_FILE "No such file or directory"
 # define ERR_NO_PERM "Permission denied"
 # define LIMIT "exit\nminishell: exit: %s: numeric argument required\n"
+# define NOTFOUND "minishell: %s: command not found\n"
 
 // STRUCTURES
 

@@ -6,71 +6,99 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:17:30 by martorre          #+#    #+#             */
-/*   Updated: 2024/02/21 11:36:24 by martorre         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:46:20 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(const char *str, char c)
+int	cont_words(char *s, char c, int **qttwords)
 {
 	int	i;
-	int	trigger;
+	int	cont;
+	int	parau;
 
 	i = 0;
-	trigger = 0;
-	while (*str)
+	cont = 0;
+	parau = 0;
+	while (s[i] != '\0')
 	{
-		if (*str != c && trigger == 0)
+		if (i == 0 && s[i] != c)
 		{
-			trigger = 1;
-			i++;
+			cont++;
 		}
-		else if (*str == c)
-			trigger = 0;
-		str++;
-	}
-	return (i);
-}
-
-static char	*word_dup(const char *str, int start, int finish)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	word = malloc((finish - start + 1) * sizeof(char));
-	while (start < finish)
-		word[i++] = str[start++];
-	word[i] = '\0';
-	return (word);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	size_t	i;
-	size_t	j;
-	int		index;
-	char	**split;
-
-	if (!s || !(split = malloc((count_words(s, c) + 1) * sizeof(char *))))
-		return (0);
-	i = 0;
-	j = 0;
-	index = -1;
-	while (i <= ft_strlenz(s))
-	{
-		if (s[i] != c && index < 0)
-			index = i;
-		else if ((s[i] == c || i == ft_strlenz(s)) && index >= 0)
-		{
-			split[j++] = word_dup(s, index, i);
-			index = -1;
-		}
+		else if ((i != 0) && (s[i - 1] == c && s[i] != c))
+			cont++;
 		i++;
 	}
-	split[j] = 0;
-	return (split);
+	**qttwords = cont;
+	return (cont);
+}
+
+int	ft_delimiter(char *s, int pos, char c)
+{
+	while (s[pos] == c)
+	{
+		pos++;
+	}
+	return (pos);
+}
+
+int	cont_letter(char *s, int pos, char c)
+{
+	int	cont;
+
+	cont = 0;
+	pos = ft_delimiter(s, pos, c);
+	while (s[pos] != '\0' && s[pos] != c)
+	{
+		cont++;
+		pos++;
+	}
+	return (cont);
+}
+
+char	**ft_free_mat(char **mat, int i)
+{
+	int		j;
+
+	j = 0;
+	while (i > j)
+	{
+		free(mat[j]);
+		j++;
+	}
+	free(mat);
+	return (NULL);
+}
+
+char	**ft_split(char const *s, char c, int *qttwords)
+{
+	int		i;
+	int		pos;
+	char	**mat;
+	int		words;
+	int		j;
+
+	i = -1;
+	pos = 0;
+	words = cont_words((char *)s, c, &qttwords);
+	mat = malloc(sizeof(char *) * (words + 1));
+	if (!mat)
+		return (0);
+	while (++i < words)
+	{
+		j = 0;
+		mat[i] = malloc(sizeof(char) * (cont_letter((char *)s, pos, c) + 1));
+		if (!mat[i])
+			return (ft_free_mat(mat, i));
+		pos = ft_delimiter((char *)s, pos, c);
+		while (s[pos] != c && s[pos] != '\0')
+			mat[i][j++] = s[pos++];
+		mat[i][j] = '\0';
+	}
+	mat[i] = NULL;
+	return (mat);
 }
 /*int	main(void)
 {

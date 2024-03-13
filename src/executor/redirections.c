@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 16:47:41 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:22:48 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	make_redirections(t_pipe *data, t_cmd *cmd)
 		dup2(data->outfile_fd, STDOUT_FILENO);
 		close(data->outfile_fd);
 	}
-	else if (cmd->next != NULL)                 
+	else if (cmd->next != NULL)
 		dup2(data->pipe_ends[1], STDOUT_FILENO);
 	close(data->pipe_ends[1]);
 	if (data->infile_fd)

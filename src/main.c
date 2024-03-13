@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/13 11:56:35 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:25:19 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ int	main(int argc, char **argv, char **envd)
 	init_signals(1);
 	while (1)
 		if (do_proces(&cmd, &lxr, &env, &exp) == 1)
-			break;
+			break ;
 	exit(exit_status(0));
 }
