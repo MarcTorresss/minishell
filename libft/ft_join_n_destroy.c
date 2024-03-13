@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:08:00 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/02/26 19:07:43 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:17:43 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_join_n_destroy(char *s1, char *s2, int to_free)
 {
 	char	*new;
 
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
 	else if (!s1)
 		new = ft_strdup(s2);
