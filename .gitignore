@@ -3,7 +3,8 @@
 .vscode
 *.o
 *.a
-readline/
 proba
 tester
 *.php
+/mpanic
+minishell

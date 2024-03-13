@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/13 12:54:24 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:13:31 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 {
 	char	**envp;
 
-	if (cmd->args == NULL /*|| cmd->args == 0 || cmd->args[0] == 0 || cmd->args[0][0] == 0*/)
-		return (ft_fprintf(2, NOTFOUND), exit(127));
-	return (ft_fprintf(2, "minishell: %s: command not found\n", cmd->args[0]), exit(127));
+	if (/*cmd->args == NULL*/cmd->args == 0 || cmd->args[0] == 0 || cmd->args[0][0] == 0)
+		return (ft_fprintf(2, "minishell: %s: command not found\n", cmd->args[0]), exit(127));
+		//return (ft_fprintf(2, NOTFOUND), exit(127));
 	envp = env_to_array(env);
 	init_signals(0);
 	get_files_redir(cmd->redir, &data);
