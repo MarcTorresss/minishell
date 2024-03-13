@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:56 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/13 12:23:07 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:00:17 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ char	*expand_var(char *str, int *i, t_env **env)
 	tmp = ft_join_n_destroy(ft_substr(str, 0, *i), var_value, 1);
 	tmp = ft_join_n_destroy(tmp, ft_substr(str, *i + ft_strlen(var_name) + 1,
 				ft_strlen(str)), 3);
-	// if (ft_strlen(var_value) == 0)
-	// 	*i += 1;
 	*i = *i + ft_strlen(var_value) - 1;
 	return (free(str), free(var_name), free(var_value), tmp);
 }

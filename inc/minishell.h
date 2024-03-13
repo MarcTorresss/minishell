@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/13 12:51:49 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:01:44 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@
 # define ERROR_TOKEN_LL "minishell: syntax error near unexpected token `<<'\n"
 # define ERROR_TOKEN_G "minishell: syntax error near unexpected token `>'\n"
 # define ERROR_TOKEN_GG "minishell: syntax error near unexpected token `>>'\n"
-# define ERROR_TOKEN_NL "minishell: syntax error near unexpected token `newline'\n"
+# define ERROR_TOKEN_NL \
+"minishell: syntax error near unexpected token `newline'\n"
 # define ERROR_TOKEN_UN "minishell: syntax error near unexpected token\n"
 # define ERR_PIPE "pipe issue"
 # define ERR_FORK "fork issue"
@@ -60,7 +61,7 @@
 # define ERR_NO_FILE "No such file or directory"
 # define ERR_NO_PERM "Permission denied"
 # define LIMIT "exit\nminishell: exit: %s: numeric argument required\n"
-# define NOTFOUND "minishell:  : command not found\n"
+# define NOTFOUND "minishell: %s: command not found\n"
 
 // STRUCTURES
 
@@ -210,7 +211,7 @@ void					export_print(t_env **exp);
 
 void					get_files_redir(t_rd *redir, t_pipe *data);
 void					make_redirections(t_pipe *data, t_cmd *cmd);
-void					unlink_heredoc(t_rd *redir);
+void					unlink_heredoc(t_cmd *cmd);
 char					**env_to_array(t_env **env);
 void					check_file(char *file, int mode);
 void					save_original_stds(t_pipe *data);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 11:52:55 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 15:55:40 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:04:08 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	len2 = ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	if (str == NULL)
-	{
-		ft_putstr_fd("minishell: malloc failed\n", 2);
-		exit(1);
-	}
+		return \
+	(ft_putstr_fd("minishell: malloc failed\n", 2), exit(1), NULL);
 	i = -1;
 	while (s1[++i])
 		str[i] = s1[i];

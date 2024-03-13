@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/13 12:22:48 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:26:51 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,20 +60,20 @@ void	get_files_redir(t_rd *redir, t_pipe *data)
 
 void	make_redirections(t_pipe *data, t_cmd *cmd)
 {
-	close(data->pipe_ends[0]);
-	if (data->outfile_fd)
-	{
-		dup2(data->outfile_fd, STDOUT_FILENO);
-		close(data->outfile_fd);
-	}
-	else if (cmd->next != NULL)
-		dup2(data->pipe_ends[1], STDOUT_FILENO);
-	close(data->pipe_ends[1]);
 	if (data->infile_fd)
 	{
 		dup2(data->infile_fd, STDIN_FILENO);
 		close(data->infile_fd);
 	}
+	if (data->outfile_fd)
+	{
+		dup2(data->outfile_fd, STDOUT_FILENO);
+		close(data->outfile_fd);
+	}
+	else if (cmd->next)
+	{
+		dup2(data->pipe_ends[1], STDOUT_FILENO);
+		close(data->pipe_ends[1]);
+	}
 	close(data->pipe_ends[0]);
-	close(data->pipe_ends[1]);
 }

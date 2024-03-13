@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:26:25 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 18:01:43 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:39:07 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	numeric_check(char *arg)
 	int		i;
 
 	i = 0;
+	digit = 0;
 	if ((arg[i] == '+' && arg[i + 1] != 0)
 		|| (arg[i] == '-' && arg[i + 1] != 0))
 		i++;
@@ -27,7 +28,9 @@ void	numeric_check(char *arg)
 			digit = 1;
 		while (arg[i] == ' ')
 			i++;
-		if (!arg[i] && digit)
+		if (!arg[i] && !digit)
+			return (ft_fprintf(2, LIMIT, arg), exit(255), (void)0);
+		else if (!arg[i] && digit)
 			return ;
 		if (!ft_isdigit(arg[i]))
 		{
