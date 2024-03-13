@@ -60,13 +60,15 @@ void	get_files_redir(t_rd *redir, t_pipe *data)
 
 void	make_redirections(t_pipe *data, t_cmd *cmd)
 {
+	close(data->pipe_ends[0]);
 	if (data->outfile_fd)
 	{
 		dup2(data->outfile_fd, STDOUT_FILENO);
 		close(data->outfile_fd);
 	}
-	else if (cmd->next != NULL)
+	else if (cmd->next != NULL)                 
 		dup2(data->pipe_ends[1], STDOUT_FILENO);
+	close(data->pipe_ends[1]);
 	if (data->infile_fd)
 	{
 		dup2(data->infile_fd, STDIN_FILENO);

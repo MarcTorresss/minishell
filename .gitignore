@@ -3,7 +3,7 @@
 .vscode
 *.o
 *.a
-/readline
-/proba
-/tester
+readline/
+proba
+tester
 *.php

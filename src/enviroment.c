@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:18:02 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 16:56:10 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:18:52 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	init_shlvl(t_env **env, t_env **exp)
 	int		shlvl;
 
 	tmp = find_env(env, "SHLVL");
-	if (tmp && tmp->value && ft_isdigit(tmp->value[0]))
+	if (tmp && tmp->value && (ft_isdigit(tmp->value[0]) \
+	|| tmp->value[0] == '-' || tmp->value[0] == '+'))
 	{
 		shlvl = ft_atoi(tmp->value);
 		shlvl++;

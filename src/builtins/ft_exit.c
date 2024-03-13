@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:26:25 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 16:53:21 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:01:43 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	numeric_check(char *arg)
 {
+	int		digit;
 	int		i;
 
 	i = 0;
@@ -22,6 +23,12 @@ void	numeric_check(char *arg)
 		i++;
 	while (arg[i])
 	{
+		if (ft_isdigit(arg[i]))
+			digit = 1;
+		while (arg[i] == ' ')
+			i++;
+		if (!arg[i] && digit)
+			return ;
 		if (!ft_isdigit(arg[i]))
 		{
 			ft_fprintf(2, LIMIT, arg);
@@ -78,11 +85,10 @@ void	ft_exit(char **cmd)
 		limit_number(cmd[1]);
 		ret = ft_atoi(cmd[1]);
 	}
-	else if (cmd[1] && cmd[2])
+	if (cmd[1] && cmd[2])
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
 		return (exit_status(1), (void)0);
 	}
-	ft_fprintf(1, "exit\n");
 	exit(ret);
 }

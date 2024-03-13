@@ -80,6 +80,8 @@ void	child(t_pipe data, t_cmd *cmd, t_env **env, t_env **exp)
 {
 	char	**envp;
 
+	if (cmd->args == 0 || cmd->args[0] == 0 || cmd->args[0][0] == 0)
+		return (ft_fprintf(2, "minishell: %s: command not found\n", cmd->args[0]), exit(127));
 	envp = env_to_array(env);
 	init_signals(0);
 	get_files_redir(cmd->redir, &data);
