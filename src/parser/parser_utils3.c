@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 16:16:16 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/11 15:47:10 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:45:24 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	check_signs(t_lxr *lxr, int qtt)
 	t_lxr	*last;
 
 	last = ft_last_lxr(lxr);
-	if ((qtt == 0 && ft_issigntoken(lxr->sign) == 1)
-		|| ft_issigntoken(last->sign) == 1)
+	(void)qtt;
+	if (qtt == 0 && ft_issigntoken(last->sign) == 1)
 		return (check_error(lxr), -1);
 	return (0);
 }
@@ -48,7 +48,8 @@ int	check_pipes(t_lxr *lxr)
 	tmp = lxr;
 	while (tmp != NULL)
 	{
-		if (tmp->sign == PIPE && tmp->next->sign != NOTH && tmp->next->sign != PIPE)
+		if (tmp->sign == PIPE && tmp->next != NULL
+			&& tmp->next->sign != NOTH && tmp->next->sign != PIPE)
 			return (-1);
 		if (tmp->sign != NOTH && tmp->next != NULL && tmp->next->sign != NOTH)
 			return (check_error(lxr), -1);

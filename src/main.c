@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 18:39:50 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:56:35 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,38 @@ void	print_parser(t_cmd *cmd)
 			ft_fprintf(1, "tmp->redir->file = %s\n", tmp->file);
 			tmp = tmp->next;
 		}
-		// while (cmd->args[j][i] != '\0')
-		// {
-		// 	ft_fprintf(1, "cmd->args[%d][%d] = %c\n", j, i,
-		// 		cmd->args[j][i]);
-		// 	i++;
-		// }
 		j++;
 		z++;
 		cmd = cmd->next;
 	}
+}
+
+int	do_proces(t_cmd **cmd, t_lxr **lxr, t_env **env, t_env **exp)
+{
+	char	*prompt;
+
+	prompt = readline("\033[1;32mminishell: \033[0m");
+	if (prompt == NULL)
+	{
+		ft_fprintf(1, "exit\n");
+		return (1);
+	}
+	if (ft_lexer(prompt, lxr) == 0)
+	{
+		if (ft_parser(cmd, lxr) != -1)
+		{
+			//print_lex(*lxr);
+			//print_parser(*cmd);
+			ft_heredoc(*cmd, env);
+			if (!expansor(*cmd, env))
+				executor(*cmd, env, exp);
+		}
+	}
+	ft_clean_lxr_prs(cmd, lxr);
+	lxr = NULL;
+	cmd = NULL;
+	free(prompt);
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envd)
@@ -62,14 +84,12 @@ int	main(int argc, char **argv, char **envd)
 	t_env	*env;
 	t_env	*exp;
 	t_cmd	*cmd;
-	char	*prompt;
 	t_lxr	*lxr;
 
 	cmd = NULL;
 	lxr = NULL;
 	env = NULL;
 	exp = NULL;
-	//(void)envd;
 	rl_catch_signals = 0;
 	(void)argv;
 	if (argc > 1)
@@ -80,30 +100,7 @@ int	main(int argc, char **argv, char **envd)
 	init_envd(envd, &env, &exp);
 	init_signals(1);
 	while (1)
-	{
-		prompt = readline("\033[1;32mminishell: \033[0m");
-		if (prompt == NULL)
-		{
-			ft_fprintf(1, "exit\n");
-			break ;
-		}
-		if (ft_lexer(prompt, &lxr) == 0)
-		{
-			if (ft_parser(&cmd, &lxr) != -1)
-			{
-				//print_lex(lxr);
-				//print_parser(cmd);
-				ft_heredoc(cmd, &env);
-				if (!expansor(cmd, &env))
-					executor(cmd, &env, &exp);
-			}
-		}
-		lexer_clear(&lxr);
-		parser_clear(&cmd);
-		//ft_clean_lxr_prs(&cmd, &lxr);
-		lxr = NULL;
-		cmd = NULL;
-		free(prompt);
-	}
+		if (do_proces(&cmd, &lxr, &env, &exp) == 1)
+			break;
 	exit(exit_status(0));
 }

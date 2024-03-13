@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 17:24:45 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/03/12 18:08:45 by rbarbier         ###   ########.fr       */
@@ -15,22 +15,22 @@
 void	msg_return(char *cmd, char *arg, char *msg, int status)
 {
 	if (cmd && arg)
-		ft_fprintf(2, "error: %s: %s: %s\n", cmd, arg, msg);
+		ft_fprintf(2, "minishell: %s: %s: %s\n", cmd, arg, msg);
 	else if (cmd)
-		ft_fprintf(2, "error: %s: %s\n", cmd, msg);
+		ft_fprintf(2, "minishell: %s: %s\n", cmd, msg);
 	else
-		ft_fprintf(2, "error: %s\n", msg);
+		ft_fprintf(2, "minishell: %s\n", msg);
 	exit_status(status);
 }
 
 void	msg_exit(char *cmd, char *arg, char *msg, int status)
 {
 	if (cmd && arg)
-		ft_fprintf(2, "error: %s: '%s': %s\n", cmd, arg, msg);
+		ft_fprintf(2, "minishell: %s: '%s': %s\n", cmd, arg, msg);
 	else if (cmd)
-		ft_fprintf(2, "error: %s: %s\n", cmd, msg);
+		ft_fprintf(2, "minishell: %s: %s\n", cmd, msg);
 	else
-		ft_fprintf(2, "error: %s\n", msg);
+		ft_fprintf(2, "minishell: %s\n", msg);
 	exit(status);
 }
 

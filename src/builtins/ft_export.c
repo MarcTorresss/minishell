@@ -12,22 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void	export_print(t_env **exp)
-{
-	t_env	*tmp;
-
-	tmp = *exp;
-	while (tmp)
-	{
-		ft_fprintf(1, "declare -x %s", tmp->name);
-		if (tmp->value)
-			ft_fprintf(1, "=\"%s\"\n", tmp->value);
-		else
-			ft_fprintf(1, "\n");
-		tmp = tmp->next;
-	}
-}
-
 void	sort_export(t_env **exp)
 {
 	t_env	*node;
@@ -57,6 +41,19 @@ void	sort_export(t_env **exp)
 	export_print(exp);
 }
 
+void	update_value2(t_env *tmp, char *value, int append)
+{
+	if (append)
+		tmp->value = ft_join_n_destroy(tmp->value, value, 1);
+	else if (value && tmp->value)
+	{
+		free(tmp->value);
+		tmp->value = ft_strdup(value);
+	}
+	else if (value)
+		tmp->value = ft_strdup(value);
+}
+
 int	update_value(char *name, char *value, t_env **exp, int append)
 {
 	t_env	*tmp;
@@ -70,15 +67,7 @@ int	update_value(char *name, char *value, t_env **exp, int append)
 	{
 		if (!ft_strcmp(tmp->name, name))
 		{
-			if (append)
-				tmp->value = ft_join_n_destroy(tmp->value, value, 1);
-			else if (value && tmp->value)
-			{
-				free(tmp->value);
-				tmp->value = ft_strdup(value);
-			}
-			else if (value)
-				tmp->value = ft_strdup(value);
+			update_value2(tmp, value, append);
 			exists_f = 1;
 			break ;
 		}
@@ -96,7 +85,7 @@ void	export_process(t_env **exp, t_env **env, char *cmd)
 	value = NULL;
 	append = 0;
 	if (forbidden_char(cmd))
-		return (msg_return("export", cmd, "not a valid identifier", 1), (void)0);
+		return (msg_return("export", cmd, "n val id", 1), (void)0);
 	name = get_name(cmd);
 	value = get_value(cmd);
 	if (ft_strncmp(cmd + ft_strlen(name), "+=", 2) == 0)

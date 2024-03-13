@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:26:25 by rbarbier          #+#    #+#             */
 /*   Updated: 2024/03/12 18:01:43 by rbarbier         ###   ########.fr       */
@@ -18,8 +18,8 @@ void	numeric_check(char *arg)
 	int		i;
 
 	i = 0;
-	digit = 0;
-	if ((arg[i] == '+' && arg[i + 1] != 0) || (arg[i] == '-' && arg[i + 1] != 0))
+	if ((arg[i] == '+' && arg[i + 1] != 0)
+		|| (arg[i] == '-' && arg[i + 1] != 0))
 		i++;
 	while (arg[i])
 	{
@@ -31,12 +31,13 @@ void	numeric_check(char *arg)
 			return ;
 		if (!ft_isdigit(arg[i]))
 		{
-			ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", arg);
+			ft_fprintf(2, LIMIT, arg);
 			exit(255);
 		}
 		i++;
 	}
 }
+
 void	limit_number(char *arg)
 {
 	int		negativ;
@@ -52,11 +53,13 @@ void	limit_number(char *arg)
 	while (*arg == '0' && *(arg + 1) != '\0')
 		arg++;
 	if (ft_strlen(arg) > 19)
-		ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", orig);
-	else if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775807") > 0 && !negativ)
-		ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", orig);
-	else if (ft_strlen(arg) == 19 && ft_strcmp(arg, "9223372036854775808") > 0 && negativ)
-		ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", orig);
+		ft_fprintf(2, LIMIT, orig);
+	else if (ft_strlen(arg) == 19
+		&& ft_strcmp(arg, "9223372036854775807") > 0 && !negativ)
+		ft_fprintf(2, LIMIT, orig);
+	else if (ft_strlen(arg) == 19
+		&& ft_strcmp(arg, "9223372036854775808") > 0 && negativ)
+		ft_fprintf(2, LIMIT, orig);
 	else
 		return ;
 	exit(255);
