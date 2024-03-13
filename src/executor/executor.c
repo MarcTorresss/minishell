@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/12 16:49:58 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 17:53:39 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	breeder(t_cmd *cmd, t_env **env, t_env **exp, t_pipe data)
 		cmd = cmd->next;
 		i++;
 	}
-	wait_processes(data.pid, &ret_value, data.n_cmds);
 	reset_original_stds(&data);
+	wait_processes(data.pid, &ret_value, data.n_cmds);
 	init_signals(1);
 	exit_status(ret_value);
 }
@@ -114,5 +114,6 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 		return ;
 	}
 	breeder(cmd, env, exp, data);
+	unlink_heredoc(cmd);
 	free(data.pid);
 }
