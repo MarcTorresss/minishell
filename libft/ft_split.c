@@ -6,13 +6,13 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:17:30 by martorre          #+#    #+#             */
-/*   Updated: 2023/10/26 15:46:20 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:29:17 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	cont_words(char *s, char c, int **qttwords)
+int	cont_words(char *s, char c)
 {
 	int	i;
 	int	cont;
@@ -31,7 +31,6 @@ int	cont_words(char *s, char c, int **qttwords)
 			cont++;
 		i++;
 	}
-	**qttwords = cont;
 	return (cont);
 }
 
@@ -72,7 +71,7 @@ char	**ft_free_mat(char **mat, int i)
 	return (NULL);
 }
 
-char	**ft_split(char const *s, char c, int *qttwords)
+char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		pos;
@@ -82,7 +81,7 @@ char	**ft_split(char const *s, char c, int *qttwords)
 
 	i = -1;
 	pos = 0;
-	words = cont_words((char *)s, c, &qttwords);
+	words = cont_words((char *)s, c);
 	mat = malloc(sizeof(char *) * (words + 1));
 	if (!mat)
 		return (0);
