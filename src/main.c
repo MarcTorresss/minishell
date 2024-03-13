@@ -6,7 +6,7 @@
 /*   By: martorre <martorre@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:07 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/12 17:17:53 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:56:35 by martorre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	do_proces(t_cmd **cmd, t_lxr **lxr, t_env **env, t_env **exp)
 	{
 		if (ft_parser(cmd, lxr) != -1)
 		{
-			//print_lex(lxr);
-			//print_parser(cmd);
+			//print_lex(*lxr);
+			//print_parser(*cmd);
 			ft_heredoc(*cmd, env);
 			if (!expansor(*cmd, env))
 				executor(*cmd, env, exp);
