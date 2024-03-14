@@ -6,23 +6,24 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 13:39:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/13 17:26:51 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:04:56 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	input_file(t_pipe *data, char *file, int heredoc)
+int	input_file(t_pipe *data, char *file, int heredoc)
 {
 	if (data->infile_fd)
 		close(data->infile_fd);
 	check_file(file, heredoc);
 	data->infile_fd = open(file, O_RDONLY);
 	if (data->infile_fd < 0)
-		msg_exit(file, 0, ERR_NO_FILE, 1);
+		return (msg_return(file, 0, ERR_NO_FILE, 1), 1);
+	return (0);
 }
 
-void	outfile_file(t_pipe *data, char *file, int type)
+int	outfile_file(t_pipe *data, char *file, int type)
 {
 	if (data->outfile_fd)
 		close(data->outfile_fd);
@@ -32,24 +33,29 @@ void	outfile_file(t_pipe *data, char *file, int type)
 	else
 		data->outfile_fd = open(file, O_TRUNC | O_CREAT | O_RDWR, 0000644);
 	if (data->outfile_fd < 0)
-		msg_exit(file, 0, ERR_NO_FILE, 1);
+		return (msg_return(file, 0, ERR_NO_FILE, 1), 1);
+	return (0);
 }
 
-void	get_files_redir(t_rd *redir, t_pipe *data)
+int	get_files_redir(t_rd *redir, t_pipe *data)
 {
 	while (redir)
 	{
 		if (redir->type == INPUT_REDIR)
-			input_file(data, redir->file, 1);
-		else if (redir->type == HEREDOC)
+			if (input_file(data, redir->file, 1))
+				return (1);
+		if (redir->type == HEREDOC)
 		{
 			printf("HEREDOC\n");
-			input_file(data, redir->file, 0);
+			if (input_file(data, redir->file, 0))
+				return (1);
 		}
 		else if (redir->type == OUTPUT_REDIR || redir->type == APPEND_TO_END)
-			outfile_file(data, redir->file, redir->type);
+			if (outfile_file(data, redir->file, redir->type))
+				return (1);
 		redir = redir->next;
 	}
+	return (0);
 }
 // if theres an output file
 // if this is not the last command

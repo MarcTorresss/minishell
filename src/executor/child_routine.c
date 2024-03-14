@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 13:04:40 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/13 14:13:31 by martorre         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:11:27 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	is_local_cmd(t_cmd *cmd, t_pipe data, char **envp)
 		if (check_absolute_path(cmd))
 		{
 			execve(cmd->args[0], cmd->args, envp);
-			ft_fprintf(2, "%s:  option -- %c\n", cmd->args[0], cmd->args[0][1]);
+			ft_fprintf(2, "%s:  command incorrect\n", cmd->args[0]);
 			exit(1);
 		}
 		msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 1);
@@ -57,7 +57,7 @@ void	is_global_cmd(t_cmd *cmd, t_pipe data, char **envp)
 	if (check_paths(&data, cmd))
 	{
 		execve(data.cmd, cmd->args, envp);
-		ft_fprintf(2, "%s: illegal  -- %c\n", cmd->args[0], cmd->args[0][1]);
+		ft_fprintf(2, "%s:  command incorrect\n", cmd->args[0]);
 		exit(1);
 	}
 	msg_exit(cmd->args[0], 0, ERR_CMD_NOT_FOUND, 127);

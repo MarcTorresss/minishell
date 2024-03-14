@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 12:58:04 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/05 14:39:01 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:18:30 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_paths(t_pipe *data, t_cmd *cmd)
 				data->cmd = path;
 				return (1);
 			}
-			msg_exit(cmd->args[0], 0, ERR_NO_PERM, 1);
+			msg_exit(cmd->args[0], 0, ERR_NO_PERM, 126);
 		}
 		free(path);
 		i++;
@@ -43,7 +43,7 @@ int	check_absolute_path(t_cmd *cmd)
 	{
 		if (access(cmd->args[0], X_OK) == 0)
 			return (1);
-		msg_exit(cmd->args[0], 0, ERR_NO_PERM, 1);
+		msg_exit(cmd->args[0], 0, ERR_NO_PERM, 126);
 	}
 	return (0);
 }

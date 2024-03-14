@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:31:21 by martorre          #+#    #+#             */
-/*   Updated: 2024/03/13 18:01:44 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:20:22 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ void					export_print(t_env **exp);
 
 /*******************************  EXECUTOR  *******************************/
 
-void					get_files_redir(t_rd *redir, t_pipe *data);
+int						get_files_redir(t_rd *redir, t_pipe *data);
 void					make_redirections(t_pipe *data, t_cmd *cmd);
 void					unlink_heredoc(t_cmd *cmd);
 char					**env_to_array(t_env **env);

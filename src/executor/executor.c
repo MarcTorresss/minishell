@@ -6,7 +6,7 @@
 /*   By: rbarbier <rbarbier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 13:34:47 by rbarbier          #+#    #+#             */
-/*   Updated: 2024/03/13 17:53:39 by rbarbier         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:04:20 by rbarbier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	executor(t_cmd *cmd, t_env **env, t_env **exp)
 	save_original_stds(&data);
 	if (cmd->args != NULL && builtin_check(*cmd->args) && !cmd->next)
 	{
-		get_files_redir(cmd->redir, &data);
+		if (get_files_redir(cmd->redir, &data))
+			return ;
 		make_redirections(&data, cmd);
 		is_builtin(cmd->args, env, exp);
 		reset_original_stds(&data);
